@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -31,6 +32,21 @@ public class UnityPlayerActivity extends Activity
         startActivity(main);
     }
 
+    public void like(String id){
+        Log.d("LIKE",id);
+        //En id está el id de la película que ha detectado con RA
+        //y que le ha dado a guardar
+    }
+    public void plan(String id){
+        Log.d("PLAN",id);
+        //En id está el id de la película que ha detectado con RA
+        //y que le ha dado a plan
+    }
+    public void share(String id){
+        Log.d("SHARE",id);
+        //En id está el id de la película que ha detectado con RA
+        //y que le ha dado a compartir
+    }
     @Override protected void onNewIntent(Intent intent)
     {
         // To support deep linking, we need to make sure that the client can get access to
