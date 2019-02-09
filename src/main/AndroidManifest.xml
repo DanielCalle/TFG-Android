@@ -42,7 +42,6 @@
     <uses-feature
         android:name="android.hardware.touchscreen.multitouch.distinct"
         android:required="false" />
-
     <application
         android:icon="@mipmap/app_icon"
         android:isGame="true"

@@ -28,7 +28,7 @@ public class UnityPlayerActivity extends Activity
         setContentView(mUnityPlayer);
         mUnityPlayer.requestFocus();
     }
-    public void back(){
+    public void exitAR(){
         Intent main = new Intent(this, MainActivity.class);
         startActivity(main);
     }
@@ -48,10 +48,10 @@ public class UnityPlayerActivity extends Activity
         //En id está el id de la película que ha detectado con RA
         //y que le ha dado a compartir
     }
-    public void youtube(String id){
-        Log.d("YOUTUBE",id);
-
+    public void youtube(String url){
+        Log.d("YOUTUBE",url);
         Intent youtube = new Intent(this, YoutubeActivity.class);
+        youtube.putExtra("url", url);
         startActivity(youtube);
     }
     @Override protected void onNewIntent(Intent intent)
