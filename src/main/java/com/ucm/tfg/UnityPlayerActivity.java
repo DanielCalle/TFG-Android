@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebView;
 
 public class UnityPlayerActivity extends Activity
 {
@@ -46,6 +47,12 @@ public class UnityPlayerActivity extends Activity
         Log.d("SHARE",id);
         //En id está el id de la película que ha detectado con RA
         //y que le ha dado a compartir
+    }
+    public void youtube(String id){
+        Log.d("YOUTUBE",id);
+
+        Intent youtube = new Intent(this, YoutubeActivity.class);
+        startActivity(youtube);
     }
     @Override protected void onNewIntent(Intent intent)
     {
