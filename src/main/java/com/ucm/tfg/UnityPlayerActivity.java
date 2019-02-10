@@ -32,7 +32,14 @@ public class UnityPlayerActivity extends Activity
         Intent main = new Intent(this, MainActivity.class);
         startActivity(main);
     }
-
+    public void goPlans(){
+        Intent plans = new Intent(this, PlansActivity.class);
+        startActivity(plans);
+    }
+    public void goSaves(){
+        Intent saves = new Intent(this, SavesActivity.class);
+        startActivity(saves);
+    }
     public void like(String id){
         Log.d("LIKE",id);
         //En id está el id de la película que ha detectado con RA
