@@ -18,7 +18,7 @@ public class SavesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saves);
-        list = (ListView) findViewById(R.id.savedFilms);
+
 
     }
 
@@ -27,7 +27,7 @@ public class SavesActivity extends AppCompatActivity {
         startActivity(ar);
     }
 
-    public void goPlans(){
+    public void goPlans(View view){
         Intent plans = new Intent(this, PlansActivity.class);
         startActivity(plans);
     }
