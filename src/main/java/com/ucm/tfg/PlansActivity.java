@@ -44,4 +44,8 @@ public class PlansActivity extends AppCompatActivity {
         Intent saves = new Intent(this, SavesActivity.class);
         startActivity(saves);
     }
+
+    public void testAction(View view){
+
+    }
 }
