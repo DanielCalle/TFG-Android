@@ -44,9 +44,12 @@ public class UnityPlayerActivity extends Activity
         Log.d("LIKE",id);
         //En id está el id de la película que ha detectado con RA
         //y que le ha dado a guardar
+        Intent prueba = new Intent(this, PruebaInfoPeli.class);
+        startActivity(prueba);
     }
     public void plan(String id){
         Log.d("PLAN",id);
+
         //En id está el id de la película que ha detectado con RA
         //y que le ha dado a plan
     }
