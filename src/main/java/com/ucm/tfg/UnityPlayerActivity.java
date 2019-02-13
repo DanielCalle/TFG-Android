@@ -2,6 +2,7 @@ package com.ucm.tfg;
 
 import com.unity3d.player.*;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
@@ -13,6 +14,9 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.webkit.WebView;
+import android.widget.Toast;
+
+import org.json.JSONObject;
 
 public class UnityPlayerActivity extends Activity
 {
@@ -40,11 +44,18 @@ public class UnityPlayerActivity extends Activity
         Intent saves = new Intent(this, SavesActivity.class);
         startActivity(saves);
     }
-    public void like(String id){
-        Log.d("LIKE",id);
+    public void like(String film){
+        Context context = getApplicationContext();
+        String text = film;
+        int duration = Toast.LENGTH_SHORT;
+        Log.d("LIKE", text);
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
         //En id está el id de la película que ha detectado con RA
         //y que le ha dado a guardar
         Intent prueba = new Intent(this, PruebaInfoPeli.class);
+        prueba.putExtra("film", film);
         startActivity(prueba);
     }
     public void plan(String id){
