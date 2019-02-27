@@ -58,6 +58,15 @@ public class UnityPlayerActivity extends Activity
         prueba.putExtra("film", film);
         startActivity(prueba);
     }
+
+    public void info(String info) {
+        Log.d("INFO",info);
+
+        Intent intent = new Intent(this, InfoActivity.class);
+        intent.putExtra("info", info);
+        startActivity(intent);
+    }
+
     public void plan(String id){
         Log.d("PLAN",id);
 
