@@ -6,6 +6,12 @@
 # Files for the ART/Dalvik VM
 *.dex
 
+# Settings
+.settings
+
+# project
+.project
+
 # Java class files
 *.class
 
@@ -80,3 +86,6 @@ lint/tmp/
 
 # Firebase
 google-services.json
+
+# Mac
+.DS_Store
