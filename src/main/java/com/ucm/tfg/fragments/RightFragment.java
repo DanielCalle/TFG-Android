@@ -32,6 +32,8 @@ public class RightFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private UnityPlayer mUnityPlayer;
+
     private OnFragmentInteractionListener mListener;
 
     public RightFragment() {
@@ -59,6 +61,7 @@ public class RightFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mUnityPlayer = ((MainActivity) getActivity()).getmUnityPlayer();
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -68,7 +71,7 @@ public class RightFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return ((MainActivity) getActivity()).getmUnityPlayer().getView();
+        return mUnityPlayer.getView();
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -37,8 +37,6 @@ public class PlansActivity extends AppCompatActivity {
     }
 
     public void lanzaAr(View view){
-        Intent ar = new Intent(this, UnityPlayerActivity.class);
-        startActivity(ar);
     }
 
     public void goSaves(View view){
