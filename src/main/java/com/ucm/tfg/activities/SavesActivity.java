@@ -1,11 +1,12 @@
-package com.ucm.tfg;
+package com.ucm.tfg.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.ucm.tfg.R;
 
 public class SavesActivity extends AppCompatActivity {
 

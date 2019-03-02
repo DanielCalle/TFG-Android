@@ -1,20 +1,15 @@
-package com.ucm.tfg;
+package com.ucm.tfg.activities;
 
 import com.unity3d.player.*;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.PixelFormat;
 import android.os.Bundle;
-import android.util.JsonReader;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
-import android.webkit.WebView;
 import android.widget.Toast;
 
 import org.json.JSONException;

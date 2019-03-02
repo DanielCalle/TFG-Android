@@ -1,14 +1,18 @@
-package com.ucm.tfg;
+package com.ucm.tfg.activities;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
+
+import com.ucm.tfg.fragments.CenterFragment;
+import com.ucm.tfg.fragments.LeftFragment;
+import com.ucm.tfg.R;
+import com.ucm.tfg.fragments.RightFragment;
+import com.ucm.tfg.adapters.SwipeAdapter;
 
 public class MainActivity extends AppCompatActivity implements
         LeftFragment.OnFragmentInteractionListener,

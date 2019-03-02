@@ -1,9 +1,11 @@
-package com.ucm.tfg;
+package com.ucm.tfg.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.webkit.WebView;
+
+import com.ucm.tfg.R;
 
 public class YoutubeActivity extends AppCompatActivity {
 

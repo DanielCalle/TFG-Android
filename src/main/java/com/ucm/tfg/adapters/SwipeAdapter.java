@@ -1,8 +1,12 @@
-package com.ucm.tfg;
+package com.ucm.tfg.adapters;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+
+import com.ucm.tfg.fragments.CenterFragment;
+import com.ucm.tfg.fragments.LeftFragment;
+import com.ucm.tfg.fragments.RightFragment;
 
 public class SwipeAdapter extends FragmentPagerAdapter {
 

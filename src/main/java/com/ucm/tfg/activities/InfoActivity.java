@@ -1,4 +1,4 @@
-package com.ucm.tfg;
+package com.ucm.tfg.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.ucm.tfg.R;
 
 import org.json.JSONException;
 import org.json.JSONObject;

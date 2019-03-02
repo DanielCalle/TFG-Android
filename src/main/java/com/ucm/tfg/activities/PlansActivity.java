@@ -1,4 +1,4 @@
-package com.ucm.tfg;
+package com.ucm.tfg.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +7,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.List;
+import com.ucm.tfg.R;
+import com.ucm.tfg.adapters.Adapter;
 
 public class PlansActivity extends AppCompatActivity {
 

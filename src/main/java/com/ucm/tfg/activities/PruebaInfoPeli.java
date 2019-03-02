@@ -1,8 +1,10 @@
-package com.ucm.tfg;
+package com.ucm.tfg.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.ucm.tfg.R;
 
 import org.json.JSONObject;
 
