@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.util.JsonReader;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -16,6 +17,7 @@ import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class UnityPlayerActivity extends Activity
@@ -78,11 +80,20 @@ public class UnityPlayerActivity extends Activity
         //En id está el id de la película que ha detectado con RA
         //y que le ha dado a compartir
     }
-    public void youtube(String url){
-        Log.d("YOUTUBE",url);
-        Intent youtube = new Intent(this, YoutubeActivity.class);
-        youtube.putExtra("url", url);
-        startActivity(youtube);
+    public void youtube(String info){
+        Log.d("YOUTUBE",info );
+        JSONObject json = null;
+        try {
+            json = new JSONObject(info);
+            Log.d("JSSONN", json.getString("trailer"));
+            Intent youtube = new Intent(this, YoutubeActivity.class);
+            youtube.putExtra("url", json.getString("trailer"));
+            startActivity(youtube);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
     }
     @Override protected void onNewIntent(Intent intent)
     {
