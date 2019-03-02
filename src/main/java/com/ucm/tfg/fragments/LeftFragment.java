@@ -1,14 +1,19 @@
 package com.ucm.tfg.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.ucm.tfg.R;
+import com.ucm.tfg.activities.PlanListItem;
+import com.ucm.tfg.adapters.Adapter;
 
 
 /**
@@ -28,6 +33,11 @@ public class LeftFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    ListView list;
+    String [][] data = {{"Moana","Diego, Carlos"},{"Deadpool","Zihao, Daniel"}};
+
+    int[] dataImg = {R.drawable.moana_poster, R.drawable.deadpool_poster};
 
     private OnFragmentInteractionListener mListener;
 
@@ -65,8 +75,23 @@ public class LeftFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_left, container, false);
+        list = (ListView) view.findViewById(R.id.plans_list);
+
+        list.setAdapter(new Adapter(getActivity(), data, dataImg));
+
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent visorDetalles = new Intent(view.getContext(), PlanListItem.class);
+                visorDetalles.putExtra("TITLE", data[position][0]);
+                visorDetalles.putExtra("FRIENDS", data[position][4]);
+                startActivity(visorDetalles);
+            }
+        });
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_left, container, false);
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
