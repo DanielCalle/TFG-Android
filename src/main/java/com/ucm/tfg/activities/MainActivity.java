@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -28,8 +29,6 @@ public class MainActivity extends AppCompatActivity implements
         RightFragment.OnFragmentInteractionListener
 {
 
-    private ViewPager viewPager;
-    private PagerAdapter pagerAdapter;
     private UnityPlayer mUnityPlayer;
 
     @Override
@@ -37,18 +36,16 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        viewPager = (ViewPager) findViewById(R.id.container);
-        pagerAdapter = new SwipeAdapter(getSupportFragmentManager());
+        ViewPager viewPager = (ViewPager) findViewById(R.id.container);
+        PagerAdapter pagerAdapter = new SwipeAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pagerAdapter);
         viewPager.setCurrentItem(1);
 
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab);
+        tabLayout.setupWithViewPager(viewPager);
+
         mUnityPlayer = new UnityPlayer(this);
         mUnityPlayer.requestFocus();
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(view -> {
-            startActivity(new Intent(this, UnityPlayerActivity.class));
-        });
     }
 
     public UnityPlayer getmUnityPlayer() {
