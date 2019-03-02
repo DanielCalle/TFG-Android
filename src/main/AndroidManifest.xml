@@ -77,6 +77,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <meta-data
+                android:name="unityplayer.UnityActivity"
+                android:value="true" />
         </activity>
         <activity android:name=".activities.YoutubeActivity" />
         <activity android:name=".activities.PlansActivity" />
