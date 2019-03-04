@@ -19,6 +19,8 @@ public class SwipeAdapter extends FragmentPagerAdapter {
         return 3;
     }
 
+
+
     @Override
     public Fragment getItem(int position) {
         switch(position) {

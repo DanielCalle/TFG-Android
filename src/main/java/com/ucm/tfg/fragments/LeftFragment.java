@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.widget.ListView;
 import com.ucm.tfg.R;
 import com.ucm.tfg.activities.PlanListItem;
 import com.ucm.tfg.adapters.Adapter;
+import com.ucm.tfg.adapters.RecyclerAdapter;
 
 
 /**
@@ -34,7 +37,6 @@ public class LeftFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    ListView list;
     String [][] data = {{"Moana","Diego, Carlos"},{"Deadpool","Zihao, Daniel"}};
 
     int[] dataImg = {R.drawable.moana_poster, R.drawable.deadpool_poster};
@@ -77,19 +79,12 @@ public class LeftFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_left, container, false);
-        list = (ListView) view.findViewById(R.id.plans_list);
 
-        list.setAdapter(new Adapter(getActivity(), data, dataImg));
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent visorDetalles = new Intent(view.getContext(), PlanListItem.class);
-                visorDetalles.putExtra("TITLE", data[position][0]);
-                visorDetalles.putExtra("FRIENDS", data[position][4]);
-                startActivity(visorDetalles);
-            }
-        });
+        recyclerView.setAdapter(new RecyclerAdapter(getActivity()));
         // Inflate the layout for this fragment
         return view;
     }
