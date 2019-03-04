@@ -29,8 +29,6 @@ public class MainActivity extends AppCompatActivity implements
         RightFragment.OnFragmentInteractionListener
 {
 
-    private UnityPlayer mUnityPlayer;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,12 +42,10 @@ public class MainActivity extends AppCompatActivity implements
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab);
         tabLayout.setupWithViewPager(viewPager);
 
-        mUnityPlayer = new UnityPlayer(this);
-        mUnityPlayer.requestFocus();
-    }
-
-    public UnityPlayer getmUnityPlayer() {
-        return mUnityPlayer;
+        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.unity);
+        floatingActionButton.setOnClickListener(view -> {
+            startActivity(new Intent(this, UnityPlayerActivity.class));
+        });
     }
 
     public void info(String info) {
@@ -73,84 +69,6 @@ public class MainActivity extends AppCompatActivity implements
             e.printStackTrace();
         }
     }
-
-    @Override protected void onDestroy ()
-    {
-        mUnityPlayer.destroy();
-        super.onDestroy();
-    }
-
-    // Pause Unity
-    @Override protected void onPause()
-    {
-        super.onPause();
-        mUnityPlayer.pause();
-    }
-
-    // Resume Unity
-    @Override protected void onResume()
-    {
-        super.onResume();
-        mUnityPlayer.resume();
-    }
-
-    @Override protected void onStart()
-    {
-        super.onStart();
-        mUnityPlayer.start();
-    }
-
-    @Override protected void onStop()
-    {
-        super.onStop();
-        mUnityPlayer.stop();
-    }
-
-    // Low Memory Unity
-    @Override public void onLowMemory()
-    {
-        super.onLowMemory();
-        mUnityPlayer.lowMemory();
-    }
-
-    // Trim Memory Unity
-    @Override public void onTrimMemory(int level)
-    {
-        super.onTrimMemory(level);
-        if (level == TRIM_MEMORY_RUNNING_CRITICAL)
-        {
-            mUnityPlayer.lowMemory();
-        }
-    }
-
-    // This ensures the layout will be correct.
-    @Override public void onConfigurationChanged(Configuration newConfig)
-    {
-        super.onConfigurationChanged(newConfig);
-        mUnityPlayer.configurationChanged(newConfig);
-    }
-
-    // Notify Unity of the focus change.
-    @Override public void onWindowFocusChanged(boolean hasFocus)
-    {
-        super.onWindowFocusChanged(hasFocus);
-        mUnityPlayer.windowFocusChanged(hasFocus);
-    }
-
-    // For some reason the multiple keyevent type is not supported by the ndk.
-    // Force event injection by overriding dispatchKeyEvent().
-    @Override public boolean dispatchKeyEvent(KeyEvent event)
-    {
-        if (event.getAction() == KeyEvent.ACTION_MULTIPLE)
-            return mUnityPlayer.injectEvent(event);
-        return super.dispatchKeyEvent(event);
-    }
-
-    // Pass any events not handled by (unfocused) views straight to UnityPlayer
-    @Override public boolean onKeyUp(int keyCode, KeyEvent event)     { return mUnityPlayer.injectEvent(event); }
-    @Override public boolean onKeyDown(int keyCode, KeyEvent event)   { return mUnityPlayer.injectEvent(event); }
-    @Override public boolean onTouchEvent(MotionEvent event)          { return mUnityPlayer.injectEvent(event); }
-    /*API12*/ public boolean onGenericMotionEvent(MotionEvent event)  { return mUnityPlayer.injectEvent(event); }
 
     @Override
     public void onFragmentInteraction(Uri uri) {
