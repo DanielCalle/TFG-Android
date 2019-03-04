@@ -29,14 +29,4 @@ public class SwipeAdapter extends FragmentPagerAdapter {
         }
     }
 
-    @Override
-    public CharSequence getPageTitle(int position) {
-        switch(position) {
-            case 0: return "left";
-            case 1: return "center";
-            case 2: return "right";
-            default: return null;
-        }
-    }
-
 }

@@ -35,39 +35,24 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.container);
-        PagerAdapter pagerAdapter = new SwipeAdapter(getSupportFragmentManager());
-        viewPager.setAdapter(pagerAdapter);
-        viewPager.setCurrentItem(1);
-
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab);
-        tabLayout.setupWithViewPager(viewPager);
+
+        viewPager.setAdapter(
+                new SwipeAdapter(getSupportFragmentManager())
+        );
+
+        viewPager.addOnPageChangeListener(
+                new TabLayout.TabLayoutOnPageChangeListener(tabLayout)
+        );
+
+        tabLayout.addOnTabSelectedListener(
+                new TabLayout.ViewPagerOnTabSelectedListener(viewPager)
+        );
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.unity);
         floatingActionButton.setOnClickListener(view -> {
             startActivity(new Intent(this, UnityPlayerActivity.class));
         });
-    }
-
-    public void info(String info) {
-        Log.d("INFO",info);
-
-        Intent intent = new Intent(this, InfoActivity.class);
-        intent.putExtra("info", info);
-        startActivity(intent);
-    }
-
-    public void youtube(String info){
-        Log.d("YOUTUBE",info );
-        JSONObject json = null;
-        try {
-            json = new JSONObject(info);
-            Log.d("JSSONN", json.getString("trailer"));
-            Intent youtube = new Intent(this, YoutubeActivity.class);
-            youtube.putExtra("url", json.getString("trailer"));
-            startActivity(youtube);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
