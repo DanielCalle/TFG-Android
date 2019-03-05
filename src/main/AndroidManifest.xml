@@ -91,7 +91,6 @@
         <activity android:name=".activities.PlansActivity">
         </activity>
         <activity android:name=".activities.SavesActivity" />
-        <activity android:name=".activities.PruebaInfoPeli"/>
         <activity android:name=".activities.InfoActivity"/>
     </application>
 
