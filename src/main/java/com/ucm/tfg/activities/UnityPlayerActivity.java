@@ -89,8 +89,10 @@ public class UnityPlayerActivity extends Activity
         }
     }
 
-    public void save(String film){
-        
+    public void save(String uuid){
+        Intent intent = new Intent(this, SavedFilmActivity.class);
+        intent.putExtra("uuid", uuid);
+        startActivity(intent);
     }
     @Override protected void onNewIntent(Intent intent)
     {
