@@ -63,9 +63,15 @@ public class UnityPlayerActivity extends Activity
         /*Intent intent = new Intent(this, InfoActivity.class);
         intent.putExtra("info", info);
         startActivity(intent);*/
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("https://www.imdb.com/title/tt0110357/"));
-        startActivity(intent);
+        JSONObject json = null;
+        try {
+            json = new JSONObject(info);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(json.getString("description")));
+            startActivity(intent);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     public void plan(String id){
