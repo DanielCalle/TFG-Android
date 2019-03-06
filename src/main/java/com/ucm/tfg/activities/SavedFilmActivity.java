@@ -4,24 +4,32 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
+
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.ucm.tfg.R;
+import com.ucm.tfg.entities.Film;
+import com.ucm.tfg.restClient.RestClient;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 public class SavedFilmActivity extends AppCompatActivity {
 
     private static String LOGTAG = "SavedFilmActivity";
 
     private TextView saved_film_info;
-
+    private String info;
+    private String uuid;
     private String saved_film_uuid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,37 +37,53 @@ public class SavedFilmActivity extends AppCompatActivity {
         setContentView(R.layout.activity_saved_film);
 
         Intent intent = this.getIntent();
-        String film_uuid = intent.getStringExtra("uuid");
-
+        saved_film_info = findViewById(R.id.saved_film_info);
+        this.info = intent.getStringExtra("uuid");
+        loadJSON();
+    }
+    private void loadJSON() {
         try {
-            JSONObject json = new JSONObject(film_uuid);
-            fillData(json);
+            JSONObject json = new JSONObject(this.info);
+            this.uuid = !json.isNull("uuid") ? json.getString("uuid") : "";
         } catch (JSONException e) {
             Log.e(LOGTAG, "Error at parsing");
         }
-        Toast.makeText(this, this.saved_film_uuid,
-                Toast.LENGTH_LONG).show();
-        saved_film_info = (TextView)findViewById(R.id.saved_film_info);
-        String url = "https://tfg-spring.herokuapp.com/film/" + this.saved_film_uuid;
-        Log.i(LOGTAG,  url);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                .create();
 
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        saved_film_info.setText("Response: " + response.toString());
-                    }
-                }, new Response.ErrorListener() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("https://tfg-spring.herokuapp.com")
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .build();
 
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        // TODO: Handle error
-                        Log.e(LOGTAG, error.toString());
-                    }
-                });
-    }
-    private void fillData(JSONObject json) throws JSONException {
-        this.saved_film_uuid = !json.isNull("uuid") ? "" + json.getString("uuid") : "";
+        RestClient restClient = retrofit.create(RestClient.class);
+        Call<Film> call = restClient.getData(this.uuid);
+
+        call.enqueue(new Callback<Film>() {
+            @Override
+            public void onResponse(Call<Film> call, Response<Film> response) {
+                switch (response.code()) {
+                    case 200:
+
+                        Film data = response.body();
+                        Log.i(LOGTAG, response.body().toString());
+                        saved_film_info.setText(data.getName());
+                        break;
+                    case 401:
+
+                        break;
+                    default:
+
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Film> call, Throwable t) {
+                Log.e("error", t.toString());
+            }
+        });
     }
 
 }
