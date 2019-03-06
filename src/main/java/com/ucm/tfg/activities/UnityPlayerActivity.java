@@ -3,6 +3,7 @@ package com.ucm.tfg.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -59,9 +60,11 @@ public class UnityPlayerActivity extends Activity
 
     public void info(String info) {
         Log.d("INFO",info);
-
-        Intent intent = new Intent(this, InfoActivity.class);
+        /*Intent intent = new Intent(this, InfoActivity.class);
         intent.putExtra("info", info);
+        startActivity(intent);*/
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("https://www.imdb.com/title/tt0110357/"));
         startActivity(intent);
     }
 
@@ -82,8 +85,8 @@ public class UnityPlayerActivity extends Activity
         try {
             json = new JSONObject(info);
             Log.d("JSSONN", json.getString("trailer"));
-            Intent youtube = new Intent(this, YoutubeActivity.class);
-            youtube.putExtra("url", json.getString("trailer"));
+            Intent youtube = new Intent(Intent.ACTION_VIEW);
+            youtube.setData(Uri.parse(json.getString("trailer")));
             startActivity(youtube);
         } catch (JSONException e) {
             e.printStackTrace();
