@@ -1,4 +1,4 @@
-package com.ucm.tfg.Entities;
+package com.ucm.tfg.entities;
 
 public class Film {
 

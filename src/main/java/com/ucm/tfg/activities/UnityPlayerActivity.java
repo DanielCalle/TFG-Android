@@ -87,8 +87,10 @@ public class UnityPlayerActivity extends Activity
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
 
-
+    public void save(String film){
+        
     }
     @Override protected void onNewIntent(Intent intent)
     {
