@@ -38,7 +38,8 @@ public class UnityPlayerActivity extends Activity
         imageButton.bringToFront();
         imageButton.setOnClickListener(view -> {
             Log.i("da", "dwa");
-            onBackPressed();
+            mUnityPlayer.quit();
+            finish();
         });
     }
     public void exitAR(){
