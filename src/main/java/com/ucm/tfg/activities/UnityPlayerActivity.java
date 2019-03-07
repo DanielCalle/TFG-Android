@@ -37,7 +37,6 @@ public class UnityPlayerActivity extends Activity
         ImageButton imageButton = (ImageButton) findViewById(R.id.back);
         imageButton.bringToFront();
         imageButton.setOnClickListener(view -> {
-            Log.i("da", "dwa");
             mUnityPlayer.quit();
             finish();
         });
