@@ -42,18 +42,7 @@ public class UnityPlayerActivity extends Activity
             finish();
         });
     }
-    public void exitAR(){
-        Intent main = new Intent(this, MainActivity.class);
-        startActivity(main);
-    }
-    public void goPlans(){
-        Intent plans = new Intent(this, PlansActivity.class);
-        startActivity(plans);
-    }
-    public void goSaves(){
-        Intent saves = new Intent(this, SavesActivity.class);
-        startActivity(saves);
-    }
+
     public void like(String film){
     }
 
@@ -84,6 +73,7 @@ public class UnityPlayerActivity extends Activity
         //En id está el id de la película que ha detectado con RA
         //y que le ha dado a compartir
     }
+
     public void youtube(String info){
         Log.d("YOUTUBE",info );
         JSONObject json = null;
@@ -103,6 +93,7 @@ public class UnityPlayerActivity extends Activity
         intent.putExtra("uuid", uuid);
         startActivity(intent);
     }
+
     @Override protected void onNewIntent(Intent intent)
     {
         // To support deep linking, we need to make sure that the client can get access to
