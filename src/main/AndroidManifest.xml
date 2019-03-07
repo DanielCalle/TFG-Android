@@ -93,7 +93,6 @@
                 android:name="unityplayer.UnityActivity"
                 android:value="true" />
         </activity>
-        <activity android:name=".activities.YoutubeActivity" />
         <activity android:name=".activities.PlansActivity"></activity>
         <activity android:name=".activities.SavesActivity" />
         <activity android:name=".activities.InfoActivity" />
