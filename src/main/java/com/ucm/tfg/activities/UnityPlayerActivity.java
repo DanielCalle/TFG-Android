@@ -15,8 +15,10 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.ucm.tfg.Integration.DaoFilm;
+import com.ucm.tfg.Integration.DaoUser;
 import com.ucm.tfg.R;
 import com.ucm.tfg.entities.Film;
+import com.ucm.tfg.entities.User;
 import com.unity3d.player.UnityPlayer;
 
 import org.json.JSONException;
@@ -105,9 +107,14 @@ public class UnityPlayerActivity extends Activity
         if(action.equalsIgnoreCase("getFilmById")){
             DaoFilm daoFilm = new DaoFilm();
             Film film = daoFilm.getFilmById(info);
-            UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoFilm", film.getJson().toString());
+            if(film != null)
+                UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoFilm", film.getJson().toString());
         }
-        else{
+        else if(action.equalsIgnoreCase("getUserById")){
+            DaoUser daoUser = new DaoUser();
+            User user = daoUser.getUserById(info);
+            if(user != null)
+                UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoUser", user.getJson().toString());
 
         }
     }
