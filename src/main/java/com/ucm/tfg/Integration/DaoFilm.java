@@ -12,7 +12,7 @@ public class DaoFilm {
     public Film getFilmById(String uuid){
         RestTemplate restTemplate = new RestTemplate();
         Film film = restTemplate.getForObject("http://tfg-spring.herokuapp.com/film/"+ uuid, Film.class);
-        Log.d("Spring", film.toString());
+        //Log.d("Spring", film.toString());
         /*Toast toast = Toast.makeText(this, film.getName().toString(), Toast.LENGTH_SHORT);
         toast.show();*/
         return film;
