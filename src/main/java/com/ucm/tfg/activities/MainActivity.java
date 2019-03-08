@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
+import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.fragments.CenterFragment;
 import com.ucm.tfg.fragments.LeftFragment;
 import com.ucm.tfg.R;
@@ -22,6 +23,7 @@ import com.unity3d.player.UnityPlayer;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.web.client.RestTemplate;
 
 public class MainActivity extends AppCompatActivity implements
         LeftFragment.OnFragmentInteractionListener,
@@ -53,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements
         floatingActionButton.setOnClickListener(view -> {
             startActivity(new Intent(this, UnityPlayerActivity.class));
         });
+
+
     }
 
     @Override

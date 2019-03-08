@@ -1,5 +1,8 @@
 package com.ucm.tfg.entities;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Film {
 
     private String uuid;

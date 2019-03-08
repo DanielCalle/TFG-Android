@@ -12,12 +12,15 @@ import android.view.MotionEvent;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.ucm.tfg.R;
+import com.ucm.tfg.entities.Film;
 import com.unity3d.player.UnityPlayer;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.web.client.RestTemplate;
 
 public class UnityPlayerActivity extends Activity
 {
@@ -47,6 +50,12 @@ public class UnityPlayerActivity extends Activity
     }
 
     public void info(String info) {
+        RestTemplate restTemplate = new RestTemplate();
+        Film film = restTemplate.getForObject("http://tfg-spring.herokuapp.com/film/a49581c363b94409badf6bafb4bd15d0", Film.class);
+        Log.d("Spring", film.toString());
+        Toast toast = Toast.makeText(this, film.getName().toString(), Toast.LENGTH_SHORT);
+        toast.show();
+
         Log.d("INFO",info);
         /*Intent intent = new Intent(this, InfoActivity.class);
         intent.putExtra("info", info);
