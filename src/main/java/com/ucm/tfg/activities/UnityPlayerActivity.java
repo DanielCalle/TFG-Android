@@ -101,6 +101,16 @@ public class UnityPlayerActivity extends Activity
         intent.putExtra("uuid", uuid);
         startActivity(intent);
     }
+    public void DAOFilmsController(String action, String info){
+        if(action.equalsIgnoreCase("getFilmById")){
+            DaoFilm daoFilm = new DaoFilm();
+            Film film = daoFilm.getFilmById(info);
+            UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoFilm", film.getJson().toString());
+        }
+        else{
+
+        }
+    }
 
     @Override protected void onNewIntent(Intent intent)
     {

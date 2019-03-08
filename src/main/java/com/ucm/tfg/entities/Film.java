@@ -1,6 +1,9 @@
 package com.ucm.tfg.entities;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Film {
@@ -150,4 +153,21 @@ public class Film {
     }
 
 
+    public JSONObject getJson(){
+        JSONObject json = new JSONObject();
+        try {
+            json.put("uuid", uuid);
+            json.put("name", name);
+            json.put("idDirector", idDirector);
+            json.put("trailer", trailer);
+            json.put("description", description);
+            json.put("genre", genre);
+            json.put("duration", duration);
+            json.put("valoration", valoration);
+            json.put("country", country);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return json;
+    }
 }
