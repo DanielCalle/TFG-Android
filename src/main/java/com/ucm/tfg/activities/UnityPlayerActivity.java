@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.ucm.tfg.Integration.DaoFilm;
 import com.ucm.tfg.R;
 import com.ucm.tfg.entities.Film;
 import com.unity3d.player.UnityPlayer;
@@ -50,13 +51,11 @@ public class UnityPlayerActivity extends Activity
     }
 
     public void info(String info) {
-        RestTemplate restTemplate = new RestTemplate();
-        Film film = restTemplate.getForObject("http://tfg-spring.herokuapp.com/film/a49581c363b94409badf6bafb4bd15d0", Film.class);
-        Log.d("Spring", film.toString());
-        Toast toast = Toast.makeText(this, film.getName().toString(), Toast.LENGTH_SHORT);
-        toast.show();
-
+        /*DaoFilm daoFilm = new DaoFilm();
+        Film film = daoFilm.getFilmById("a49581c363b94409badf6bafb4bd15d0");
         Log.d("INFO",info);
+        Toast toast = Toast.makeText(this, film.getName(), Toast.LENGTH_SHORT);
+        toast.show();*/
         /*Intent intent = new Intent(this, InfoActivity.class);
         intent.putExtra("info", info);
         startActivity(intent);*/
