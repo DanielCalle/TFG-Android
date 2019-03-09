@@ -106,9 +106,15 @@ public class UnityPlayerActivity extends Activity {
         JSONObject json = null;
         try {
             json = new JSONObject(uuid);
-            Intent intent = new Intent(this, SavedFilmActivity.class);
+            DaoFilm daoFilm = new DaoFilm();
+            Film film = daoFilm.getFilmById(json.getString("uuid"));
+            Toast toast = Toast.makeText(this, film.getName(), Toast.LENGTH_SHORT);
+            toast.show();
+            /*Toast toast = Toast.makeText(this, json.getString("uuid"), Toast.LENGTH_SHORT);
+            toast.show();*/
+            /*Intent intent = new Intent(this, SavedFilmActivity.class);
             intent.putExtra("uuid", json.getString("uuid"));
-            startActivity(intent);
+            startActivity(intent);*/
         } catch (JSONException e) {
             e.printStackTrace();
         }
