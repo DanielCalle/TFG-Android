@@ -3,26 +3,29 @@ package com.ucm.tfg.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.widget.GridView;
 
 import com.ucm.tfg.R;
-import com.ucm.tfg.activities.MainActivity;
-import com.unity3d.player.UnityPlayer;
+import com.ucm.tfg.adapters.FriendAdapter;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link RightFragment.OnFragmentInteractionListener} interface
+ * {@link FilmFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link RightFragment#newInstance} factory method to
+ * Use the {@link FilmFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RightFragment extends Fragment {
+public class FilmFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -32,9 +35,13 @@ public class RightFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    String [][] data = {{"Moana","Diego, Carlos"},{"Deadpool","Zihao, Daniel"}};
+
+    int[] dataImg = {R.drawable.moana_poster, R.drawable.deadpool_poster};
+
     private OnFragmentInteractionListener mListener;
 
-    public RightFragment() {
+    public FilmFragment() {
         // Required empty public constructor
     }
 
@@ -44,11 +51,11 @@ public class RightFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment RightFragment.
+     * @return A new instance of fragment PlanFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static RightFragment newInstance(String param1, String param2) {
-        RightFragment fragment = new RightFragment();
+    public static FilmFragment newInstance(String param1, String param2) {
+        FilmFragment fragment = new FilmFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -68,7 +75,23 @@ public class RightFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_right, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_film, container, false);
+
+        GridView gridView = (GridView) view.findViewById(R.id.friends);
+        gridView.setAdapter(new FriendAdapter(getActivity()));
+
+        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            }, 5000);   //5 seconds
+        });
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

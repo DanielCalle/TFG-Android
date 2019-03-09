@@ -8,16 +8,16 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.ucm.tfg.fragments.FilmFragment;
 import com.ucm.tfg.fragments.RecommendationFragment;
 import com.ucm.tfg.fragments.PlanFragment;
 import com.ucm.tfg.R;
-import com.ucm.tfg.fragments.RightFragment;
 import com.ucm.tfg.adapters.FragmentAdapter;
 
 public class MainActivity extends AppCompatActivity implements
         PlanFragment.OnFragmentInteractionListener,
         RecommendationFragment.OnFragmentInteractionListener,
-        RightFragment.OnFragmentInteractionListener
+        FilmFragment.OnFragmentInteractionListener
 {
 
     @Override
