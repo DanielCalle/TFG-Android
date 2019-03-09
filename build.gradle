@@ -103,3 +103,4 @@ android {
         }
     }
 }
+android.defaultConfig.vectorDrawables.useSupportLibrary = true

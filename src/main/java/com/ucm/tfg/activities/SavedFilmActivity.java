@@ -1,43 +1,46 @@
 package com.ucm.tfg.activities;
 
+
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
+import com.ucm.tfg.Integration.DaoFilm;
 import com.ucm.tfg.R;
+import com.ucm.tfg.entities.Film;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+
 public class SavedFilmActivity extends AppCompatActivity {
 
     private static String LOGTAG = "SavedFilmActivity";
 
-    private TextView saved_film_info;
-    private String info;
-    private String uuid;
-    private String saved_film_uuid;
+    private TextView info;
+    private Button button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved_film);
-
+        DaoFilm daoFilm = new DaoFilm();
         Intent intent = this.getIntent();
-        saved_film_info = findViewById(R.id.saved_film_info);
-        this.info = intent.getStringExtra("uuid");
-        loadJSON();
+        String uuid = intent.getStringExtra("uuid");
+        Log.i(LOGTAG, uuid);
+        Film film = daoFilm.getFilmById(uuid);
+        this.info = (TextView)findViewById(R.id.textView);
+        String text = "Saved film : " + film.getName() + " correctly!!";
+        info.setText(text);
+        this.button = (Button)findViewById(R.id.button);
+        this.button.setOnClickListener(view -> {
+            Intent intent2 = new Intent(Intent.ACTION_VIEW);
+            intent2.setData(Uri.parse(film.getDescription()));
+            startActivity(intent2);
+        });
     }
-    private void loadJSON() {
-        try {
-            JSONObject json = new JSONObject(this.info);
-            this.uuid = !json.isNull("uuid") ? json.getString("uuid") : "";
-        } catch (JSONException e) {
-            Log.e(LOGTAG, "Error at parsing");
-        }
-    }
+
 
 }

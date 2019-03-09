@@ -7,4 +7,5 @@
     <string name="director">Director</string>
     <string name="valoration">Valoration</string>
     <string name="title_activity_saved_film">SavedFilmActivity</string>
+    <string name="todo">TODO</string>
 </resources>
