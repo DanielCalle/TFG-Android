@@ -3,23 +3,29 @@ package com.ucm.tfg.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ucm.tfg.R;
+import com.ucm.tfg.adapters.PlanAdapter;
+import com.ucm.tfg.adapters.RecommendationListAdapter;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link CenterFragment.OnFragmentInteractionListener} interface
+ * {@link RecommendationFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link CenterFragment#newInstance} factory method to
+ * Use the {@link RecommendationFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CenterFragment extends Fragment {
+public class RecommendationFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,7 +37,7 @@ public class CenterFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public CenterFragment() {
+    public RecommendationFragment() {
         // Required empty public constructor
     }
 
@@ -41,11 +47,11 @@ public class CenterFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment CenterFragment.
+     * @return A new instance of fragment RecommendationFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static CenterFragment newInstance(String param1, String param2) {
-        CenterFragment fragment = new CenterFragment();
+    public static RecommendationFragment newInstance(String param1, String param2) {
+        RecommendationFragment fragment = new RecommendationFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -65,8 +71,26 @@ public class CenterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_center, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_recommendation, container, false);
+
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recommendations);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        recyclerView.setAdapter(new RecommendationListAdapter(getActivity()));
+
+        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            }, 5000);   //5 seconds
+        });
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

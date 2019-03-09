@@ -8,24 +8,23 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ucm.tfg.R;
-import com.ucm.tfg.adapters.RecyclerAdapter;
+import com.ucm.tfg.adapters.PlanAdapter;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link LeftFragment.OnFragmentInteractionListener} interface
+ * {@link PlanFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link LeftFragment#newInstance} factory method to
+ * Use the {@link PlanFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LeftFragment extends Fragment {
+public class PlanFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -41,7 +40,7 @@ public class LeftFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public LeftFragment() {
+    public PlanFragment() {
         // Required empty public constructor
     }
 
@@ -51,11 +50,11 @@ public class LeftFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment LeftFragment.
+     * @return A new instance of fragment PlanFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static LeftFragment newInstance(String param1, String param2) {
-        LeftFragment fragment = new LeftFragment();
+    public static PlanFragment newInstance(String param1, String param2) {
+        PlanFragment fragment = new PlanFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -76,13 +75,13 @@ public class LeftFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_left, container, false);
+        View view = inflater.inflate(R.layout.fragment_plan, container, false);
 
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.plans);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        recyclerView.setAdapter(new RecyclerAdapter(getActivity()));
+        recyclerView.setAdapter(new PlanAdapter(getActivity()));
 
         SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {

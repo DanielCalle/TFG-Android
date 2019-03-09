@@ -1,33 +1,22 @@
 package com.ucm.tfg.activities;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
 
-import com.ucm.tfg.entities.Film;
-import com.ucm.tfg.fragments.CenterFragment;
-import com.ucm.tfg.fragments.LeftFragment;
+import com.ucm.tfg.fragments.RecommendationFragment;
+import com.ucm.tfg.fragments.PlanFragment;
 import com.ucm.tfg.R;
 import com.ucm.tfg.fragments.RightFragment;
-import com.ucm.tfg.adapters.SwipeAdapter;
-import com.unity3d.player.UnityPlayer;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.springframework.web.client.RestTemplate;
+import com.ucm.tfg.adapters.FragmentAdapter;
 
 public class MainActivity extends AppCompatActivity implements
-        LeftFragment.OnFragmentInteractionListener,
-        CenterFragment.OnFragmentInteractionListener,
+        PlanFragment.OnFragmentInteractionListener,
+        RecommendationFragment.OnFragmentInteractionListener,
         RightFragment.OnFragmentInteractionListener
 {
 
@@ -40,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab);
 
         viewPager.setAdapter(
-                new SwipeAdapter(getSupportFragmentManager())
+                new FragmentAdapter(getSupportFragmentManager())
         );
 
         viewPager.addOnPageChangeListener(
