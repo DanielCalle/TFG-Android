@@ -25,31 +25,34 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 
-public class UnityPlayerActivity extends Activity
-{
+public class UnityPlayerActivity extends Activity {
     protected UnityPlayer mUnityPlayer; // don't change the name of this variable; referenced from native code
 
     // Setup activity layout
-    @Override protected void onCreate(Bundle savedInstanceState)
-    {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         //requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_unity_player);
 
         mUnityPlayer = new UnityPlayer(this);
-        FrameLayout frameLayout = (FrameLayout)findViewById(R.id.unity_player);
+        FrameLayout frameLayout = (FrameLayout) findViewById(R.id.unity_player);
         frameLayout.addView(mUnityPlayer, FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
         mUnityPlayer.requestFocus();
 
         ImageButton imageButton = (ImageButton) findViewById(R.id.back);
         imageButton.bringToFront();
         imageButton.setOnClickListener(view -> {
-            mUnityPlayer.quit();
-            finish();
+            quit();
         });
     }
 
-    public void like(String film){
+    private void quit() {
+        mUnityPlayer.quit();
+        finish();
+    }
+
+    public void like(String film) {
     }
 
     public void info(String info) {
@@ -72,20 +75,21 @@ public class UnityPlayerActivity extends Activity
         }
     }
 
-    public void plan(String id){
-        Log.d("PLAN",id);
+    public void plan(String id) {
+        Log.d("PLAN", id);
 
         //En id está el id de la película que ha detectado con RA
         //y que le ha dado a plan
     }
-    public void share(String id){
-        Log.d("SHARE",id);
+
+    public void share(String id) {
+        Log.d("SHARE", id);
         //En id está el id de la película que ha detectado con RA
         //y que le ha dado a compartir
     }
 
-    public void youtube(String info){
-        Log.d("YOUTUBE",info );
+    public void youtube(String info) {
+        Log.d("YOUTUBE", info);
         JSONObject json = null;
         try {
             json = new JSONObject(info);
@@ -98,29 +102,29 @@ public class UnityPlayerActivity extends Activity
         }
     }
 
-    public void save(String uuid){
+    public void save(String uuid) {
         Intent intent = new Intent(this, SavedFilmActivity.class);
         intent.putExtra("uuid", uuid);
         startActivity(intent);
     }
-    public void DAOController(String action, String info){
-        if(action.equalsIgnoreCase("getFilmById")){
+
+    public void DAOController(String action, String info) {
+        if (action.equalsIgnoreCase("getFilmById")) {
             DaoFilm daoFilm = new DaoFilm();
             Film film = daoFilm.getFilmById(info);
-            if(film != null)
+            if (film != null)
                 UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoFilm", film.getJson().toString());
-        }
-        else if(action.equalsIgnoreCase("getUserById")){
+        } else if (action.equalsIgnoreCase("getUserById")) {
             DaoUser daoUser = new DaoUser();
             User user = daoUser.getUserById(info);
-            if(user != null)
+            if (user != null)
                 UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoUser", user.getJson().toString());
 
         }
     }
 
-    @Override protected void onNewIntent(Intent intent)
-    {
+    @Override
+    protected void onNewIntent(Intent intent) {
         // To support deep linking, we need to make sure that the client can get access to
         // the last sent intent. The clients access this through a JNI api that allows them
         // to get the intent set on launch. To update that after launch we have to manually
@@ -129,81 +133,98 @@ public class UnityPlayerActivity extends Activity
     }
 
     // Quit Unity
-    @Override protected void onDestroy ()
-    {
+    @Override
+    protected void onDestroy() {
         mUnityPlayer.destroy();
         super.onDestroy();
     }
 
     // Pause Unity
-    @Override protected void onPause()
-    {
+    @Override
+    protected void onPause() {
         super.onPause();
         mUnityPlayer.pause();
     }
 
     // Resume Unity
-    @Override protected void onResume()
-    {
+    @Override
+    protected void onResume() {
         super.onResume();
         mUnityPlayer.resume();
     }
 
-    @Override protected void onStart()
-    {
+    @Override
+    protected void onStart() {
         super.onStart();
         mUnityPlayer.start();
     }
 
-    @Override protected void onStop()
-    {
+    @Override
+    protected void onStop() {
         super.onStop();
         mUnityPlayer.stop();
     }
 
     // Low Memory Unity
-    @Override public void onLowMemory()
-    {
+    @Override
+    public void onLowMemory() {
         super.onLowMemory();
         mUnityPlayer.lowMemory();
     }
 
     // Trim Memory Unity
-    @Override public void onTrimMemory(int level)
-    {
+    @Override
+    public void onTrimMemory(int level) {
         super.onTrimMemory(level);
-        if (level == TRIM_MEMORY_RUNNING_CRITICAL)
-        {
+        if (level == TRIM_MEMORY_RUNNING_CRITICAL) {
             mUnityPlayer.lowMemory();
         }
     }
 
     // This ensures the layout will be correct.
-    @Override public void onConfigurationChanged(Configuration newConfig)
-    {
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         mUnityPlayer.configurationChanged(newConfig);
     }
 
     // Notify Unity of the focus change.
-    @Override public void onWindowFocusChanged(boolean hasFocus)
-    {
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         mUnityPlayer.windowFocusChanged(hasFocus);
     }
 
     // For some reason the multiple keyevent type is not supported by the ndk.
     // Force event injection by overriding dispatchKeyEvent().
-    @Override public boolean dispatchKeyEvent(KeyEvent event)
-    {
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_MULTIPLE)
             return mUnityPlayer.injectEvent(event);
         return super.dispatchKeyEvent(event);
     }
 
     // Pass any events not handled by (unfocused) views straight to UnityPlayer
-    @Override public boolean onKeyUp(int keyCode, KeyEvent event)     { return mUnityPlayer.injectEvent(event); }
-    @Override public boolean onKeyDown(int keyCode, KeyEvent event)   { return mUnityPlayer.injectEvent(event); }
-    @Override public boolean onTouchEvent(MotionEvent event)          { return mUnityPlayer.injectEvent(event); }
-    /*API12*/ public boolean onGenericMotionEvent(MotionEvent event)  { return mUnityPlayer.injectEvent(event); }
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        return mUnityPlayer.injectEvent(event);
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            quit();
+        }
+        return mUnityPlayer.injectEvent(event);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        return mUnityPlayer.injectEvent(event);
+    }
+
+    /*API12*/
+    public boolean onGenericMotionEvent(MotionEvent event) {
+        return mUnityPlayer.injectEvent(event);
+    }
 }
