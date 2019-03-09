@@ -3,9 +3,12 @@ package com.ucm.tfg.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,7 +83,17 @@ public class LeftFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         recyclerView.setAdapter(new RecyclerAdapter(getActivity()));
-        // Inflate the layout for this fragment
+
+        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                public void run() {
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            }, 5000);   //5 seconds
+        });
+
         return view;
     }
 
