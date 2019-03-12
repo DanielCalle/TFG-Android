@@ -52,18 +52,8 @@ public class UnityPlayerActivity extends Activity {
         finish();
     }
 
-    public void like(String film) {
-    }
 
     public void info(String info) {
-        /*DaoFilm daoFilm = new DaoFilm();
-        Film film = daoFilm.getFilmById("a49581c363b94409badf6bafb4bd15d0");
-        Log.d("INFO",info);
-        Toast toast = Toast.makeText(this, film.getName(), Toast.LENGTH_SHORT);
-        toast.show();*/
-        /*Intent intent = new Intent(this, InfoActivity.class);
-        intent.putExtra("info", info);
-        startActivity(intent);*/
         JSONObject json = null;
         try {
             json = new JSONObject(info);
@@ -103,21 +93,10 @@ public class UnityPlayerActivity extends Activity {
     }
 
     public void save(String uuid) {
-        JSONObject json = null;
-        try {
-            json = new JSONObject(uuid);
-            DaoFilm daoFilm = new DaoFilm();
-            Film film = daoFilm.getFilmById(json.getString("uuid"));
-            Toast toast = Toast.makeText(this, film.getName(), Toast.LENGTH_SHORT);
-            toast.show();
-            /*Toast toast = Toast.makeText(this, json.getString("uuid"), Toast.LENGTH_SHORT);
-            toast.show();*/
-            /*Intent intent = new Intent(this, SavedFilmActivity.class);
-            intent.putExtra("uuid", json.getString("uuid"));
-            startActivity(intent);*/
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+
+        Intent intent = new Intent(this, SavedFilmActivity.class);
+        intent.putExtra("uuid", uuid);
+        startActivity(intent);
     }
 
     public void DAOController(String action, String info) {
