@@ -32,7 +32,6 @@ public class SavedFilmActivity extends AppCompatActivity {
         setContentView(R.layout.activity_saved_film);
         Intent intent = this.getIntent();
         String uuid = intent.getStringExtra("uuid");
-        Log.i(LOGTAG, uuid);
         getData(uuid);
     }
 
@@ -51,21 +50,13 @@ public class SavedFilmActivity extends AppCompatActivity {
                 Film filmSaved = new Film();
                 try {
                     json = new JSONObject(uuid[0]);
-                    Log.i(LOGTAG, "Antes de hacer peticion");
                     DaoFilm daoFilm = new DaoFilm();
                     filmSaved = daoFilm.getFilmById(json.getString("uuid"));
-                    Log.i(LOGTAG, filmSaved.getName());
 
                 } catch (Exception e) {
                     Log.e("Error", "Exception: " + e.getMessage());
                 }
                 return filmSaved;
-            }
-
-            @Override
-            protected void onPreExecute() {
-                // Este método puede actuar sobre el hilo principal y por ejmplo,
-                // aquí es donde abririas un dialogo con una barra de proceso.
             }
 
 
@@ -86,7 +77,6 @@ public class SavedFilmActivity extends AppCompatActivity {
         }
 
         HiloEnSegundoPlano hilo = new HiloEnSegundoPlano();
-
         hilo.execute(uuid);
 
     }
