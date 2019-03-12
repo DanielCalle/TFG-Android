@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
@@ -17,15 +15,8 @@ import com.ucm.tfg.Integration.DaoFilm;
 import com.ucm.tfg.R;
 import com.ucm.tfg.entities.Film;
 
-import org.json.JSONException;
+
 import org.json.JSONObject;
-import org.w3c.dom.Text;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
-
 
 public class SavedFilmActivity extends AppCompatActivity {
 
