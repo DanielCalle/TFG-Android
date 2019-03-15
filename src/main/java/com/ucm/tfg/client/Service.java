@@ -2,6 +2,8 @@ package com.ucm.tfg.client;
 
 import android.os.AsyncTask;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
@@ -34,17 +36,20 @@ public class Service {
     }
 
     public <T> void GET(String url, ClientResponse<T> callback, Class<T> c) {
-        new AsyncTask<String, Void, T>() {
+        new AsyncTask<String, Void, ResponseEntity<T>>() {
 
             @Override
-            protected T doInBackground(String... strings) {
-                T result = restTemplate.getForObject(strings[0], c, params);
-                return result;
+            protected ResponseEntity<T> doInBackground(String... strings) {
+                return restTemplate.getForEntity(strings[0], c, params);
             }
 
             @Override
-            protected void onPostExecute(T film) {
-                callback.onSuccess(film);
+            protected void onPostExecute(ResponseEntity<T> entity) {
+                if (entity.getStatusCode() == HttpStatus.OK) {
+                    callback.onSuccess(entity.getBody());
+                } else {
+                    callback.onError(entity.getStatusCode().toString());
+                }
             }
         }.execute(url);
     }
