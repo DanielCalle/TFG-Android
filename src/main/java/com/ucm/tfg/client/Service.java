@@ -54,4 +54,55 @@ public class Service {
         }.execute(url);
     }
 
+    public <T> void POST(String url, Object object, ClientResponse<T> callback, Class<T> c) {
+        new AsyncTask<String, Void, ResponseEntity<T>>() {
+
+            @Override
+            protected ResponseEntity<T> doInBackground(String... strings) {
+                return restTemplate.postForEntity(strings[0], object, c, params);
+            }
+
+            @Override
+            protected void onPostExecute(ResponseEntity<T> entity) {
+                if (entity.getStatusCode() == HttpStatus.OK) {
+                    callback.onSuccess(entity.getBody());
+                } else {
+                    callback.onError(entity.getStatusCode().toString());
+                }
+            }
+        }.execute(url);
+    }
+
+    public void PUT(String url, Object object, ClientResponse<String> callback) {
+        new AsyncTask<String, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(String... strings) {
+                restTemplate.put(strings[0], object, params);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void param) {
+                callback.onSuccess("done");
+            }
+        }.execute(url);
+    }
+
+    public void DELETE(String url,  ClientResponse<String> callback) {
+        new AsyncTask<String, Void, Void>() {
+
+            @Override
+            protected Void doInBackground(String... strings) {
+                restTemplate.delete(strings[0], params);
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Void param) {
+                callback.onSuccess("done");
+            }
+        }.execute(url);
+    }
+
 }
