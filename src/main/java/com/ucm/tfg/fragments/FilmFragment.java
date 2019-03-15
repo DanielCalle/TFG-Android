@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.ucm.tfg.R;
 import com.ucm.tfg.adapters.FriendAdapter;
 import com.ucm.tfg.client.FilmService;
+import com.ucm.tfg.entities.Film;
 
 
 /**
@@ -88,7 +89,7 @@ public class FilmFragment extends Fragment {
             FilmService.getFilmById("a49581c363b94409badf6bafb4bd15d0", (result) -> {
                 Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
                 swipeRefreshLayout.setRefreshing(false);
-            }); //5 seconds
+            }, String.class); //5 seconds
         });
 
         return view;

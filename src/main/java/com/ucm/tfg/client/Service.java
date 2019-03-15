@@ -4,14 +4,19 @@ import android.os.AsyncTask;
 
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Service {
 
     private RestTemplate restTemplate;
+    private Map<String, String> params;
 
     private static Service instance;
 
     private Service() {
         restTemplate = new RestTemplate();
+        params = new HashMap<>();
     }
 
     // Thread safe
@@ -23,12 +28,17 @@ public class Service {
         return instance;
     }
 
-    public <T> void execute(String url, ClientResponse<T> callback, Class<T> c) {
+    public Service addParam(String key, String value) {
+        params.put(key, value);
+        return this;
+    }
+
+    public <T> void GET(String url, ClientResponse<T> callback, Class<T> c) {
         new AsyncTask<String, Void, T>() {
 
             @Override
             protected T doInBackground(String... strings) {
-                T result = restTemplate.getForObject(strings[0], c);
+                T result = restTemplate.getForObject(strings[0], c, params);
                 return result;
             }
 
