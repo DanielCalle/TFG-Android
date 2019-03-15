@@ -12,9 +12,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.ucm.tfg.R;
 import com.ucm.tfg.adapters.FriendAdapter;
+import com.ucm.tfg.client.FilmService;
 
 
 /**
@@ -35,7 +37,7 @@ public class FilmFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    String [][] data = {{"Moana","Diego, Carlos"},{"Deadpool","Zihao, Daniel"}};
+    String[][] data = {{"Moana", "Diego, Carlos"}, {"Deadpool", "Zihao, Daniel"}};
 
     int[] dataImg = {R.drawable.moana_poster, R.drawable.deadpool_poster};
 
@@ -83,12 +85,10 @@ public class FilmFragment extends Fragment {
 
         SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    swipeRefreshLayout.setRefreshing(false);
-                }
-            }, 5000);   //5 seconds
+            FilmService.getFilmById("a49581c363b94409badf6bafb4bd15d0", (result) -> {
+                Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
+            }); //5 seconds
         });
 
         return view;
