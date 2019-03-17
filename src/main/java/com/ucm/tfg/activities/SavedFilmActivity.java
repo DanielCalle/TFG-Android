@@ -9,10 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.ucm.tfg.Integration.DaoFilm;
 import com.ucm.tfg.R;
+import com.ucm.tfg.client.ClientResponse;
+import com.ucm.tfg.client.FilmService;
 import com.ucm.tfg.entities.Film;
 
 
@@ -24,7 +27,6 @@ public class SavedFilmActivity extends AppCompatActivity {
 
     private TextView info;
     private Button button;
-    private DaoFilm daoFilm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,48 +38,34 @@ public class SavedFilmActivity extends AppCompatActivity {
     }
 
     public void getData(String uuid){
+        JSONObject json = null;
+        try {
+            json = new JSONObject(uuid);
+            FilmService.getFilmById(json.getString("uuid"), new ClientResponse<Film>() {
 
-        class HiloEnSegundoPlano extends AsyncTask <String, Void, Film> {
-
-            public HiloEnSegundoPlano() {
-                // Es el constructor
-            }
-
-            @Override
-            protected Film doInBackground(String... uuid) {
-                // Aquí iria el código que quieres ejecutar en segundo plano.
-                JSONObject json = null;
-                Film filmSaved = new Film();
-                try {
-                    json = new JSONObject(uuid[0]);
-                    DaoFilm daoFilm = new DaoFilm();
-                    filmSaved = daoFilm.getFilmById(json.getString("uuid"));
-
-                } catch (Exception e) {
-                    Log.e("Error", "Exception: " + e.getMessage());
+                @Override
+                public void onSuccess(Film film) {
+                    String text = "Saved film : " + film.getName() + " correctly!!";
+                    TextView info = (TextView) findViewById(R.id.textView);
+                    Button button = (Button) findViewById(R.id.button);
+                    info.setText(text);
+                    button.setOnClickListener(view -> {
+                        Intent intent2 = new Intent(Intent.ACTION_VIEW);
+                        intent2.setData(Uri.parse(film.getDescription()));
+                        startActivity(intent2);
+                    });
                 }
-                return filmSaved;
-            }
 
+                @Override
+                public void onError(String error) {
+                    TextView info = (TextView) findViewById(R.id.textView);
+                    info.setText(error);
+                }
+            }, Film.class); //5 seconds
 
-            @Override
-            protected void onPostExecute(Film film) {
-                String text = "Saved film : " + film.getName() + " correctly!!";
-                TextView info = (TextView) findViewById(R.id.textView);
-                Button button = (Button) findViewById(R.id.button);
-                info.setText(text);
-                button.setOnClickListener(view -> {
-                    Intent intent2 = new Intent(Intent.ACTION_VIEW);
-                    intent2.setData(Uri.parse(film.getDescription()));
-                    startActivity(intent2);
-                });
-
-            }
-
+        } catch (Exception e) {
+            Log.e("Error", "Exception: " + e.getMessage());
         }
-
-        HiloEnSegundoPlano hilo = new HiloEnSegundoPlano();
-        hilo.execute(uuid);
 
     }
 

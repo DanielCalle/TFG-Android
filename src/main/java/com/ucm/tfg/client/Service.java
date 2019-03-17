@@ -23,10 +23,7 @@ public class Service {
 
     // Thread safe
     public static synchronized Service getInstance() {
-        // Lazy initialization
-        if (instance == null) {
-            instance = new Service();
-        }
+        instance = new Service();
         return instance;
     }
 
