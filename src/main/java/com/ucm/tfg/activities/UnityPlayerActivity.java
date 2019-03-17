@@ -5,17 +5,20 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.ucm.tfg.Integration.DaoFilm;
 import com.ucm.tfg.Integration.DaoUser;
 import com.ucm.tfg.R;
 import com.ucm.tfg.client.ClientResponse;
 import com.ucm.tfg.client.FilmService;
+import com.ucm.tfg.client.FriendshipService;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.User;
 import com.unity3d.player.UnityPlayer;
@@ -52,6 +55,19 @@ public class UnityPlayerActivity extends Activity {
 
 
     public void info(String info) {
+        /*
+            FriendshipService.getFriendsById("5df9b1ab2e9742aa9bfd4a7d12dde033", new ClientResponse<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onError(String error) {
+                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+                }
+            }, String.class); //5 seconds
+            */
         JSONObject json = null;
         try{
             json = new JSONObject(info);
