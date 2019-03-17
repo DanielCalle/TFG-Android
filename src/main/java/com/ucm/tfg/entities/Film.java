@@ -1,8 +1,12 @@
 package com.ucm.tfg.entities;
+import android.graphics.Bitmap;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.sql.Blob;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -12,11 +16,13 @@ public class Film {
 
     private String name;
 
-    private String idDirector;
+    private String director;
 
     private String trailer;
 
-    private String description;
+    private String infoURL;
+
+    private byte[] image;
 
     private String genre;
 
@@ -25,6 +31,10 @@ public class Film {
     private int valoration;
 
     private String country;
+
+    public Film() {
+    }
+
 
     /**
      * @return the uuid
@@ -55,17 +65,17 @@ public class Film {
     }
 
     /**
-     * @return the idDirector
+     * @return the director
      */
-    public String getIdDirector() {
-        return idDirector;
+    public String getdirector() {
+        return director;
     }
 
     /**
-     * @param idDirector the idDirector to set
+     * @param director the director to set
      */
-    public void setIdDirector(String idDirector) {
-        this.idDirector = idDirector;
+    public void setDirector(String director) {
+        this.director = director;
     }
 
     /**
@@ -83,17 +93,31 @@ public class Film {
     }
 
     /**
-     * @return the description
+     * @return the infoURL
      */
-    public String getDescription() {
-        return description;
+    public String getInfoURL() {
+        return infoURL;
     }
 
     /**
-     * @param description the description to set
+     * @param infoURL the description to set
      */
-    public void setDescription(String description) {
-        this.description = description;
+    public void setInfoURL(String infoURL) {
+        this.infoURL = infoURL;
+    }
+
+    /**
+     * @return the image
+     */
+    public byte[] getImage() {
+        return image;
+    }
+
+    /**
+     * @param image the description to set
+     */
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     /**
@@ -158,9 +182,9 @@ public class Film {
         try {
             json.put("uuid", uuid);
             json.put("name", name);
-            json.put("idDirector", idDirector);
+            json.put("idDirector", director);
             json.put("trailer", trailer);
-            json.put("description", description);
+            json.put("description", infoURL);
             json.put("genre", genre);
             json.put("duration", duration);
             json.put("valoration", valoration);

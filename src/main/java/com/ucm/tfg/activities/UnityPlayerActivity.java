@@ -14,6 +14,8 @@ import android.widget.ImageButton;
 import com.ucm.tfg.Integration.DaoFilm;
 import com.ucm.tfg.Integration.DaoUser;
 import com.ucm.tfg.R;
+import com.ucm.tfg.client.ClientResponse;
+import com.ucm.tfg.client.FilmService;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.User;
 import com.unity3d.player.UnityPlayer;
@@ -51,13 +53,25 @@ public class UnityPlayerActivity extends Activity {
 
     public void info(String info) {
         JSONObject json = null;
-        try {
+        try{
             json = new JSONObject(info);
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(json.getString("description")));
-            startActivity(intent);
-        } catch (JSONException e) {
-            e.printStackTrace();
+            FilmService.getFilmById(json.getString("uuid"), new ClientResponse<Film>() {
+
+                @Override
+                public void onSuccess(Film film) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(film.getInfoURL()));
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onError(String error) {
+                    Log.e("Error", "Exception: " + error);
+                }
+            }, Film.class); //5 seconds
+
+        } catch (Exception e) {
+            Log.e("Error", "Exception: " + e.getMessage());
         }
     }
 
@@ -89,10 +103,8 @@ public class UnityPlayerActivity extends Activity {
     }
 
     public void save(String uuid) {
-
         Intent intent = new Intent(this, SavedFilmActivity.class);
         intent.putExtra("uuid", uuid);
-        Log.i("UnityPlayerActivity", uuid);
         startActivity(intent);
     }
 
