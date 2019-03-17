@@ -22,6 +22,7 @@ import com.ucm.tfg.R;
 import com.ucm.tfg.client.ClientResponse;
 import com.ucm.tfg.client.FilmService;
 import com.ucm.tfg.entities.Film;
+import com.ucm.tfg.entities.ImageConverter;
 
 
 import org.json.JSONObject;
@@ -58,20 +59,16 @@ public class SavedFilmActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Film film) {
                     String text = "Saved film : " + film.getName() + " correctly!!";
+
                     TextView info = (TextView) findViewById(R.id.textView);
-                    Button button = (Button) findViewById(R.id.button);
-                    ImageView image = (ImageView) findViewById(R.id.image);
                     info.setText(text);
-                    Log.i(LOGTAG, film.getImage().toString());
-                    /* To display an image represented by byte[]*/
-                    Bitmap bm = BitmapFactory.decodeByteArray(film.getImage(), 0, film.getImage().length);
-                    DisplayMetrics dm = new DisplayMetrics();
-                    getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-                    image.setMinimumHeight(dm.heightPixels);
-                    image.setMinimumWidth(dm.widthPixels);
-                    image.setImageBitmap(bm);
+                    ImageView image = (ImageView) findViewById(R.id.image);
+                    /* To display an image represented by byte[], it converts it to a valid ImageView*/
+                    ImageConverter imageConverter = new ImageConverter();
+                    image = imageConverter.convert(film.getImage(), image);
 
+                    Button button = (Button) findViewById(R.id.button);
                     button.setOnClickListener(view -> {
                         Intent intent2 = new Intent(Intent.ACTION_VIEW);
                         intent2.setData(Uri.parse(film.getInfoURL()));
