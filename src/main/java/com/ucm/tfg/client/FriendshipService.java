@@ -7,7 +7,7 @@ public class FriendshipService {
 
     public FriendshipService() {}
 
-    public static <T> void getFriendsById(String uuid, ClientResponse<T> callback, Class<T> c) {
+    public static <T> void getFriendsById(String uuid, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .addParam("id", uuid)
                 .GET(FriendshipService.develop_url + "{id}", callback, c);

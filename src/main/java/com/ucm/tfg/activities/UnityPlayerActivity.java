@@ -11,11 +11,11 @@ import android.view.MotionEvent;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
+import com.ucm.tfg.client.Service;
 import com.ucm.tfg.integration.DaoFilm;
 import com.ucm.tfg.integration.DaoFriendship;
 import com.ucm.tfg.integration.DaoUser;
 import com.ucm.tfg.R;
-import com.ucm.tfg.client.ClientResponse;
 import com.ucm.tfg.client.FilmService;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.User;
@@ -76,7 +76,7 @@ public class UnityPlayerActivity extends Activity {
         JSONObject json = null;
         try{
             json = new JSONObject(info);
-            FilmService.getFilmById(json.getString("uuid"), new ClientResponse<Film>() {
+            FilmService.getFilmById(this, json.getString("uuid"), new Service.ClientResponse<Film>() {
 
                 @Override
                 public void onSuccess(Film film) {

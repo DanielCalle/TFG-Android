@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 
 import com.ucm.tfg.R;
-import com.ucm.tfg.client.ClientResponse;
 import com.ucm.tfg.client.FilmService;
+import com.ucm.tfg.client.Service;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.ImageConverter;
 
@@ -42,7 +42,7 @@ public class SavedFilmActivity extends AppCompatActivity {
         JSONObject json = null;
         try {
             json = new JSONObject(uuid);
-            FilmService.getFilmById(json.getString("uuid"), new ClientResponse<Film>() {
+            FilmService.getFilmById(this, json.getString("uuid"), new Service.ClientResponse<Film>() {
 
                 @Override
                 public void onSuccess(Film film) {

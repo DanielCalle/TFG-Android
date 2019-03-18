@@ -51,8 +51,4 @@ public class MainActivity extends AppCompatActivity implements
     public void onFragmentInteraction(Uri uri) {
 
     }
-
-    public String getCurrentUser() {
-        return "a49581c363b94409badf6bafb4bd15d0";
-    }
 }

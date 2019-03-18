@@ -2,8 +2,8 @@ package com.ucm.tfg.integration;
 
 import android.util.Log;
 
-import com.ucm.tfg.client.ClientResponse;
 import com.ucm.tfg.client.FriendshipService;
+import com.ucm.tfg.client.Service;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,7 +14,7 @@ public class DaoFriendship {
 
     public boolean areFriends(String friend1, String friend2){
 
-        FriendshipService.getFriendsById(friend1, new ClientResponse<String>() {
+        FriendshipService.getFriendsById(friend1, new Service.ClientResponse<String>() {
             @Override
             public void onSuccess(String result) {
                 Log.d("Friendship", result);

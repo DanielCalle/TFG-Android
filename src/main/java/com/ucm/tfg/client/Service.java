@@ -1,11 +1,14 @@
 package com.ucm.tfg.client;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,6 +16,7 @@ public class Service {
 
     private RestTemplate restTemplate;
     private Map<String, String> params;
+    private WeakReference<Activity> context;
 
     private static Service instance;
 
@@ -25,6 +29,11 @@ public class Service {
     public static synchronized Service getInstance() {
         instance = new Service();
         return instance;
+    }
+
+    public Service setContext(Activity activity) {
+        context = new WeakReference<>(activity);
+        return this;
     }
 
     public Service addParam(String key, String value) {
@@ -42,10 +51,13 @@ public class Service {
 
             @Override
             protected void onPostExecute(ResponseEntity<T> entity) {
-                if (entity.getStatusCode() == HttpStatus.OK) {
-                    callback.onSuccess(entity.getBody());
-                } else {
-                    callback.onError(entity.getStatusCode().toString());
+                Activity activity = context.get();
+                if (activity != null && !activity.isFinishing()) {
+                    if (entity.getStatusCode() == HttpStatus.OK) {
+                        callback.onSuccess(entity.getBody());
+                    } else {
+                        callback.onError(entity.getStatusCode().toString());
+                    }
                 }
             }
         }.execute(url);
@@ -61,16 +73,19 @@ public class Service {
 
             @Override
             protected void onPostExecute(ResponseEntity<T> entity) {
-                if (entity.getStatusCode() == HttpStatus.OK) {
-                    callback.onSuccess(entity.getBody());
-                } else {
-                    callback.onError(entity.getStatusCode().toString());
+                Activity activity = context.get();
+                if (activity != null && !activity.isFinishing()) {
+                    if (entity.getStatusCode() == HttpStatus.OK) {
+                        callback.onSuccess(entity.getBody());
+                    } else {
+                        callback.onError(entity.getStatusCode().toString());
+                    }
                 }
             }
         }.execute(url);
     }
 
-    public void PUT(String url, Object object, ClientResponse<String> callback) {
+    public void PUT(String url, Object object) {
         new AsyncTask<String, Void, Void>() {
 
             @Override
@@ -80,13 +95,11 @@ public class Service {
             }
 
             @Override
-            protected void onPostExecute(Void param) {
-                callback.onSuccess("done");
-            }
+            protected void onPostExecute(Void param) {}
         }.execute(url);
     }
 
-    public void DELETE(String url,  ClientResponse<String> callback) {
+    public void DELETE(String url) {
         new AsyncTask<String, Void, Void>() {
 
             @Override
@@ -96,10 +109,15 @@ public class Service {
             }
 
             @Override
-            protected void onPostExecute(Void param) {
-                callback.onSuccess("done");
-            }
+            protected void onPostExecute(Void param) {}
         }.execute(url);
+    }
+
+    public interface ClientResponse<T> {
+
+        void onSuccess(T result);
+
+        void onError(String error);
     }
 
 }

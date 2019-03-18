@@ -3,11 +3,8 @@ package com.ucm.tfg.fragments;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +13,8 @@ import android.widget.Toast;
 
 import com.ucm.tfg.R;
 import com.ucm.tfg.adapters.FriendAdapter;
-import com.ucm.tfg.client.ClientResponse;
 import com.ucm.tfg.client.FilmService;
-import com.ucm.tfg.entities.Film;
+import com.ucm.tfg.client.Service;
 
 
 /**
@@ -87,7 +83,7 @@ public class FilmFragment extends Fragment {
 
         SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            FilmService.getFilmById("a49581c363b94409badf6bafb4bd15d0", new ClientResponse<String>() {
+            FilmService.getFilmById(getActivity(),"28f361ae08014c4bb94e8a8d59b91130", new Service.ClientResponse<String>() {
                 @Override
                 public void onSuccess(String result) {
                     Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
