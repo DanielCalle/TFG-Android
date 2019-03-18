@@ -1,8 +1,7 @@
-package com.ucm.tfg.Integration;
+package com.ucm.tfg.integration;
 
 import android.util.Log;
 
-import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.User;
 
 import org.springframework.web.client.RestTemplate;

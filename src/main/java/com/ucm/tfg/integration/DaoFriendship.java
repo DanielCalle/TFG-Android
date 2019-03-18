@@ -1,7 +1,6 @@
-package com.ucm.tfg.Integration;
+package com.ucm.tfg.integration;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.ucm.tfg.client.ClientResponse;
 import com.ucm.tfg.client.FriendshipService;

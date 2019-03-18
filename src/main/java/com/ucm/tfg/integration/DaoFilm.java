@@ -1,7 +1,4 @@
-package com.ucm.tfg.Integration;
-
-import android.util.Log;
-import android.widget.Toast;
+package com.ucm.tfg.integration;
 
 import com.ucm.tfg.entities.Film;
 
