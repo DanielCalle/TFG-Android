@@ -1,4 +1,4 @@
-package com.ucm.tfg.client;
+package com.ucm.tfg.service;
 
 public class FriendshipService {
 

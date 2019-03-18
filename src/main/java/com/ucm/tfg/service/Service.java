@@ -1,7 +1,6 @@
-package com.ucm.tfg.client;
+package com.ucm.tfg.service;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.AsyncTask;
 
 import org.springframework.http.HttpStatus;

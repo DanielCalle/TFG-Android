@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 
 import com.ucm.tfg.R;
-import com.ucm.tfg.client.FilmService;
-import com.ucm.tfg.client.Service;
+import com.ucm.tfg.service.FilmService;
+import com.ucm.tfg.service.Service;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.ImageConverter;
 
@@ -69,7 +69,7 @@ public class SavedFilmActivity extends AppCompatActivity {
                     TextView info = (TextView) findViewById(R.id.textView);
                     info.setText(error);
                 }
-            }, Film.class); //5 seconds
+            }, Film.class);
 
         } catch (Exception e) {
             Log.e("Error", "Exception: " + e.getMessage());

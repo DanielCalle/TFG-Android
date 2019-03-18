@@ -11,12 +11,9 @@ import android.view.MotionEvent;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 
-import com.ucm.tfg.client.Service;
-import com.ucm.tfg.integration.DaoFilm;
-import com.ucm.tfg.integration.DaoFriendship;
-import com.ucm.tfg.integration.DaoUser;
+import com.ucm.tfg.service.Service;
 import com.ucm.tfg.R;
-import com.ucm.tfg.client.FilmService;
+import com.ucm.tfg.service.FilmService;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.User;
 import com.unity3d.player.UnityPlayer;
@@ -53,6 +50,7 @@ public class UnityPlayerActivity extends Activity {
 
 
     public void info(String info) {
+        /*
         DaoFriendship daoFriendship = new DaoFriendship();
         if(daoFriendship.areFriends("5df9b1ab2e9742aa9bfd4a7d12dde033", "1")){
             Log.wtf("Friendship", "true");
@@ -60,6 +58,7 @@ public class UnityPlayerActivity extends Activity {
         else{
             Log.wtf("Friendship", "false");
         }
+        */
         /*
             FriendshipService.getFriendsById("5df9b1ab2e9742aa9bfd4a7d12dde033", new ClientResponse<String>() {
                 @Override
@@ -129,24 +128,9 @@ public class UnityPlayerActivity extends Activity {
         startActivity(intent);
     }
 
-    public void DAOController(String action, String info) {
-        if (action.equalsIgnoreCase("getFilmById")) {
-            DaoFilm daoFilm = new DaoFilm();
-            Film film = daoFilm.getFilmById(info);
-            if (film != null)
-                UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoFilm", film.getJson().toString());
-        } else if (action.equalsIgnoreCase("getUserById")) {
-            DaoUser daoUser = new DaoUser();
-            User user = daoUser.getUserById(info);
-            if (user != null)
-                UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoUser", user.getJson().toString());
-
-        }
-    }
-
     @Override
     protected void onNewIntent(Intent intent) {
-        // To support deep linking, we need to make sure that the client can get access to
+        // To support deep linking, we need to make sure that the service can get access to
         // the last sent intent. The clients access this through a JNI api that allows them
         // to get the intent set on launch. To update that after launch we have to manually
         // replace the intent with the one caught here.
