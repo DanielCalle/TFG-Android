@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.ucm.tfg.Integration.DaoFilm;
+import com.ucm.tfg.Integration.DaoFriendship;
 import com.ucm.tfg.Integration.DaoUser;
 import com.ucm.tfg.R;
 import com.ucm.tfg.client.ClientResponse;
@@ -55,6 +56,13 @@ public class UnityPlayerActivity extends Activity {
 
 
     public void info(String info) {
+        DaoFriendship daoFriendship = new DaoFriendship();
+        if(daoFriendship.areFriends("5df9b1ab2e9742aa9bfd4a7d12dde033", "1")){
+            Log.wtf("Friendship", "true");
+        }
+        else{
+            Log.wtf("Friendship", "false");
+        }
         /*
             FriendshipService.getFriendsById("5df9b1ab2e9742aa9bfd4a7d12dde033", new ClientResponse<String>() {
                 @Override
