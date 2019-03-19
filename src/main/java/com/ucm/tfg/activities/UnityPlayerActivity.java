@@ -21,6 +21,7 @@ import com.ucm.tfg.entities.User;
 import com.ucm.tfg.service.UserService;
 import com.unity3d.player.UnityPlayer;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -154,13 +155,53 @@ public class UnityPlayerActivity extends Activity {
 
                     @Override
                     public void onError(String error) {
-
+                        Log.wtf("Foto detectada error user ", error);
+                    }
+                }, String.class);
+                break;
+            case "areFriends":
+                //String[] user = info.split(";");
+                Log.d("Friendship", info);
+                FriendshipService.getFriendsById(this, info, new Service.ClientResponse<String>(){
+                    @Override
+                    public void onSuccess(String result) {
+                        Log.d("Friendship", result);
+                        Log.wtf("Friendship", result);
+                        try {
+                            JSONArray jsonArray = new JSONArray(result);
+                            String sol = "false";
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                //Log.wtf("Friendship " + i, jsonArray.get(i).toString());
+                                JSONObject json = jsonArray.getJSONObject(i);
+                                //Log.wtf("Friendship requester " + i, json.getJSONObject("requester").get("uuid").toString());
+                                //Log.wtf("Friendship friend " + i, json.getJSONObject("friend").get("uuid").toString());
+                                String requester = json.getJSONObject("requester").get("uuid").toString();
+                                String friend = json.getJSONObject("friend").get("uuid").toString();
+                                if (requester.equalsIgnoreCase(info) && friend.equalsIgnoreCase(getCurrentUser()) ||
+                                        requester.equalsIgnoreCase(getCurrentUser()) && friend.equalsIgnoreCase(info)) {
+                                    Log.wtf("Friendship solution " + i, "son amigos");
+                                    //break;
+                                    sol = "true";
+                                }
+                            }
+                            Log.wtf("Friendship solution ", "le mando a unity un " + sol.toString());
+                            UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoFriends", sol);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                    }
+                    @Override
+                    public void onError(String error) {
+                        Log.wtf("error", error);
                     }
                 }, String.class);
 
         }
     }
 
+    public String getCurrentUser(){
+        return "1";
+    }
     public void save(String uuid) {
         Intent intent = new Intent(this, SavedFilmActivity.class);
         intent.putExtra("uuid", uuid);
