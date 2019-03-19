@@ -16,7 +16,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -37,7 +37,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/title"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/image"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -48,7 +48,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/director"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/image"
             app:layout_constraintTop_toBottomOf="@+id/title" />
 
         <TextView
@@ -59,7 +59,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="8dp"
             android:text="@string/valoration"
-            app:layout_constraintStart_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toEndOf="@+id/image"
             app:layout_constraintTop_toBottomOf="@+id/from" />
 
     </android.support.constraint.ConstraintLayout>

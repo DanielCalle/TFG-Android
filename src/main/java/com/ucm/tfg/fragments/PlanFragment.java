@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,9 @@ import com.ucm.tfg.R;
 import com.ucm.tfg.adapters.PlanAdapter;
 import com.ucm.tfg.service.PlanService;
 import com.ucm.tfg.service.Service;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 
 /**
@@ -84,14 +88,20 @@ public class PlanFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        recyclerView.setAdapter(new PlanAdapter(getActivity()));
+        PlanAdapter planAdapter = new PlanAdapter(getActivity());
+
+        recyclerView.setAdapter(planAdapter);
 
         SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             PlanService.getPlans(getActivity(), new Service.ClientResponse<String>() {
                 @Override
                 public void onSuccess(String result) {
-                    Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                    try{
+                        planAdapter.setData(new JSONArray(result));
+                    } catch (Exception e) {
+                        Log.e("Error", "Exception: " + e.getMessage());
+                    }
                     swipeRefreshLayout.setRefreshing(false);
                 }
 

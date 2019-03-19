@@ -1,19 +1,28 @@
 package com.ucm.tfg.adapters;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ucm.tfg.R;
+import com.ucm.tfg.entities.Film;
+import com.ucm.tfg.entities.ImageConverter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHolder> {
 
-    String [][] data = {
+    String [][] dataa = {
             {"Moana","Diego", "Carlos"},
             {"Deadpool","Carlos", "Zihao"},
             {"1","Diego", "Daniel"},
@@ -32,9 +41,11 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
             {"Dea232dpool","Zihao", "Diego"}
     };
     private Context context;
+    private JSONArray data;
 
     public PlanAdapter(Context context) {
         this.context = context;
+        data = new JSONArray();
     }
 
     @NonNull
@@ -48,14 +59,33 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder recyclerViewHolder, int i) {
-        recyclerViewHolder.title.setText(data[i][0]);
-        recyclerViewHolder.from.setText(data[i][1]);
-        recyclerViewHolder.to.setText(data[i][2]);
+        try {
+            JSONObject jsonObject = data.getJSONObject(i);
+            JSONObject creator = jsonObject.getJSONObject("creator");
+
+            ObjectMapper objectMapper = new ObjectMapper();
+            Film film = objectMapper.readValue(jsonObject.getJSONObject("film").toString(), Film.class);
+
+            ImageConverter imageConverter = new ImageConverter();
+            imageConverter.convert(film.getImage(), recyclerViewHolder.image);
+
+            recyclerViewHolder.title.setText(film.getName());
+            recyclerViewHolder.from.setText(creator.getString("name"));
+            recyclerViewHolder.to.setText(film.getdirector());
+        }
+        catch (Exception e) {
+            Log.e("Error", "Exception: " + e.getMessage());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return data.length;
+        return data.length();
+    }
+
+    public void setData(JSONArray jsonArray) {
+        data = jsonArray;
+        notifyDataSetChanged();
     }
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
