@@ -18,6 +18,7 @@ import com.ucm.tfg.R;
 import com.ucm.tfg.service.FilmService;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.User;
+import com.ucm.tfg.service.UserService;
 import com.unity3d.player.UnityPlayer;
 
 import org.json.JSONException;
@@ -131,6 +132,21 @@ public class UnityPlayerActivity extends Activity {
                     public void onSuccess(String result) {
                         Log.wtf("Foto detectada info ", result);
                         UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoFilm", result);
+
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                }, String.class);
+                break;
+            case "getUserById":
+                UserService.getUserById(this,info, new Service.ClientResponse<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Log.wtf("Foto detectada info ", result);
+                        UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoUser", result);
 
                     }
 
