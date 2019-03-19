@@ -11,9 +11,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.ucm.tfg.R;
 import com.ucm.tfg.adapters.PlanAdapter;
+import com.ucm.tfg.service.PlanService;
+import com.ucm.tfg.service.Service;
 
 
 /**
@@ -85,12 +88,19 @@ public class PlanFragment extends Fragment {
 
         SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
+            PlanService.getPlans(getActivity(), new Service.ClientResponse<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
                     swipeRefreshLayout.setRefreshing(false);
                 }
-            }, 5000);   //5 seconds
+
+                @Override
+                public void onError(String error) {
+                    Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            });
         });
 
         return view;
