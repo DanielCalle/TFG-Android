@@ -22,24 +22,6 @@ import org.json.JSONObject;
 
 public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHolder> {
 
-    String [][] dataa = {
-            {"Moana","Diego", "Carlos"},
-            {"Deadpool","Carlos", "Zihao"},
-            {"1","Diego", "Daniel"},
-            {"2","Carlos", "Diego"},
-            {"3","Zihao", "Carlos"},
-            {"4","Zihao", "Daniel"},
-            {"5","Diego", "Carlos"},
-            {"8","Diego", "Zihao"},
-            {"6","Carlos", "Carlos"},
-            {"454","Zihao", "Carlos"},
-            {"34","Diego", "Carlos"},
-            {"5","Diego", "Zihao"},
-            {"64","Diego", "Carlos"},
-            {"De77adpool","Carlos", "Diego"},
-            {"Moan86a","Diego", "Daniel"},
-            {"Dea232dpool","Zihao", "Diego"}
-    };
     private Context context;
     private JSONArray data;
 

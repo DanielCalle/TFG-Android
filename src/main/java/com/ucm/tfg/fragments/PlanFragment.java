@@ -41,9 +41,8 @@ public class PlanFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    String [][] data = {{"Moana","Diego, Carlos"},{"Deadpool","Zihao, Daniel"}};
-
-    int[] dataImg = {R.drawable.moana_poster, R.drawable.deadpool_poster};
+    private PlanAdapter planAdapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private OnFragmentInteractionListener mListener;
 
@@ -88,32 +87,38 @@ public class PlanFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        PlanAdapter planAdapter = new PlanAdapter(getActivity());
+        planAdapter = new PlanAdapter(getActivity());
 
         recyclerView.setAdapter(planAdapter);
 
-        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            PlanService.getPlans(getActivity(), new Service.ClientResponse<String>() {
-                @Override
-                public void onSuccess(String result) {
-                    try{
-                        planAdapter.setData(new JSONArray(result));
-                    } catch (Exception e) {
-                        Log.e("Error", "Exception: " + e.getMessage());
-                    }
-                    swipeRefreshLayout.setRefreshing(false);
-                }
-
-                @Override
-                public void onError(String error) {
-                    Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
-                    swipeRefreshLayout.setRefreshing(false);
-                }
-            });
+            updatePlans();
         });
 
+        updatePlans();
         return view;
+    }
+
+    private void updatePlans() {
+        swipeRefreshLayout.setRefreshing(true);
+        PlanService.getPlans(getActivity(), new Service.ClientResponse<String>() {
+            @Override
+            public void onSuccess(String result) {
+                try{
+                    planAdapter.setData(new JSONArray(result));
+                } catch (Exception e) {
+                    Log.e("Error", "Exception: " + e.getMessage());
+                }
+                swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
