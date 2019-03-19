@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.ucm.tfg.R;
 import com.ucm.tfg.adapters.FriendAdapter;
+import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.service.FilmService;
 import com.ucm.tfg.service.Service;
 
@@ -83,10 +84,10 @@ public class FilmFragment extends Fragment {
 
         SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            FilmService.getFilmById(getActivity(),"28f361ae08014c4bb94e8a8d59b91130", new Service.ClientResponse<String>() {
+            FilmService.getFilmById(getActivity(),"28f361ae08014c4bb94e8a8d59b91130", new Service.ClientResponse<Film>() {
                 @Override
-                public void onSuccess(String result) {
-                    Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
+                public void onSuccess(Film result) {
+                    Toast.makeText(getActivity(), result.getName(), Toast.LENGTH_SHORT).show();
                     swipeRefreshLayout.setRefreshing(false);
                 }
 
@@ -95,7 +96,7 @@ public class FilmFragment extends Fragment {
                     Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
                     swipeRefreshLayout.setRefreshing(false);
                 }
-            }, String.class);
+            }, Film.class);
         });
 
         return view;

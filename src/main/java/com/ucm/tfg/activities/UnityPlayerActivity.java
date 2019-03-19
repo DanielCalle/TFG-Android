@@ -10,12 +10,15 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.ucm.tfg.service.FriendshipService;
 import com.ucm.tfg.service.Service;
 import com.ucm.tfg.R;
 import com.ucm.tfg.service.FilmService;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.User;
+import com.ucm.tfg.service.UserService;
 import com.unity3d.player.UnityPlayer;
 
 import org.json.JSONException;
@@ -121,11 +124,50 @@ public class UnityPlayerActivity extends Activity {
             e.printStackTrace();
         }
     }
+    public void DAOController(String action, String info) {
+        switch(action){
+            case "getFilmById":
+                FilmService.getFilmById(this,info, new Service.ClientResponse<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Log.wtf("Foto detectada info film ", result);
+                        if(!result.equalsIgnoreCase("null"))
+                            UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoFilm", result);
+
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                }, String.class);
+                break;
+            case "getUserById":
+                UserService.getUserById(this,info, new Service.ClientResponse<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Log.wtf("Foto detectada info user ", result);
+                        if(!result.equalsIgnoreCase("null"))
+                            UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoUser", result);
+
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                }, String.class);
+
+        }
+    }
 
     public void save(String uuid) {
         Intent intent = new Intent(this, SavedFilmActivity.class);
         intent.putExtra("uuid", uuid);
         startActivity(intent);
+    }
+    public void areFriends(String info){
+        Log.wtf("friends unity", info);
     }
 
     @Override
