@@ -15,5 +15,6 @@ public class FriendshipService {
                 .addParam("id", uuid)
                 .GET(FriendshipService.develop_url + "{id}", callback, c);
     }
+    
 
 }
