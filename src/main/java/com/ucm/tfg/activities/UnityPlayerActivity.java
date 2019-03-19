@@ -130,8 +130,9 @@ public class UnityPlayerActivity extends Activity {
                 FilmService.getFilmById(this,info, new Service.ClientResponse<String>() {
                     @Override
                     public void onSuccess(String result) {
-                        Log.wtf("Foto detectada info ", result);
-                        UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoFilm", result);
+                        Log.wtf("Foto detectada info film ", result);
+                        if(!result.equalsIgnoreCase("null"))
+                            UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoFilm", result);
 
                     }
 
@@ -145,8 +146,9 @@ public class UnityPlayerActivity extends Activity {
                 UserService.getUserById(this,info, new Service.ClientResponse<String>() {
                     @Override
                     public void onSuccess(String result) {
-                        Log.wtf("Foto detectada info ", result);
-                        UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoUser", result);
+                        Log.wtf("Foto detectada info user ", result);
+                        if(!result.equalsIgnoreCase("null"))
+                            UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoUser", result);
 
                     }
 
