@@ -3,8 +3,8 @@ package com.ucm.tfg.service;
 import android.app.Activity;
 
 public class UserService {
-    private static String url = "http://tfg-spring.herokuapp.com/user/";
-    private static String develop_url = "http://filmar-develop.herokuapp.com/user/";
+    private static String url = "http://tfg-spring.herokuapp.com/users/";
+    private static String develop_url = "http://filmar-develop.herokuapp.com/users/";
 
     public UserService() {}
 

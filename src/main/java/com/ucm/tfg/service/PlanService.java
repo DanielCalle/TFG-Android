@@ -4,8 +4,8 @@ import android.app.Activity;
 
 public class PlanService {
 
-    private static String url = "http://tfg-spring.herokuapp.com/plan/";
-    private static String develop_url = "http://filmar-develop.herokuapp.com/plan/";
+    private static String url = "http://tfg-spring.herokuapp.com/plans/";
+    private static String develop_url = "http://filmar-develop.herokuapp.com/plans/";
 
     public static void getPlans(Activity activity, Service.ClientResponse<String> callback) {
         Service.getInstance()

@@ -4,8 +4,8 @@ import android.app.Activity;
 
 public class FilmService {
 
-    private static String url = "http://tfg-spring.herokuapp.com/film/";
-    private static String develop_url = "http://filmar-develop.herokuapp.com/film/";
+    private static String url = "http://tfg-spring.herokuapp.com/films/";
+    private static String develop_url = "http://filmar-develop.herokuapp.com/films/";
 
     public FilmService() {}
 
