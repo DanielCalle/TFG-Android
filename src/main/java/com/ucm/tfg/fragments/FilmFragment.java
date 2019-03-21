@@ -84,10 +84,10 @@ public class FilmFragment extends Fragment {
 
         SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            FilmService.getFilmById(getActivity(),"28f361ae08014c4bb94e8a8d59b91130", new Service.ClientResponse<Film>() {
+            FilmService.getFilmById(getActivity(),"28f361ae08014c4bb94e8a8d59b91130", new Service.ClientResponse<String>() {
                 @Override
-                public void onSuccess(Film result) {
-                    Toast.makeText(getActivity(), result.getName(), Toast.LENGTH_SHORT).show();
+                public void onSuccess(String result) {
+                    Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
                     swipeRefreshLayout.setRefreshing(false);
                 }
 
@@ -96,7 +96,7 @@ public class FilmFragment extends Fragment {
                     Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
                     swipeRefreshLayout.setRefreshing(false);
                 }
-            }, Film.class);
+            }, String.class);
         });
 
         return view;

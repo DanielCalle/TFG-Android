@@ -11,7 +11,9 @@ public class UserService {
     public static <T> void getUserById(Activity activity, String uuid, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
-                .addParam("id", uuid)
-                .GET(UserService.develop_url + "{id}", callback, c);
+                .get()
+                .addPathVariable("id", uuid)
+                .url(develop_url + "{id}")
+                .execute(callback, c);
     }
 }

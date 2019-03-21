@@ -16,11 +16,16 @@ import android.widget.Toast;
 
 import com.ucm.tfg.R;
 import com.ucm.tfg.adapters.PlanAdapter;
+import com.ucm.tfg.entities.ListWrapper;
+import com.ucm.tfg.entities.Plan;
 import com.ucm.tfg.service.PlanService;
 import com.ucm.tfg.service.Service;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -102,14 +107,10 @@ public class PlanFragment extends Fragment {
 
     private void updatePlans() {
         swipeRefreshLayout.setRefreshing(true);
-        PlanService.getPlans(getActivity(), new Service.ClientResponse<String>() {
+        PlanService.getPlans(getActivity(), new Service.ClientResponse<ArrayList<Plan>>() {
             @Override
-            public void onSuccess(String result) {
-                try{
-                    planAdapter.setData(new JSONArray(result));
-                } catch (Exception e) {
-                    Log.e("Error", "Exception: " + e.getMessage());
-                }
+            public void onSuccess(ArrayList<Plan> result) {
+                planAdapter.setData(result);
                 swipeRefreshLayout.setRefreshing(false);
             }
 

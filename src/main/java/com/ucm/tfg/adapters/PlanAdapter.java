@@ -15,19 +15,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ucm.tfg.R;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.ImageConverter;
+import com.ucm.tfg.entities.Plan;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHolder> {
 
     private Context context;
-    private JSONArray data;
+    private List<Plan> plans;
 
     public PlanAdapter(Context context) {
         this.context = context;
-        data = new JSONArray();
+        plans = new ArrayList<>();
     }
 
     @NonNull
@@ -35,38 +39,29 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         return new RecyclerViewHolder(
                 LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.plan_item, viewGroup, false)
+                        .inflate(R.layout.plan_item, viewGroup, false)
         );
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder recyclerViewHolder, int i) {
-        try {
-            JSONObject jsonObject = data.getJSONObject(i);
-            JSONObject creator = jsonObject.getJSONObject("creator");
+        Plan plan = plans.get(i);
 
-            ObjectMapper objectMapper = new ObjectMapper();
-            Film film = objectMapper.readValue(jsonObject.getJSONObject("film").toString(), Film.class);
+        ImageConverter imageConverter = new ImageConverter();
+        imageConverter.convert(plan.getFilm().getImage(), recyclerViewHolder.image);
 
-            ImageConverter imageConverter = new ImageConverter();
-            imageConverter.convert(film.getImage(), recyclerViewHolder.image);
-
-            recyclerViewHolder.title.setText(film.getName());
-            recyclerViewHolder.from.setText(creator.getString("name"));
-            recyclerViewHolder.to.setText(film.getdirector());
-        }
-        catch (Exception e) {
-            Log.e("Error", "Exception: " + e.getMessage());
-        }
+        recyclerViewHolder.title.setText(plan.getFilm().getName());
+        recyclerViewHolder.from.setText(plan.getCreator().getName());
+        recyclerViewHolder.to.setText(plan.getFilm().getdirector());
     }
 
     @Override
     public int getItemCount() {
-        return data.length();
+        return plans.size();
     }
 
-    public void setData(JSONArray jsonArray) {
-        data = jsonArray;
+    public void setData(List<Plan> data) {
+        plans = data;
         notifyDataSetChanged();
     }
 
@@ -77,7 +72,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
         public TextView from;
         public TextView to;
 
-        public RecyclerViewHolder(View view){
+        public RecyclerViewHolder(View view) {
             super(view);
             image = view.findViewById(R.id.image);
             title = view.findViewById(R.id.title);
