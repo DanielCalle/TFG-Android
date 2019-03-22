@@ -12,10 +12,11 @@ import android.widget.TextView;
 
 
 import com.ucm.tfg.R;
+import com.ucm.tfg.Utils;
 import com.ucm.tfg.service.FilmService;
 import com.ucm.tfg.service.Service;
 import com.ucm.tfg.entities.Film;
-import com.ucm.tfg.entities.ImageConverter;
+import com.ucm.tfg.ImageConverter;
 
 
 import org.json.JSONObject;
@@ -53,8 +54,8 @@ public class SavedFilmActivity extends AppCompatActivity {
 
                     ImageView image = (ImageView) findViewById(R.id.image);
                     /* To display an image represented by byte[], it converts it to a valid ImageView*/
-                    ImageConverter imageConverter = new ImageConverter();
-                    image = imageConverter.convert(film.getImage(), image);
+
+                    Utils.convertImage(film.getImage(), image);
 
                     Button button = (Button) findViewById(R.id.button);
                     button.setOnClickListener(view -> {
