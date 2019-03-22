@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ucm.tfg.R;
-import com.ucm.tfg.ImageConverter;
+import com.ucm.tfg.Utils;
 import com.ucm.tfg.entities.Plan;
 
 import java.util.ArrayList;
@@ -39,8 +39,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
     public void onBindViewHolder(@NonNull RecyclerViewHolder recyclerViewHolder, int i) {
         Plan plan = plans.get(i);
 
-        ImageConverter imageConverter = new ImageConverter();
-        imageConverter.convert(plan.getFilm().getImage(), recyclerViewHolder.image);
+        Utils.convertImage(plan.getFilm().getImage(), recyclerViewHolder.image);
 
         recyclerViewHolder.title.setText(plan.getFilm().getName());
         recyclerViewHolder.from.setText(plan.getCreator().getName());
