@@ -4,7 +4,8 @@ public class CommandParser {
 
     private final static Command[] commands = {
             new CommandGetFilmById(),
-            new CommandGetUserById()
+            new CommandGetUserById(),
+            new CommandAreFriends()
     };
 
     public static Command parse(String action) {

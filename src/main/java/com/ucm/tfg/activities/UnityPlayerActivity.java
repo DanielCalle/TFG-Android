@@ -128,32 +128,19 @@ public class UnityPlayerActivity extends Activity {
     }
 
     public void DAOController(String action, String info) {
-        if (!action.equalsIgnoreCase("areFriends")) {
-            CommandParser.parse(action).execute(this, info, new Service.ClientResponse<String>() {
-                @Override
-                public void onSuccess(String result) {
-                    if (!result.equalsIgnoreCase("null")) {
-                        switch (action) {
-                            case "getFilmById":
-                                UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoFilm", result);
-                                break;
-                            case "getUserById":
-                                UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoUser", result);
-                                break;
-                            case "areFriends":
-                                break;
-                        }
-                    }
+        CommandParser.parse(action).execute(this, info, new Service.ClientResponse<String>() {
+            @Override
+            public void onSuccess(String result) {
+                if (!result.equalsIgnoreCase("null")) {
+                    UnityPlayer.UnitySendMessage("CloudRecognition", action, result);
                 }
+            }
 
-                @Override
-                public void onError(String error) {
+            @Override
+            public void onError(String error) {
 
-                }
-            }, String.class);
-        } else {
-            UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoFriends", "true");
-        }
+            }
+        }, String.class);
     }
 
     public String getCurrentUser() {
