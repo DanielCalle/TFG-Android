@@ -8,4 +8,6 @@
     <string name="valoration">Valoration</string>
     <string name="title_activity_saved_film">SavedFilmActivity</string>
     <string name="todo">TODO</string>
+    <string name="creator">Creator</string>
+    <string name="joined_users">joined Users</string>
 </resources>
