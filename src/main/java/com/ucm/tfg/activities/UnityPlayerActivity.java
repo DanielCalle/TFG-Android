@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.ucm.tfg.commands.CommandParser;
 import com.ucm.tfg.service.FriendshipService;
 import com.ucm.tfg.service.Service;
 import com.ucm.tfg.R;
@@ -77,7 +78,7 @@ public class UnityPlayerActivity extends Activity {
             }, String.class); //5 seconds
             */
         JSONObject json = null;
-        try{
+        try {
             json = new JSONObject(info);
             FilmService.getFilmById(this, json.getString("uuid"), new Service.ClientResponse<Film>() {
 
@@ -125,79 +126,47 @@ public class UnityPlayerActivity extends Activity {
             e.printStackTrace();
         }
     }
+
     public void DAOController(String action, String info) {
-        switch(action){
-            case "getFilmById":
-                FilmService.getFilmById(this,info, new Service.ClientResponse<String>() {
-                    @Override
-                    public void onSuccess(String result) {
-                        Log.wtf("Foto detectada info film ", result);
-                        if(!result.equalsIgnoreCase("null"))
-                            UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoFilm", result);
-
+        if (!action.equalsIgnoreCase("areFriends")) {
+            CommandParser.parse(action).execute(this, info, new Service.ClientResponse<String>() {
+                @Override
+                public void onSuccess(String result) {
+                    if (!result.equalsIgnoreCase("null")) {
+                        switch (action) {
+                            case "getFilmById":
+                                UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoFilm", result);
+                                break;
+                            case "getUserById":
+                                UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoUser", result);
+                                break;
+                            case "areFriends":
+                                break;
+                        }
                     }
+                }
 
-                    @Override
-                    public void onError(String error) {
+                @Override
+                public void onError(String error) {
 
-                    }
-                }, String.class);
-                break;
-            case "getUserById":
-                UserService.getUserById(this,info, new Service.ClientResponse<String>() {
-                    @Override
-                    public void onSuccess(String result) {
-                        Log.wtf("Foto detectada info user ", result);
-                        if(!result.equalsIgnoreCase("null"))
-                            UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoUser", result);
-
-                    }
-
-                    @Override
-                    public void onError(String error) {
-                        Log.wtf("Foto detectada error user ", error);
-                    }
-                }, String.class);
-                break;
-            case "areFriends":
-                UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoFriends", "true");
-                //The code below is necessary when we implement the onError method
-                /*
-                FriendshipService.getFriendsById(this, getCurrentUser(), info, new Service.ClientResponse<String>(){
-                    @Override
-                    public void onSuccess(String result) {
-                        UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoFriends", "true");
-                    }
-                    @Override
-                    public void onError(String error) {
-                        Log.wtf("Friendship error", error);
-                        FriendshipService.getFriendsById(getParent(), info, getCurrentUser(), new Service.ClientResponse<String>(){
-                            @Override
-                            public void onSuccess(String result) {
-                                UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoFriends", "true");
-                            }
-                            @Override
-                            public void onError(String error) {
-                                UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoFriends", "false");
-                            }
-                        }, String.class);
-                    }
-                }, String.class);
-                */
-                break;
-
+                }
+            }, String.class);
+        } else {
+            UnityPlayer.UnitySendMessage("CloudRecognition", "recibeInfoFriends", "true");
         }
     }
 
-    public String getCurrentUser(){
+    public String getCurrentUser() {
         return "1";
     }
+
     public void save(String uuid) {
         Intent intent = new Intent(this, SavedFilmActivity.class);
         intent.putExtra("uuid", uuid);
         startActivity(intent);
     }
-    public void areFriends(String info){
+
+    public void areFriends(String info) {
         Log.wtf("friends unity", info);
     }
 
