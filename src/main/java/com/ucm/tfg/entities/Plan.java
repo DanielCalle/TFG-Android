@@ -1,9 +1,10 @@
 package com.ucm.tfg.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Plan {
+public class Plan implements Serializable {
 
     private Long id;
 

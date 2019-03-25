@@ -6,11 +6,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.sql.Blob;
 
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Film {
+public class Film implements Serializable {
 
     private String uuid;
 

@@ -5,8 +5,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User {
+public class User implements Serializable {
     private String uuid;
 
     private String name;
