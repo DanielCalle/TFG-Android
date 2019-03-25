@@ -15,9 +15,9 @@ public class UserFilmService {
 
     public static <T> void postUserFilm(Activity activity, UserFilm userFilm, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
-                .setContext(activity).setContentType(MediaType.APPLICATION_JSON)
-                .addBody("userUuid", userFilm.getUserUuid()).addBody("filmUuid", userFilm.getFilmUuid())
+                .setContext(activity)
                 .post()
+                .body(userFilm)
                 .url(develop_url)
                 .execute(callback, c);
     }

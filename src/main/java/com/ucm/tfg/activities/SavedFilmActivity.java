@@ -62,9 +62,9 @@ public class SavedFilmActivity extends AppCompatActivity {
                     Picasso.get().load(film.getImageURL()).into(image);
 
                     UserFilm userFilm = new UserFilm("1", film.getUuid());
-                    UserFilmService.postUserFilm(SavedFilmActivity.this, userFilm, new Service.ClientResponse<UserFilm>(){
+                    UserFilmService.postUserFilm(SavedFilmActivity.this, userFilm, new Service.ClientResponse<String>(){
                         @Override
-                        public void onSuccess(UserFilm userFilm) {
+                        public void onSuccess(String userFilm) {
                             Button button = (Button) findViewById(R.id.button);
                             button.setOnClickListener(view -> {
                                 Intent intent2 = new Intent(Intent.ACTION_VIEW);
@@ -77,7 +77,7 @@ public class SavedFilmActivity extends AppCompatActivity {
                             TextView info = (TextView) findViewById(R.id.textView);
                             info.setText(error);
                         }
-                    }, UserFilm.class);
+                    }, String.class);
 
                 }
 

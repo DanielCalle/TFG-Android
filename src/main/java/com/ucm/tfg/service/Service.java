@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.json.JSONObject;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +23,7 @@ import org.springframework.web.util.UriTemplate;
 import java.lang.ref.WeakReference;
 import java.net.URI;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -36,7 +38,7 @@ public class Service {
     private HttpMethod method;
     private Map<String, String> pathVariables;
     private HttpHeaders headers;
-    private MultiValueMap<String, String> body;
+    private Object body;
 
     private WeakReference<Activity> context;
 
@@ -46,7 +48,6 @@ public class Service {
         restTemplate = new RestTemplate();
         pathVariables = new HashMap<>();
         headers = new HttpHeaders();
-        body = new LinkedMultiValueMap<>();
     }
 
     // Thread safe
@@ -90,29 +91,29 @@ public class Service {
         return this;
     }
 
-    public Service setContentType(MediaType mediaType){
+    public Service setContentType(MediaType mediaType) {
         headers.setContentType(mediaType);
         return this;
     }
 
-    public <T> Service addBody(String key, String value) {
-        body.add(key, value);
+    public Service setAccept(MediaType mediaType) {
+        headers.setAccept(Arrays.asList(mediaType));
+        return this;
+    }
+
+    public Service addHeader(String key, String value) {
+        headers.add(key, value);
         return this;
     }
 
     public <T> Service body(T body) {
-        this.body.putAll(
-                new ObjectMapper().convertValue(
-                        body,
-                        new TypeReference<Map<String, String>>() {
-                        })
-        );
+        this.body = body;
         return this;
     }
 
     public <T> void execute(ClientResponse<T> callback, Class<T> responseType) {
         URI uri = new UriTemplate(url).expand(pathVariables);
-        HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(body, headers);
+        HttpEntity<Object> httpEntity = new HttpEntity<>(body, headers);
         new AsyncTask<Void, Void, ResponseEntity<T>>() {
 
             @Override
@@ -136,7 +137,7 @@ public class Service {
 
     public <T> void execute(ClientResponse<T> callback, ParameterizedTypeReference<T> responseType) {
         URI uri = new UriTemplate(url).expand(pathVariables);
-        HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<>(body, headers);
+        HttpEntity<Object> httpEntity = new HttpEntity<>(body, headers);
         new AsyncTask<Void, Void, ResponseEntity<T>>() {
 
             @Override

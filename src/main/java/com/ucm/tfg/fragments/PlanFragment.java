@@ -19,6 +19,7 @@ import com.ucm.tfg.adapters.PlanAdapter;
 import com.ucm.tfg.entities.Plan;
 import com.ucm.tfg.service.PlanService;
 import com.ucm.tfg.service.Service;
+import com.ucm.tfg.service.UserFilmService;
 
 import java.util.ArrayList;
 
