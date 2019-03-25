@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
 import com.ucm.tfg.Utils;
 import com.ucm.tfg.entities.Plan;
@@ -45,8 +46,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
     public void onBindViewHolder(@NonNull RecyclerViewHolder recyclerViewHolder, int index) {
         Plan plan = plans.get(index);
 
-
-        Utils.LoadImageFromWebOperations(plan.getFilm().getImageURL(), recyclerViewHolder.image );
+        Picasso.get().load(plan.getFilm().getImageURL()).resize(600, 200).centerCrop().into(recyclerViewHolder.image);
 
         recyclerViewHolder.title.setText(plan.getFilm().getName());
         recyclerViewHolder.from.setText(plan.getCreator().getName());

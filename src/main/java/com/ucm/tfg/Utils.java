@@ -16,8 +16,6 @@ public class Utils {
         //view.setImageBitmap(bm);
     }
 
-    public static void LoadImageFromWebOperations(String imageUrl, ImageView i) {
-        Picasso.get().load(imageUrl).into(i);
-    }
+
 
 }

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
 import com.ucm.tfg.Utils;
 import com.ucm.tfg.service.FilmService;
@@ -55,9 +56,9 @@ public class SavedFilmActivity extends AppCompatActivity {
 
                     ImageView image = (ImageView) findViewById(R.id.image);
                     /* To display an image represented by byte[], it converts it to a valid ImageView*/
+                    Picasso.get().load(film.getImageURL()).into(image);
 
 
-                    Utils.LoadImageFromWebOperations(film.getImageURL(), image);
 
 
                     Button button = (Button) findViewById(R.id.button);
