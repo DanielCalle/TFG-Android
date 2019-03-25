@@ -144,10 +144,6 @@ public class UnityPlayerActivity extends Activity {
         }, String.class);
     }
 
-    public String getCurrentUser() {
-        return "1";
-    }
-
     public void save(String uuid) {
         Intent intent = new Intent(this, SavedFilmActivity.class);
         intent.putExtra("uuid", uuid);
