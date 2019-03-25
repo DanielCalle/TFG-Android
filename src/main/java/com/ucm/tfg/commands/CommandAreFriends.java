@@ -8,7 +8,7 @@ public class CommandAreFriends implements Command {
 
     @Override
     public Object execute(Object... objects) {
-        ((Service.ClientResponse) objects[2]).onSuccess("true");
+        ((Service.ClientResponse) objects[2]).onSuccess("false");
         return null;
     }
 

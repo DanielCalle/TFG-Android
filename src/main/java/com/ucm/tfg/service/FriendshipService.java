@@ -2,6 +2,8 @@ package com.ucm.tfg.service;
 
 import android.app.Activity;
 
+import com.ucm.tfg.entities.Friendship;
+
 public class FriendshipService {
 
     private static String url = "";
@@ -17,6 +19,15 @@ public class FriendshipService {
                 .addPathVariable("friendUuid", uuid2)
                 .url(develop_url + "/{requesterUuid}/{friendUuid}")
                 .execute(callback, c);
+    }
+    public static <T> void addFriend(Activity activity, Friendship friendship, Service.ClientResponse<T> callback, Class<T> c){
+        Service.getInstance()
+                .setContext(activity)
+                .post()
+                .body(friendship)
+                .url(develop_url)
+                .execute(callback, c);
+
     }
     
 

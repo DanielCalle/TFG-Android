@@ -132,6 +132,7 @@ public class UnityPlayerActivity extends Activity {
             @Override
             public void onSuccess(String result) {
                 if (!result.equalsIgnoreCase("null")) {
+                    Log.wtf("daocontroller", "mando a unity " + action + " result " + result );
                     UnityPlayer.UnitySendMessage("CloudRecognition", action, result);
                 }
             }
@@ -152,6 +153,7 @@ public class UnityPlayerActivity extends Activity {
         intent.putExtra("uuid", uuid);
         startActivity(intent);
     }
+
 
     public void areFriends(String info) {
         Log.wtf("friends unity", info);
