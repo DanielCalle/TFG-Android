@@ -22,7 +22,7 @@ public class Film {
 
     private String infoURL;
 
-    private byte[] image;
+    private String image;
 
     private String genre;
 
@@ -109,14 +109,14 @@ public class Film {
     /**
      * @return the image
      */
-    public byte[] getImage() {
+    public String getImageURL() {
         return image;
     }
 
     /**
      * @param image the description to set
      */
-    public void setImage(byte[] image) {
+    public void setImageURL(String image) {
         this.image = image;
     }
 

@@ -3,6 +3,7 @@ package com.ucm.tfg.adapters;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -19,7 +20,7 @@ import com.ucm.tfg.entities.User;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.wasabeef.blurry.Blurry;
+
 
 public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHolder> {
 
@@ -45,7 +46,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
         Plan plan = plans.get(index);
 
 
-        Utils.convertImage(plan.getFilm().getImage(), recyclerViewHolder.image);
+        Utils.LoadImageFromWebOperations(plan.getFilm().getImageURL(), recyclerViewHolder.image );
 
         recyclerViewHolder.title.setText(plan.getFilm().getName());
         recyclerViewHolder.from.setText(plan.getCreator().getName());

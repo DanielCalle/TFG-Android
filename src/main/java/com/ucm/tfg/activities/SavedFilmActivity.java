@@ -2,6 +2,7 @@ package com.ucm.tfg.activities;
 
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -55,7 +56,9 @@ public class SavedFilmActivity extends AppCompatActivity {
                     ImageView image = (ImageView) findViewById(R.id.image);
                     /* To display an image represented by byte[], it converts it to a valid ImageView*/
 
-                    Utils.convertImage(film.getImage(), image);
+
+                    Utils.LoadImageFromWebOperations(film.getImageURL(), image);
+
 
                     Button button = (Button) findViewById(R.id.button);
                     button.setOnClickListener(view -> {
