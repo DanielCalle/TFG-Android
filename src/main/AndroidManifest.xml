@@ -85,6 +85,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.InfoActivity" />
+        <activity android:name=".activities.PlanActivity" />
     </application>
 
 </manifest>

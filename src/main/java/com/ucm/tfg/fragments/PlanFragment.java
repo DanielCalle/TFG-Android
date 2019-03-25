@@ -1,6 +1,7 @@
 package com.ucm.tfg.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.ucm.tfg.R;
+import com.ucm.tfg.activities.PlanActivity;
 import com.ucm.tfg.adapters.PlanAdapter;
 import com.ucm.tfg.entities.Plan;
 import com.ucm.tfg.service.PlanService;
@@ -87,7 +89,9 @@ public class PlanFragment extends Fragment {
 
         planAdapter = new PlanAdapter(getActivity());
         planAdapter.addPlanOnClickListener((Plan p) -> {
-            Toast.makeText(getActivity(), p.getFilm().getName(), Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(getActivity(), PlanActivity.class);
+            i.putExtra("plan", p);
+            startActivity(i);
         });
 
         recyclerView.setAdapter(planAdapter);
