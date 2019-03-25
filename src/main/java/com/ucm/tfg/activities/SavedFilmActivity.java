@@ -61,10 +61,12 @@ public class SavedFilmActivity extends AppCompatActivity {
                     /* To display an image represented by byte[], it converts it to a valid ImageView*/
                     Picasso.get().load(film.getImageURL()).into(image);
 
-                    UserFilm userFilm = new UserFilm("1", film.getUuid());
-                    UserFilmService.postUserFilm(SavedFilmActivity.this, userFilm, new Service.ClientResponse<String>(){
+                    UserFilm userFilm = new UserFilm();
+                    userFilm.setUserUuid("1");
+                    userFilm.setFilmUuid(film.getUuid());
+                    UserFilmService.postUserFilm(SavedFilmActivity.this, userFilm, new Service.ClientResponse<UserFilm>(){
                         @Override
-                        public void onSuccess(String userFilm) {
+                        public void onSuccess(UserFilm userFilm) {
                             Button button = (Button) findViewById(R.id.button);
                             button.setOnClickListener(view -> {
                                 Intent intent2 = new Intent(Intent.ACTION_VIEW);
@@ -77,7 +79,7 @@ public class SavedFilmActivity extends AppCompatActivity {
                             TextView info = (TextView) findViewById(R.id.textView);
                             info.setText(error);
                         }
-                    }, String.class);
+                    }, UserFilm.class);
 
                 }
 

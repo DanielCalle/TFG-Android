@@ -2,16 +2,15 @@ package com.ucm.tfg.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.io.Serializable;
+import java.util.Date;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserFilm {
+public class UserFilm implements Serializable {
 
     private String userUuid;
     private String filmUuid;
-
-    public UserFilm(String userUuid, String filmUuid) {
-        this.userUuid = userUuid;
-        this.filmUuid = filmUuid;
-    }
+    private Date date;
 
     public String getUserUuid() {
         return userUuid;
@@ -27,5 +26,13 @@ public class UserFilm {
 
     public void setFilmUuid(String filmUuid) {
         this.filmUuid = filmUuid;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }
