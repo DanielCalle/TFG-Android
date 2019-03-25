@@ -86,6 +86,9 @@ public class PlanFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         planAdapter = new PlanAdapter(getActivity());
+        planAdapter.addPlanOnClickListener((Plan p) -> {
+            Toast.makeText(getActivity(), p.getFilm().getName(), Toast.LENGTH_SHORT).show();
+        });
 
         recyclerView.setAdapter(planAdapter);
 
