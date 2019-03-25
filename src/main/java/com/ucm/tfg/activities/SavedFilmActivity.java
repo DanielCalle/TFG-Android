@@ -15,10 +15,13 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
 import com.ucm.tfg.Utils;
+import com.ucm.tfg.entities.User;
+import com.ucm.tfg.entities.UserFilm;
 import com.ucm.tfg.service.FilmService;
 import com.ucm.tfg.service.Service;
 import com.ucm.tfg.entities.Film;
-
+import com.ucm.tfg.service.UserFilmService;
+import com.ucm.tfg.service.UserService;
 
 
 import org.json.JSONObject;
@@ -45,7 +48,7 @@ public class SavedFilmActivity extends AppCompatActivity {
         JSONObject json = null;
         try {
             json = new JSONObject(uuid);
-            FilmService.getFilmById(this, json.getString("uuid"), new Service.ClientResponse<Film>() {
+            FilmService.getFilmById(SavedFilmActivity.this, json.getString("uuid"), new Service.ClientResponse<Film>() {
 
                 @Override
                 public void onSuccess(Film film) {
@@ -58,15 +61,24 @@ public class SavedFilmActivity extends AppCompatActivity {
                     /* To display an image represented by byte[], it converts it to a valid ImageView*/
                     Picasso.get().load(film.getImageURL()).into(image);
 
+                    UserFilm userFilm = new UserFilm("1", film.getUuid());
+                    UserFilmService.postUserFilm(SavedFilmActivity.this, userFilm, new Service.ClientResponse<UserFilm>(){
+                        @Override
+                        public void onSuccess(UserFilm userFilm) {
+                            Button button = (Button) findViewById(R.id.button);
+                            button.setOnClickListener(view -> {
+                                Intent intent2 = new Intent(Intent.ACTION_VIEW);
+                                intent2.setData(Uri.parse(film.getInfoURL()));
+                                startActivity(intent2);
+                            });
+                        }
+                        @Override
+                        public void onError(String error) {
+                            TextView info = (TextView) findViewById(R.id.textView);
+                            info.setText(error);
+                        }
+                    }, UserFilm.class);
 
-
-
-                    Button button = (Button) findViewById(R.id.button);
-                    button.setOnClickListener(view -> {
-                        Intent intent2 = new Intent(Intent.ACTION_VIEW);
-                        intent2.setData(Uri.parse(film.getInfoURL()));
-                        startActivity(intent2);
-                    });
                 }
 
                 @Override

@@ -8,8 +8,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpRequest;
 import org.springframework.util.LinkedMultiValueMap;
@@ -33,7 +35,7 @@ public class Service {
     private String url;
     private HttpMethod method;
     private Map<String, String> pathVariables;
-    private MultiValueMap<String, String> headers;
+    private HttpHeaders headers;
     private MultiValueMap<String, String> body;
 
     private WeakReference<Activity> context;
@@ -43,7 +45,7 @@ public class Service {
     private Service() {
         restTemplate = new RestTemplate();
         pathVariables = new HashMap<>();
-        headers = new LinkedMultiValueMap<>();
+        headers = new HttpHeaders();
         body = new LinkedMultiValueMap<>();
     }
 
@@ -88,8 +90,8 @@ public class Service {
         return this;
     }
 
-    public Service addHeader(String key, String value) {
-        headers.add(key, value);
+    public Service setContentType(MediaType mediaType){
+        headers.setContentType(mediaType);
         return this;
     }
 
