@@ -1,6 +1,7 @@
 package com.ucm.tfg.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,10 +13,12 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.ucm.tfg.R;
-import com.ucm.tfg.adapters.FriendAdapter;
+import com.ucm.tfg.adapters.FilmAdapter;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.service.FilmService;
 import com.ucm.tfg.service.Service;
+
+import java.util.ArrayList;
 
 
 /**
@@ -36,11 +39,11 @@ public class FilmFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    String[][] data = {{"Moana", "Diego, Carlos"}, {"Deadpool", "Zihao, Daniel"}};
 
-    int[] dataImg = {R.drawable.moana_poster, R.drawable.deadpool_poster};
 
     private OnFragmentInteractionListener mListener;
+    private FilmAdapter filmAdapter;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public FilmFragment() {
         // Required empty public constructor
@@ -79,29 +82,35 @@ public class FilmFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_film, container, false);
 
-        GridView gridView = (GridView) view.findViewById(R.id.friends);
-        gridView.setAdapter(new FriendAdapter(getActivity()));
+        GridView gridView = (GridView) view.findViewById(R.id.films);
+        filmAdapter = new FilmAdapter(getActivity());
+        gridView.setAdapter(filmAdapter);
 
-        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            FilmService.getFilmById(getActivity(),"28f361ae08014c4bb94e8a8d59b91130", new Service.ClientResponse<String>() {
-                @Override
-                public void onSuccess(String result) {
-                    Toast.makeText(getActivity(), result, Toast.LENGTH_SHORT).show();
-                    swipeRefreshLayout.setRefreshing(false);
-                }
-
-                @Override
-                public void onError(String error) {
-                    Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
-                    swipeRefreshLayout.setRefreshing(false);
-                }
-            }, String.class);
+            updateFilms();
         });
+        updateFilms();
 
         return view;
     }
+    private void updateFilms() {
+        swipeRefreshLayout.setRefreshing(true);
+        FilmService.getFilms(getActivity(), new Service.ClientResponse<ArrayList<Film>>() {
+            @Override
+            public void onSuccess(ArrayList<Film> result) {
+                filmAdapter.setData(result);
+                swipeRefreshLayout.setRefreshing(false);
+            }
 
+            @Override
+            public void onError(String error) {
+                Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
