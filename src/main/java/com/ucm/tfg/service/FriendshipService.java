@@ -11,7 +11,7 @@ public class FriendshipService {
 
     public FriendshipService() {}
 
-    public static <T> void getFriendsById(Activity activity, String uuid1, String uuid2, Service.ClientResponse<T> callback, Class<T> c) {
+    public static <T> void areFriends(Activity activity, String uuid1, String uuid2, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
                 .get()

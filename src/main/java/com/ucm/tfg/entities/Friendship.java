@@ -2,10 +2,12 @@ package com.ucm.tfg.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Friendship {
+
+public class Friendship implements Serializable {
 
     private String requesterUuid;
     private String friendUuid;

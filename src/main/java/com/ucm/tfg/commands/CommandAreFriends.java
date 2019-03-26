@@ -1,5 +1,9 @@
 package com.ucm.tfg.commands;
 
+import android.app.Activity;
+import android.util.Log;
+
+import com.ucm.tfg.service.FriendshipService;
 import com.ucm.tfg.service.Service;
 
 public class CommandAreFriends implements Command {
@@ -8,7 +12,8 @@ public class CommandAreFriends implements Command {
 
     @Override
     public Object execute(Object... objects) {
-        ((Service.ClientResponse) objects[2]).onSuccess("false");
+        Log.wtf("command friendship objects[1]", (String) objects[1]);
+        FriendshipService.areFriends((Activity) objects[0], "1", (String) objects[1], (Service.ClientResponse) objects[2], (Class) objects[3]);
         return null;
     }
 

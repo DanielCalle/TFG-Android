@@ -21,13 +21,13 @@ public class CommandAddFriends implements Command {
     public Object execute(Object... objects) {
         Log.wtf("command addfriends", objects.toString());
         Friendship tfriendship = new Friendship();
-        DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
         Date date = new Date();
-        //Log.wtf("command addfriends",sdf.format(date) );
+        Log.wtf("command addfriends",sdf.format(date) );
         tfriendship.setDate(sdf.format(date));
         tfriendship.setRequesterUuid("1");
-        //tfriendship.setFriendUuid((String) objects[1]);
-        tfriendship.setFriendUuid("2");
+        tfriendship.setFriendUuid((String) objects[1]);
+        //tfriendship.setFriendUuid("2");
         FriendshipService.addFriend((Activity) objects[0], tfriendship, (Service.ClientResponse) objects[2], (Class) objects[3]);
         //FriendshipService.addFriend((Activity) objects[0],(String) objects[1], "1", (Service.ClientResponse) objects[2], (Class) objects[3]);
         return null;
