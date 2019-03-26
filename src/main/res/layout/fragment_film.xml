@@ -13,13 +13,15 @@
             android:layout_margin="8dp">
 
             <GridView
-                android:id="@+id/friends"
+                android:id="@+id/films"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:horizontalSpacing="4dp"
+                android:horizontalSpacing="1dp"
+                android:verticalSpacing="1dp"
                 android:numColumns="3"
+                android:gravity="center"
                 android:scrollbars="vertical"
-                android:verticalSpacing="4dp" />
+                 />
 
         </android.support.v4.widget.SwipeRefreshLayout>
 

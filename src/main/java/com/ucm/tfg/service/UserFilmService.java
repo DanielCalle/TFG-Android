@@ -5,7 +5,7 @@ import android.app.Activity;
 
 import com.ucm.tfg.entities.UserFilm;
 
-import org.springframework.http.MediaType;
+
 
 public class UserFilmService {
     private static String url = "http://tfg-spring.herokuapp.com/user-films/";
