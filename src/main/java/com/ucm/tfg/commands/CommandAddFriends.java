@@ -26,8 +26,8 @@ public class CommandAddFriends implements Command {
         Log.wtf("command addfriends",sdf.format(date) );
         tfriendship.setDate(sdf.format(date));
         tfriendship.setRequesterUuid("1");
-        //tfriendship.setFriendUuid((String) objects[1]);
-        tfriendship.setFriendUuid("2");
+        tfriendship.setFriendUuid((String) objects[1]);
+        //tfriendship.setFriendUuid("2");
         FriendshipService.addFriend((Activity) objects[0], tfriendship, (Service.ClientResponse) objects[2], (Class) objects[3]);
         //FriendshipService.addFriend((Activity) objects[0],(String) objects[1], "1", (Service.ClientResponse) objects[2], (Class) objects[3]);
         return null;
