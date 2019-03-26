@@ -130,11 +130,7 @@ public class Service {
             protected void onPostExecute(ResponseEntity<T> entity) {
                 Activity activity = context.get();
                 if (activity != null && !activity.isFinishing()) {
-                    if (Integer.parseInt(entity.getStatusCode().toString()) >= 200) {
-                        callback.onSuccess(entity.getBody());
-                    } else {
-                        callback.onError(entity.getStatusCode().toString());
-                    }
+                    callback.onSuccess(entity.getBody());
                 }
             }
         }.execute();
