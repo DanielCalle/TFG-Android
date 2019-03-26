@@ -85,7 +85,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.InfoActivity" />
-        <activity android:name=".activities.PlanActivity" />
+        <activity android:name=".activities.PlanActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>
