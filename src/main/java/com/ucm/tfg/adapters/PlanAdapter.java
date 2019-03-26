@@ -58,7 +58,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
 
         recyclerViewHolder.cardView.setOnClickListener((View v) -> {
             if (planActionListener != null) {
-                planActionListener.onPlanClick(plan);
+                planActionListener.onPlanClick(plan, recyclerViewHolder);
             }
         });
 
@@ -108,7 +108,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
 
     public interface PlanActionListener {
 
-        void onPlanClick(Plan p);
+        void onPlanClick(Plan p, RecyclerViewHolder recyclerViewHolder);
 
     }
 

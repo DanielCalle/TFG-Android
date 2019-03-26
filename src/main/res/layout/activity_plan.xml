@@ -28,6 +28,7 @@
                 android:id="@+id/film_poster"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:transitionName="film_poster"
                 android:scaleType="centerCrop" />
 
             <android.support.v7.widget.Toolbar

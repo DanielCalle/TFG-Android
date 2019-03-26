@@ -4,16 +4,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.ucm.tfg.R;
+import com.ucm.tfg.activities.MainActivity;
 import com.ucm.tfg.activities.PlanActivity;
 import com.ucm.tfg.adapters.PlanAdapter;
 import com.ucm.tfg.entities.Plan;
@@ -89,10 +93,15 @@ public class PlanFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         planAdapter = new PlanAdapter(getActivity());
-        planAdapter.addPlanOnClickListener((Plan p) -> {
+        planAdapter.addPlanOnClickListener((Plan p, PlanAdapter.RecyclerViewHolder recyclerViewHolder) -> {
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(
+                            getActivity(),
+                            Pair.create(recyclerViewHolder.image, "film_poster")
+                    );
             Intent i = new Intent(getActivity(), PlanActivity.class);
             i.putExtra("plan", p);
-            startActivity(i);
+            startActivity(i, optionsCompat.toBundle());
         });
 
         recyclerView.setAdapter(planAdapter);
