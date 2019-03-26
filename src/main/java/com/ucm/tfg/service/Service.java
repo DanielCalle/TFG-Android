@@ -118,14 +118,19 @@ public class Service {
 
             @Override
             protected ResponseEntity<T> doInBackground(Void... voids) {
-                return restTemplate.exchange(uri, method, httpEntity, responseType);
+                try {
+                    return restTemplate.exchange(uri, method, httpEntity, responseType);
+                } catch (Exception e) {
+                    callback.onError("error");
+                    return null;
+                }
             }
 
             @Override
             protected void onPostExecute(ResponseEntity<T> entity) {
                 Activity activity = context.get();
                 if (activity != null && !activity.isFinishing()) {
-                    if (entity.getStatusCode() == HttpStatus.OK) {
+                    if (Integer.parseInt(entity.getStatusCode().toString()) >= 200) {
                         callback.onSuccess(entity.getBody());
                     } else {
                         callback.onError(entity.getStatusCode().toString());
