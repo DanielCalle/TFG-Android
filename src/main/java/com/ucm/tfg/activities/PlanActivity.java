@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,6 +41,9 @@ public class PlanActivity extends AppCompatActivity {
                         .getImageURL()
                 )
                 .into(filmPoster);
+
+        filmPoster.setOnClickListener((View v) -> {
+        });
 
         FloatingActionButton floatingActionButton = findViewById(R.id.film_info);
         floatingActionButton.setOnClickListener((View v) -> {
