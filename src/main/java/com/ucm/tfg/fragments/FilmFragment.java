@@ -15,8 +15,10 @@ import android.widget.Toast;
 import com.ucm.tfg.R;
 import com.ucm.tfg.adapters.FilmAdapter;
 import com.ucm.tfg.entities.Film;
+import com.ucm.tfg.entities.UserFilm;
 import com.ucm.tfg.service.FilmService;
 import com.ucm.tfg.service.Service;
+import com.ucm.tfg.service.UserFilmService;
 
 import java.util.ArrayList;
 

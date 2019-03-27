@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
 import com.ucm.tfg.entities.Film;
+import com.ucm.tfg.entities.Film;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,6 +61,7 @@ public class FilmAdapter extends BaseAdapter {
         TextView text = view.findViewById(R.id.text);
 
         Film film = (Film)this.getItem(position);
+
 
         Picasso.get()
                 .load(film
