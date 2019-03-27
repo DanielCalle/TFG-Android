@@ -69,7 +69,11 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
 
         String users = "";
         for (int i = 0; i < joinedUsers.size(); i++) {
-            users += joinedUsers.get(i).getName() + ", ";
+            if(i < joinedUsers.size() - 1) {
+                users += joinedUsers.get(i).getName() + ", ";
+            } else{
+                users += joinedUsers.get(i).getName();
+            }
         }
         recyclerViewHolder.to.setText(users);
     }

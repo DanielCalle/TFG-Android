@@ -3,12 +3,12 @@
     android:shape="rectangle" >
 
     <!-- View background color -->
+
     <gradient
-        android:startColor="#c79100"
-        android:centerColor="#ffc107"
-        android:centerX="0.75"
-        android:endColor="#c79100"
-        android:angle="270"
+        android:startColor="@color/secondaryColor"
+        android:endColor="@color/secondaryLightColor"
+        android:angle="180"
+        android:dither="true"
         />
 
 
