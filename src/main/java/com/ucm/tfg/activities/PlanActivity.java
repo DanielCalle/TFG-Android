@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +17,9 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
+import com.ucm.tfg.adapters.PlanJoinedUsersAdapter;
 import com.ucm.tfg.entities.Plan;
+import com.ucm.tfg.entities.User;
 
 public class PlanActivity extends AppCompatActivity {
 
@@ -42,8 +46,16 @@ public class PlanActivity extends AppCompatActivity {
                 )
                 .into(filmPoster);
 
-        filmPoster.setOnClickListener((View v) -> {
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.joined);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(PlanActivity.this));
+
+        PlanJoinedUsersAdapter planJoinedUsersAdapter = new PlanJoinedUsersAdapter(PlanActivity.this);
+        planJoinedUsersAdapter.addPlanOnClickListener((User u) -> {
+            Toast.makeText(PlanActivity.this, u.getName(), Toast.LENGTH_SHORT).show();
         });
+        recyclerView.setAdapter(planJoinedUsersAdapter);
+        planJoinedUsersAdapter.setData(plan.getJoinedUsers());
 
         FloatingActionButton floatingActionButton = findViewById(R.id.film_info);
         floatingActionButton.setOnClickListener((View v) -> {
