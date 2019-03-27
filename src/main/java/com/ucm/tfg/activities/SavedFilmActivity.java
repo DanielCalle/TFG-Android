@@ -69,9 +69,9 @@ public class SavedFilmActivity extends AppCompatActivity {
                         public void onSuccess(UserFilm userFilm) {
                             Button button = (Button) findViewById(R.id.button);
                             button.setOnClickListener(view -> {
-                                Intent intent2 = new Intent(Intent.ACTION_VIEW);
-                                intent2.setData(Uri.parse(film.getInfoURL()));
-                                startActivity(intent2);
+                                Intent intentInfo = new Intent(Intent.ACTION_VIEW);
+                                intentInfo.setData(Uri.parse(film.getInfoURL()));
+                                startActivity(intentInfo);
                             });
                         }
                         @Override

@@ -1,6 +1,9 @@
 package com.ucm.tfg.adapters;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +19,8 @@ import com.ucm.tfg.entities.Film;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.support.v4.content.ContextCompat.startActivity;
 
 public class FilmAdapter extends BaseAdapter {
 
@@ -62,7 +67,11 @@ public class FilmAdapter extends BaseAdapter {
                 ).fit()
                 .into(image);
 
-
+        image.setOnClickListener((View v) -> {
+            Intent intentInfo = new Intent(Intent.ACTION_VIEW);
+            intentInfo.setData(Uri.parse(film.getInfoURL()));
+            startActivity(this.context, intentInfo, Bundle.EMPTY);
+        });
 
         return view;
     }
