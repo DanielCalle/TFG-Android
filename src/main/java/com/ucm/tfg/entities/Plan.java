@@ -1,43 +1,45 @@
 package com.ucm.tfg.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Plan implements Serializable {
 
-    private Long id;
+    private String id;
 
-    private User creator;
+    private String creatorUuid;
 
-    private Film film;
+    private String filmUuid;
 
     private List<User> joinedUsers;
 
     private Date date;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public User getCreator() {
-        return creator;
+    public String getCreatorUuid() {
+        return creatorUuid;
     }
 
-    public void setCreator(User creator) {
-        this.creator = creator;
+    public void setCreator(String creatorUuid) {
+        this.creatorUuid = creatorUuid;
     }
 
-    public Film getFilm() {
-        return film;
+    public String getFilmUuid() {
+        return filmUuid;
     }
 
-    public void setFilm(Film film) {
-        this.film = film;
+    public void setFilmUuid(String filmUuid) {
+        this.filmUuid = filmUuid;
     }
 
     public List<User> getJoinedUsers() {

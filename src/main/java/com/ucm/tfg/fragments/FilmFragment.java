@@ -19,6 +19,7 @@ import com.ucm.tfg.entities.UserFilm;
 import com.ucm.tfg.service.FilmService;
 import com.ucm.tfg.service.Service;
 import com.ucm.tfg.service.UserFilmService;
+import com.ucm.tfg.service.UserService;
 
 import java.util.ArrayList;
 
@@ -99,7 +100,7 @@ public class FilmFragment extends Fragment {
     }
     private void updateFilms() {
         swipeRefreshLayout.setRefreshing(true);
-        FilmService.getFilms(getActivity(), new Service.ClientResponse<ArrayList<Film>>() {
+        UserService.getUserFilmsById(getActivity(), "1", new Service.ClientResponse<ArrayList<Film>>() {
             @Override
             public void onSuccess(ArrayList<Film> result) {
                 filmAdapter.setData(result);

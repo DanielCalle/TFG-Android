@@ -35,16 +35,16 @@ public class PlanActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setTitle(plan.getFilm().getName());
+            //getSupportActionBar().setTitle(plan.getFilm().getName());
         }
 
         ImageView filmPoster = findViewById(R.id.film_poster);
-        Picasso.get()
+        /*Picasso.get()
                 .load(plan
                         .getFilm()
                         .getImageURL()
                 )
-                .into(filmPoster);
+                .into(filmPoster);*/
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.joined);
         recyclerView.setHasFixedSize(true);
@@ -60,11 +60,11 @@ public class PlanActivity extends AppCompatActivity {
         FloatingActionButton floatingActionButton = findViewById(R.id.film_info);
         floatingActionButton.setOnClickListener((View v) -> {
             Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(plan.getFilm().getInfoURL()));
+           // intent.setData(Uri.parse(plan.getFilm().getInfoURL()));
             startActivity(intent);
         });
 
-        Toast.makeText(PlanActivity.this, plan.getFilm().getName(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(PlanActivity.this, plan.getFilm().getName(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

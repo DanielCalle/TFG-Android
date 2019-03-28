@@ -2,6 +2,12 @@ package com.ucm.tfg.service;
 
 import android.app.Activity;
 
+import com.ucm.tfg.entities.Film;
+
+import org.springframework.core.ParameterizedTypeReference;
+
+import java.util.ArrayList;
+
 public class UserService {
     private static String url = "http://tfg-spring.herokuapp.com/users/";
     private static String develop_url = "http://filmar-develop.herokuapp.com/users/";
@@ -16,4 +22,13 @@ public class UserService {
                 .url(develop_url + "{id}")
                 .execute(callback, c);
     }
+
+    public static <T> void getUserFilmsById(Activity activity,String uuid, Service.ClientResponse<ArrayList<Film>> callback) {
+        Service.getInstance()
+                .setContext(activity)
+                .get().addPathVariable("id", uuid)
+                .url(develop_url + "{id}" + "/films")
+                .execute(callback, new ParameterizedTypeReference<ArrayList<Film>>(){});
+    }
+
 }

@@ -16,13 +16,7 @@ public class UserFilmService {
 
     public UserFilmService(){}
 
-    public static <T> void getUserFilms(Activity activity, Service.ClientResponse<ArrayList<UserFilm>> callback) {
-        Service.getInstance()
-                .setContext(activity)
-                .get()
-                .url(develop_url)
-                .execute(callback, new ParameterizedTypeReference<ArrayList<UserFilm>>(){});
-    }
+
     public static <T> void postUserFilm(Activity activity, UserFilm userFilm, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
