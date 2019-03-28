@@ -130,7 +130,11 @@ public class Service {
             protected void onPostExecute(ResponseEntity<T> entity) {
                 Activity activity = context.get();
                 if (activity != null && !activity.isFinishing()) {
-                    callback.onSuccess(entity.getBody());
+                    if (entity != null && entity.getStatusCode().toString().startsWith("2")) {
+                        callback.onSuccess(entity.getBody());
+                    } else {
+                        callback.onError(entity == null ? "" : entity.getStatusCode().toString());
+                    }
                 }
             }
         }.execute();
@@ -150,10 +154,10 @@ public class Service {
             protected void onPostExecute(ResponseEntity<T> entity) {
                 Activity activity = context.get();
                 if (activity != null && !activity.isFinishing()) {
-                    if (entity.getStatusCode() == HttpStatus.OK) {
+                    if (entity != null && entity.getStatusCode().toString().startsWith("2")) {
                         callback.onSuccess(entity.getBody());
                     } else {
-                        callback.onError(entity.getStatusCode().toString());
+                        callback.onError(entity == null ? "" : entity.getStatusCode().toString());
                     }
                 }
             }
