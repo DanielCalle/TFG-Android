@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +31,13 @@ import java.util.ArrayList;
 
 public class PlanActivity extends AppCompatActivity {
 
+    private RecyclerView recyclerView;
+    private PlanJoinedUsersAdapter planJoinedUsersAdapter;
+
+    private ActionBar actionBar;
+    private ImageView filmPoster;
+    private FloatingActionButton floatingActionButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,30 +47,33 @@ public class PlanActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayShowHomeEnabled(true);
+            actionBar.setTitle("");
         }
 
-        ImageView filmPoster = findViewById(R.id.film_poster);
+        filmPoster = findViewById(R.id.film_poster);
 
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.joined);
+        recyclerView = (RecyclerView) findViewById(R.id.joined);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(PlanActivity.this));
 
-        PlanJoinedUsersAdapter planJoinedUsersAdapter = new PlanJoinedUsersAdapter(PlanActivity.this);
+        planJoinedUsersAdapter = new PlanJoinedUsersAdapter(PlanActivity.this);
         planJoinedUsersAdapter.addPlanOnClickListener((User u) -> {
             Toast.makeText(PlanActivity.this, u.getName(), Toast.LENGTH_SHORT).show();
         });
         recyclerView.setAdapter(planJoinedUsersAdapter);
 
-        FloatingActionButton floatingActionButton = findViewById(R.id.film_info);
+        floatingActionButton = findViewById(R.id.film_info);
 
         FilmService.getFilmById(PlanActivity.this, plan.getFilmUuid(), new Service.ClientResponse<Film>() {
             @Override
             public void onSuccess(Film result) {
-                if (getSupportActionBar() != null) {
-                    getSupportActionBar().setTitle(result.getName());
+                if (actionBar != null) {
+                    actionBar.setTitle(result.getName());
                 }
 
                 Picasso.get()
