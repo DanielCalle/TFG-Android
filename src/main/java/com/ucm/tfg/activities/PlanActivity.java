@@ -18,8 +18,15 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
 import com.ucm.tfg.adapters.PlanJoinedUsersAdapter;
+import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.Plan;
 import com.ucm.tfg.entities.User;
+import com.ucm.tfg.service.FilmService;
+import com.ucm.tfg.service.PlanService;
+import com.ucm.tfg.service.Service;
+import com.ucm.tfg.service.UserService;
+
+import java.util.ArrayList;
 
 public class PlanActivity extends AppCompatActivity {
 
@@ -35,16 +42,9 @@ public class PlanActivity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
-            //getSupportActionBar().setTitle(plan.getFilm().getName());
         }
 
         ImageView filmPoster = findViewById(R.id.film_poster);
-        /*Picasso.get()
-                .load(plan
-                        .getFilm()
-                        .getImageURL()
-                )
-                .into(filmPoster);*/
 
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.joined);
         recyclerView.setHasFixedSize(true);
@@ -55,16 +55,45 @@ public class PlanActivity extends AppCompatActivity {
             Toast.makeText(PlanActivity.this, u.getName(), Toast.LENGTH_SHORT).show();
         });
         recyclerView.setAdapter(planJoinedUsersAdapter);
-        planJoinedUsersAdapter.setData(plan.getJoinedUsers());
 
         FloatingActionButton floatingActionButton = findViewById(R.id.film_info);
-        floatingActionButton.setOnClickListener((View v) -> {
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-           // intent.setData(Uri.parse(plan.getFilm().getInfoURL()));
-            startActivity(intent);
-        });
 
-        //Toast.makeText(PlanActivity.this, plan.getFilm().getName(), Toast.LENGTH_SHORT).show();
+        FilmService.getFilmById(PlanActivity.this, plan.getFilmUuid(), new Service.ClientResponse<Film>() {
+            @Override
+            public void onSuccess(Film result) {
+                if (getSupportActionBar() != null) {
+                    getSupportActionBar().setTitle(result.getName());
+                }
+
+                Picasso.get()
+                        .load(result.getImageURL())
+                        .into(filmPoster);
+
+                floatingActionButton.setOnClickListener((View v) -> {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse(result.getInfoURL()));
+                    startActivity(intent);
+                });
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        }, Film.class);
+
+        PlanService.getJoinedUsers(PlanActivity.this, plan.getId(), new Service.ClientResponse<ArrayList<User>>() {
+
+            @Override
+            public void onSuccess(ArrayList<User> result) {
+                planJoinedUsersAdapter.setData(result);
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
     }
 
     @Override
