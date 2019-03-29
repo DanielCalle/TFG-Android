@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FilmAR</string>
+    <string name="plans">我的计划</string>
+    <string name="recommendations">推荐</string>
+    <string name="saved_films">我的电影</string>
+</resources>
