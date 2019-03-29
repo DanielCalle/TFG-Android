@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FilmAR</string>
+    <string name="title">Título</string>
+    <string name="description">Descripción</string>
+    <string name="duration">Duración</string>
+    <string name="director">Director</string>
+    <string name="valoration">Valoración</string>
+    <string name="title_activity_saved_film">SavedFilmActivity</string>
+    <string name="todo">Para Hacer</string>
+    <string name="creator">Creador</string>
+    <string name="joined_users">Usuarios unidos</string>
+    <string name="plans">Mis planes</string>
+    <string name="recommendations">Recomendaciones</string>
+    <string name="saved_films">Mis películas</string>
+</resources>

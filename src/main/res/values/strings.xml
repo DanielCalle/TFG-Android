@@ -10,4 +10,7 @@
     <string name="todo">TODO</string>
     <string name="creator">Creator</string>
     <string name="joined_users">joined Users</string>
+    <string name="plans">My plans</string>
+    <string name="recommendations">Recommendations</string>
+    <string name="saved_films">My films</string>
 </resources>

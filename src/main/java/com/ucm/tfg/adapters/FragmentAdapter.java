@@ -8,6 +8,8 @@ import com.ucm.tfg.fragments.FilmFragment;
 import com.ucm.tfg.fragments.RecommendationFragment;
 import com.ucm.tfg.fragments.PlanFragment;
 
+import java.nio.charset.Charset;
+
 public class FragmentAdapter extends FragmentPagerAdapter {
 
     public FragmentAdapter(FragmentManager fm) {
@@ -27,6 +29,16 @@ public class FragmentAdapter extends FragmentPagerAdapter {
             case 0: return new PlanFragment();
             case 1: return new RecommendationFragment();
             case 2: return new FilmFragment();
+            default: return null;
+        }
+    }
+
+    @Override
+    public CharSequence getPageTitle(int position) {
+        switch(position) {
+            case 0: return "Planes";
+            case 1: return "Recomendaciones";
+            case 2: return "Películas";
             default: return null;
         }
     }

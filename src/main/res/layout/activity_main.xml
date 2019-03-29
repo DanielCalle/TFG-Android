@@ -36,19 +36,22 @@
             android:alpha="@android:integer/config_shortAnimTime"
             android:filterTouchesWhenObscured="true"
             android:foreground="@color/secondaryTextColor"
-            android:icon="@drawable/ic_perm_contact_calendar_black_24dp" />
+            android:icon="@drawable/ic_perm_contact_calendar_black_24dp"
+            android:text="@string/plans" />
 
         <android.support.design.widget.TabItem
             android:id="@+id/center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@drawable/ic_search_white_24dp" />
+            android:icon="@drawable/ic_search_white_24dp"
+            android:text="@string/recommendations" />
 
         <android.support.design.widget.TabItem
             android:id="@+id/right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:icon="@drawable/ic_movie_white_24dp" />
+            android:icon="@drawable/ic_movie_white_24dp"
+            android:text="@string/saved_films" />
 
     </android.support.design.widget.TabLayout>
 
