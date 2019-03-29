@@ -26,6 +26,8 @@ import com.ucm.tfg.service.UserService;
 
 import org.json.JSONObject;
 
+import java.util.Date;
+
 public class SavedFilmActivity extends AppCompatActivity {
 
     private static String LOGTAG = "SavedFilmActivity";
@@ -64,9 +66,11 @@ public class SavedFilmActivity extends AppCompatActivity {
                     UserFilm userFilm = new UserFilm();
                     userFilm.setUserUuid("1");
                     userFilm.setFilmUuid(film.getUuid());
+                    userFilm.setDate(new Date());
                     UserFilmService.postUserFilm(SavedFilmActivity.this, userFilm, new Service.ClientResponse<UserFilm>(){
                         @Override
                         public void onSuccess(UserFilm userFilm) {
+                            Log.i(LOGTAG, userFilm.getFilmUuid());
                             Button button = (Button) findViewById(R.id.button);
                             button.setOnClickListener(view -> {
                                 Intent intentInfo = new Intent(Intent.ACTION_VIEW);
