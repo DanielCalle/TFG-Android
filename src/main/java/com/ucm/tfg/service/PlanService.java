@@ -22,6 +22,7 @@ public class PlanService {
                 .url(develop_url)
                 .execute(callback, new ParameterizedTypeReference<ArrayList<Plan>>(){});
     }
+
     public static <T> void getJoinedUsers(Activity activity, String uuid, Service.ClientResponse<ArrayList<User>> callback) {
         Service.getInstance()
                 .setContext(activity)

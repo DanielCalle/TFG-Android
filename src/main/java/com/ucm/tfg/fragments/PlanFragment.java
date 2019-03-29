@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.ucm.tfg.R;
+import com.ucm.tfg.Utils;
 import com.ucm.tfg.activities.MainActivity;
 import com.ucm.tfg.activities.PlanActivity;
 import com.ucm.tfg.adapters.PlanAdapter;
@@ -26,6 +27,7 @@ import com.ucm.tfg.service.FilmService;
 import com.ucm.tfg.service.PlanService;
 import com.ucm.tfg.service.Service;
 import com.ucm.tfg.service.UserFilmService;
+import com.ucm.tfg.service.UserService;
 
 import java.util.ArrayList;
 
@@ -119,7 +121,7 @@ public class PlanFragment extends Fragment {
 
     private void updatePlans() {
         swipeRefreshLayout.setRefreshing(true);
-        PlanService.getPlans(getActivity(), new Service.ClientResponse<ArrayList<Plan>>() {
+        UserService.getUserPlansById(getActivity(), "5df9b1ab2e9742aa9bfd4a7d12dde033", new Service.ClientResponse<ArrayList<Plan>>() {
             @Override
             public void onSuccess(ArrayList<Plan> result) {
                 planAdapter.setData(result);
