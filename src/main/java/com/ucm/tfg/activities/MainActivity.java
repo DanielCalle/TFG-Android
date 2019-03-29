@@ -4,10 +4,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.ucm.tfg.views.CustomViewPager;
 import com.ucm.tfg.fragments.FilmFragment;
 import com.ucm.tfg.fragments.RecommendationFragment;
 import com.ucm.tfg.fragments.PlanFragment;
@@ -24,8 +24,10 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.container);
+        CustomViewPager viewPager = (CustomViewPager) findViewById(R.id.container);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab);
+
+        viewPager.setSwipePagingEnabled(false);
 
         viewPager.setAdapter(
                 new FragmentAdapter(getSupportFragmentManager())
