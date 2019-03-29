@@ -21,24 +21,12 @@ public class FragmentAdapter extends FragmentPagerAdapter {
         return 3;
     }
 
-
-
     @Override
     public Fragment getItem(int position) {
         switch(position) {
             case 0: return new PlanFragment();
             case 1: return new RecommendationFragment();
             case 2: return new FilmFragment();
-            default: return null;
-        }
-    }
-
-    @Override
-    public CharSequence getPageTitle(int position) {
-        switch(position) {
-            case 0: return "Planes";
-            case 1: return "Recomendaciones";
-            case 2: return "Películas";
             default: return null;
         }
     }
