@@ -27,6 +27,7 @@ public class FilmAdapter extends BaseAdapter {
 
     private List<Film> films;
     private Context context;
+    private FilmActionListener filmActionListener;
 
     public FilmAdapter(Context context) {
         this.context = context;
@@ -62,7 +63,6 @@ public class FilmAdapter extends BaseAdapter {
 
         Film film = (Film)this.getItem(position);
 
-
         Picasso.get()
                 .load(film
                         .getImageURL()
@@ -70,11 +70,21 @@ public class FilmAdapter extends BaseAdapter {
                 .into(image);
 
         image.setOnClickListener((View v) -> {
-            Intent intentInfo = new Intent(Intent.ACTION_VIEW);
-            intentInfo.setData(Uri.parse(film.getInfoURL()));
-            startActivity(this.context, intentInfo, Bundle.EMPTY);
+            if (filmActionListener != null) {
+                filmActionListener.onFilmClick(film, v);
+            }
         });
 
         return view;
+    }
+
+    public void addPlanOnClickListener(FilmActionListener filmActionListener) {
+        this.filmActionListener = filmActionListener;
+    }
+
+    public interface FilmActionListener {
+
+        void onFilmClick(Film film, View v);
+
     }
 }

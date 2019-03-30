@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +15,7 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.ucm.tfg.R;
+import com.ucm.tfg.activities.InfoActivity;
 import com.ucm.tfg.adapters.FilmAdapter;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.UserFilm;
@@ -87,8 +90,17 @@ public class FilmFragment extends Fragment {
 
         GridView gridView = (GridView) view.findViewById(R.id.films);
         filmAdapter = new FilmAdapter(getActivity());
+        filmAdapter.addPlanOnClickListener((Film film, View v) -> {
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(
+                            getActivity(),
+                            Pair.create(v, "film_poster")
+                    );
+            Intent i = new Intent(getActivity(), InfoActivity.class);
+            i.putExtra("film", film);
+            startActivity(i, optionsCompat.toBundle());
+        });
         gridView.setAdapter(filmAdapter);
-
 
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
