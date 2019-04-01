@@ -29,7 +29,7 @@ public class Film implements Serializable {
 
     private int duration;
 
-    private int valoration;
+    private float rating;
 
     private String country;
 
@@ -150,17 +150,17 @@ public class Film implements Serializable {
     }
 
     /**
-     * @return the valoration
+     * @return the rating
      */
-    public int getValoration() {
-        return valoration;
+    public float getRating() {
+        return rating;
     }
 
     /**
-     * @param valoration the valoration to set
+     * @param rating the valoration to set
      */
-    public void setValoration(int valoration) {
-        this.valoration = valoration;
+    public void setRating(float rating) {
+        this.rating = rating;
     }
 
     /**
@@ -177,22 +177,4 @@ public class Film implements Serializable {
         this.country = country;
     }
 
-
-    public JSONObject getJson(){
-        JSONObject json = new JSONObject();
-        try {
-            json.put("uuid", uuid);
-            json.put("name", name);
-            json.put("idDirector", director);
-            json.put("trailer", trailer);
-            json.put("description", infoURL);
-            json.put("genre", genre);
-            json.put("duration", duration);
-            json.put("valoration", valoration);
-            json.put("country", country);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return json;
-    }
 }

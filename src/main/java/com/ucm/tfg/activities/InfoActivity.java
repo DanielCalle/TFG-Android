@@ -56,6 +56,10 @@ public class InfoActivity extends AppCompatActivity {
         TextView progressText = findViewById(R.id.progress_text);
         SeekBar progressController = findViewById(R.id.progress_controller);
 
+        progressBar.setProgress((int) film.getRating() * 10);
+        progressText.setText("" + film.getRating() + "/10");
+        progressController.setProgress((int) film.getRating() * 10);
+
         progressController.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
