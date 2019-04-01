@@ -46,15 +46,17 @@ public class AnchorVisibilityBehavior<T extends View> extends CoordinatorLayout.
         }
 
         // First, let's get the visible rect of the dependency
-        final Rect rect = mTmpRect;
-        ViewGroupUtils.getDescendantRect(parent, appBarLayout, rect);
+        if (child.getVisibility() != View.GONE) {
+            final Rect rect = mTmpRect;
+            ViewGroupUtils.getDescendantRect(parent, appBarLayout, rect);
 
-        if (rect.bottom <= appBarLayout.getMinimumHeightForVisibleOverlappingContent()) {
-            // If the anchor's bottom is below the seam, hide it
-            child.setVisibility(View.INVISIBLE);
-        } else {
-            // Else, show it
-            child.setVisibility(View.VISIBLE);
+            if (rect.bottom <= appBarLayout.getMinimumHeightForVisibleOverlappingContent()) {
+                // If the anchor's bottom is below the seam, hide it
+                child.setVisibility(View.INVISIBLE);
+            } else {
+                // Else, show it
+                child.setVisibility(View.VISIBLE);
+            }
         }
         return true;
     }

@@ -8,9 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,10 +58,19 @@ public class InfoActivity extends AppCompatActivity {
         TextView progressText = findViewById(R.id.progress_text);
         SeekBar progressController = findViewById(R.id.progress_controller);
 
+        // setting film rating data
         progressBar.setProgress((int) film.getRating() * 10);
         progressText.setText("" + film.getRating() + "/10");
         progressController.setProgress((int) film.getRating() * 10);
 
+        // enable/disable rating
+        progressBar.setOnClickListener((View v) -> {
+            progressController.setVisibility(
+                    progressController.isShown() ? View.GONE : View.VISIBLE
+            );
+        });
+
+        // change rating
         progressController.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -77,8 +88,6 @@ public class InfoActivity extends AppCompatActivity {
 
             }
         });
-
-
     }
 
     @Override
