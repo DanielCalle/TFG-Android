@@ -118,9 +118,9 @@ public class UnityPlayerActivity extends Activity {
         JSONObject json = null;
         try {
             json = new JSONObject(info);
-            Log.d("JSSONN", json.getString("trailer"));
+            Log.d("JSSONN", json.getString("trailerURL"));
             Intent youtube = new Intent(Intent.ACTION_VIEW);
-            youtube.setData(Uri.parse(json.getString("trailer")));
+            youtube.setData(Uri.parse(json.getString("trailerURL")));
             startActivity(youtube);
         } catch (JSONException e) {
             e.printStackTrace();
