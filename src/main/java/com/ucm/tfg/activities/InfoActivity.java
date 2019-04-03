@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
 import com.ucm.tfg.entities.Film;
+import com.ucm.tfg.views.ExpandableTextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -88,6 +91,18 @@ public class InfoActivity extends AppCompatActivity {
 
             }
         });
+
+        Button addToPlan = findViewById(R.id.add_to_plan);
+
+        ImageButton expandable = findViewById(R.id.expandable_button);
+        ExpandableTextView description = findViewById(R.id.description);
+        String text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt " +
+                "ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco " +
+                "laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate " +
+                "velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, " +
+                "sunt in culpa qui officia deserunt mollit anim id est laborum.";
+        description.setText(text);
+        description.setExpandListener(expandable);
     }
 
     @Override

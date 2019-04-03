@@ -4,4 +4,5 @@
     <string name="plans">My plans</string>
     <string name="recommendations">Recommendations</string>
     <string name="saved_films">My films</string>
+    <string name="add_film_to_plan">Add to plan</string>
 </resources>
