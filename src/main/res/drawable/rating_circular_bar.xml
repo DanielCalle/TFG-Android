@@ -14,23 +14,13 @@
             android:thickness="10dp"
             android:useLevel="true">
 
-            <solid android:color="#55FFFF00" />
-        </shape>
-    </item>
-
-    <item>
-        <shape
-            android:innerRadius="40dp"
-            android:shape="ring"
-            android:thickness="10dp"
-            android:useLevel="true">
-
             <gradient
                 android:angle="0"
-                android:endColor="@color/secondaryDarkColor"
-                android:startColor="@color/secondaryLightColor"
+                android:endColor="#00ff00"
+                android:centerColor="#ffff00"
+                android:startColor="#ff0000"
                 android:type="sweep"
-                android:useLevel="false" />
+                android:useLevel="false"/>
         </shape>
     </item>
 </layer-list>
