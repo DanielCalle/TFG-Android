@@ -50,6 +50,27 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <SeekBar
+                android:id="@+id/progress_controller"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin"
+                android:theme="@style/AppTheme.SeekBar"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/description_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin"
+                android:text="@string/film_description"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/progress_controller" />
+
             <com.ucm.tfg.views.ExpandableTextView
                 android:id="@+id/description"
                 android:layout_width="0dp"
@@ -57,7 +78,7 @@
                 android:layout_margin="@dimen/margin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/description_title" />
 
             <ImageButton
                 android:id="@+id/expandable_button"
@@ -99,18 +120,6 @@
             android:textStyle="bold" />
 
     </RelativeLayout>
-
-    <SeekBar
-        android:id="@+id/progress_controller"
-        android:theme="@style/AppTheme.SeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/margin"
-        android:visibility="gone"
-        app:layout_anchor="@id/app_bar"
-        android:layout_gravity="bottom"
-        app:layout_anchorGravity="bottom|center|end"
-        app:layout_behavior="com.ucm.tfg.views.AnchorVisibilityBehavior" />
 
     <Button
         android:id="@+id/add_to_plan"
