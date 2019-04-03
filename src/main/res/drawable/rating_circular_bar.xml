@@ -27,12 +27,10 @@
 
             <gradient
                 android:angle="0"
-                android:endColor="@color/secondaryColor"
-                android:startColor="#FFFFFF"
+                android:endColor="@color/secondaryDarkColor"
+                android:startColor="@color/secondaryLightColor"
                 android:type="sweep"
                 android:useLevel="false" />
-
-            <corners android:radius="5dp"/>
         </shape>
     </item>
 </layer-list>
