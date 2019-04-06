@@ -1,0 +1,16 @@
+<resources>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowActivityTransitions">true</item>
+    </style>
+
+    <style name="AppTheme.SeekBar" parent="Base.Widget.AppCompat.SeekBar">
+        <item name="android:colorControlActivated">@color/secondaryColor</item>
+        <item name="android:colorControlNormal">#FFFFFF</item>
+    </style>
+
+    <style name="AppTheme.CollapsibleToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+</resources>
