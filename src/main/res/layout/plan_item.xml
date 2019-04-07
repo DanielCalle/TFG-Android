@@ -36,13 +36,11 @@
             android:layout_width="405dp"
             android:layout_height="match_parent">
 
-
             <TextView
                 android:id="@+id/date"
                 android:layout_width="102dp"
                 android:layout_height="27dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginBottom="8dp"
                 android:alpha="0.9"
@@ -62,7 +60,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginStart="20dp"
-                android:layout_marginLeft="20dp"
                 android:layout_marginTop="40dp"
                 android:gravity="center"
                 android:textAllCaps="true"

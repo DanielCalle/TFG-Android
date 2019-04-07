@@ -22,9 +22,9 @@ public class PlanUserAdapter extends RecyclerView.Adapter<PlanUserAdapter.Recycl
     private Activity context;
     private List<User> users;
 
-    public PlanUserAdapter(Activity context, ArrayList<User> users) {
+    public PlanUserAdapter(Activity context) {
         this.context = context;
-        this.users = users;
+        this.users = new ArrayList<>();
     }
 
     @NonNull
@@ -50,6 +50,11 @@ public class PlanUserAdapter extends RecyclerView.Adapter<PlanUserAdapter.Recycl
     @Override
     public int getItemCount() {
         return this.users.size();
+    }
+
+    public void setData(List<User> data) {
+        users = data;
+        notifyDataSetChanged();
     }
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {

@@ -7,6 +7,7 @@ import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,8 +93,9 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
             @Override
             public void onSuccess(ArrayList<User> result) {
                 String users = "";
-                PlanUserAdapter planUserAdapter = new PlanUserAdapter(context, result);
+                PlanUserAdapter planUserAdapter = new PlanUserAdapter(context);
                 recyclerViewHolder.users.setAdapter(planUserAdapter);
+                planUserAdapter.setData(result);
             }
 
             @Override
@@ -138,6 +140,8 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
             date = view.findViewById(R.id.date);
             title = view.findViewById(R.id.title);
             users = view.findViewById(R.id.users);
+            users.setHasFixedSize(true);
+            users.setLayoutManager(new LinearLayoutManager(context));
         }
     }
 
