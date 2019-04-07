@@ -17,6 +17,8 @@ public class User implements Serializable {
 
     private String password;
 
+    private String imageURL;
+
     /**
      * @return the uuid
      */
@@ -43,6 +45,20 @@ public class User implements Serializable {
      */
     public void setName(String name) {
         this.name = name;
+    }
+
+    /**
+     * @return the imageURL
+     */
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    /**
+     * @param imageURL the name to set
+     */
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     /**
@@ -74,6 +90,7 @@ public class User implements Serializable {
             json.put("name", name);
             json.put("email", email);
             json.put("password", password);
+            json.put("imageURL", imageURL);
         } catch (JSONException e) {
             e.printStackTrace();
         }

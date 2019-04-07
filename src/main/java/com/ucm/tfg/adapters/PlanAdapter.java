@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
 import com.ucm.tfg.Utils;
+import com.ucm.tfg.activities.PlanActivity;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.Plan;
 import com.ucm.tfg.entities.User;
@@ -63,6 +64,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
                         .centerCrop()
                         .into(recyclerViewHolder.image);
                 recyclerViewHolder.title.setText(result.getName());
+                recyclerViewHolder.date.setText(plan.getDate().toString());
             }
 
             @Override
@@ -75,7 +77,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
 
             @Override
             public void onSuccess(User result) {
-                recyclerViewHolder.from.setText(result.getName());
+                //recyclerViewHolder.from.setText(result.getName());
             }
 
             @Override
@@ -90,14 +92,8 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
             @Override
             public void onSuccess(ArrayList<User> result) {
                 String users = "";
-                for (int i = 0; i < result.size(); i++) {
-                    if(i < result.size() - 1) {
-                        users += result.get(i).getName() + ", ";
-                    } else{
-                        users += result.get(i).getName();
-                    }
-                }
-                recyclerViewHolder.to.setText(users);
+                PlanUserAdapter planUserAdapter = new PlanUserAdapter(context, result);
+                recyclerViewHolder.users.setAdapter(planUserAdapter);
             }
 
             @Override
@@ -131,17 +127,17 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
 
         public CardView cardView;
         public ImageView image;
+        public TextView date;
         public TextView title;
-        public TextView from;
-        public TextView to;
+        public RecyclerView users;
 
         public RecyclerViewHolder(View view) {
             super(view);
             cardView = view.findViewById(R.id.cardview);
             image = view.findViewById(R.id.image);
+            date = view.findViewById(R.id.date);
             title = view.findViewById(R.id.title);
-            from = view.findViewById(R.id.from);
-            to = view.findViewById(R.id.to);
+            users = view.findViewById(R.id.users);
         }
     }
 

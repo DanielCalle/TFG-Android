@@ -69,17 +69,16 @@ public class PlanJoinedUsersAdapter extends RecyclerView.Adapter<PlanJoinedUsers
 
         public CardView cardView;
         public ImageView image;
+        public TextView date;
         public TextView title;
-        public TextView from;
-        public TextView to;
+        public TextView users;
 
         public RecyclerViewHolder(View view) {
             super(view);
             cardView = view.findViewById(R.id.cardview);
             image = view.findViewById(R.id.image);
+            date = view.findViewById(R.id.date);
             title = view.findViewById(R.id.title);
-            from = view.findViewById(R.id.from);
-            to = view.findViewById(R.id.to);
         }
     }
 
