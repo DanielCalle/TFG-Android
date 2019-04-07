@@ -32,7 +32,7 @@ public class PlanUserAdapter extends RecyclerView.Adapter<PlanUserAdapter.Recycl
     public RecyclerViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         return new PlanUserAdapter.RecyclerViewHolder(
                 LayoutInflater.from(viewGroup.getContext())
-                        .inflate(R.layout.plan_item, viewGroup, false)
+                        .inflate(R.layout.plan_user_item, viewGroup, false)
         );
     }
 
