@@ -19,7 +19,7 @@ public class Film implements Serializable {
 
     private String director;
 
-    private String trailer;
+    private String trailerURL;
 
     private String infoURL;
 
@@ -80,17 +80,17 @@ public class Film implements Serializable {
     }
 
     /**
-     * @return the trailer
+     * @return the trailerURL
      */
-    public String getTrailer() {
-        return trailer;
+    public String getTrailerURL() {
+        return trailerURL;
     }
 
     /**
-     * @param trailer the trailer to set
+     * @param trailerURL the trailer to set
      */
-    public void setTrailer(String trailer) {
-        this.trailer = trailer;
+    public void setTrailerURL(String trailerURL) {
+        this.trailerURL = trailerURL;
     }
 
     /**

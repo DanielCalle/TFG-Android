@@ -1,8 +1,10 @@
 package com.ucm.tfg.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -103,6 +105,18 @@ public class InfoActivity extends AppCompatActivity {
                 "sunt in culpa qui officia deserunt mollit anim id est laborum.";
         description.setText(text);
         description.setExpandListener(expandable);
+
+        TextView genre = findViewById(R.id.genre);
+        genre.setText(film.getGenre());
+        TextView director = findViewById(R.id.director);
+        director.setText(film.getdirector());
+
+        FloatingActionButton trailer = findViewById(R.id.trailer);
+        trailer.setOnClickListener((View v) -> {
+            Intent youtube = new Intent(Intent.ACTION_VIEW);
+            youtube.setData(Uri.parse(film.getTrailerURL()));
+            startActivity(youtube);
+        });
     }
 
     @Override

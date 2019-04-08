@@ -42,6 +42,7 @@
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -55,10 +56,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin"
-                android:theme="@style/AppTheme.SeekBar"
-                android:thumb="@drawable/seekbar_thumb"
                 android:progressDrawable="@drawable/seekbar_progress"
                 android:splitTrack="false"
+                android:theme="@style/AppTheme.SeekBar"
+                android:thumb="@drawable/seekbar_thumb"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -88,8 +89,46 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_keyboard_arrow_down_black_24dp"
-                app:layout_constraintTop_toBottomOf="@id/description"
-                app:layout_constraintRight_toRightOf="@id/description" />
+                app:layout_constraintRight_toRightOf="@id/description"
+                app:layout_constraintTop_toBottomOf="@id/description" />
+
+            <TextView
+                android:id="@+id/genre_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin"
+                android:text="@string/film_genre"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/expandable_button" />
+
+            <TextView
+                android:id="@+id/genre"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/genre_title" />
+
+            <TextView
+                android:id="@+id/director_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin"
+                android:text="@string/film_director"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/genre" />
+
+            <TextView
+                android:id="@+id/director"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/director_title" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>
 
@@ -124,13 +163,27 @@
 
     </RelativeLayout>
 
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/trailer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/double_margin"
+        android:layout_marginBottom="64dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_anchor="@id/add_to_plan"
+        app:layout_anchorGravity="right"
+        app:rippleColor="@color/secondaryTextColor"
+        app:backgroundTint="@color/secondaryLightColor"
+        app:srcCompat="@drawable/ic_play_arrow_white_24dp" />
+
     <Button
         android:id="@+id/add_to_plan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/secondaryLightColor"
+        android:background="@color/primaryColor"
         android:text="@string/add_film_to_plan"
-        android:textColor="@color/secondaryTextColor" />
+        android:textColor="@color/primaryTextColor" />
 
 </android.support.design.widget.CoordinatorLayout>
