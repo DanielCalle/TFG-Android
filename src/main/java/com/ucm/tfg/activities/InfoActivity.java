@@ -1,8 +1,10 @@
 package com.ucm.tfg.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +24,9 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
 import com.ucm.tfg.entities.Film;
+import com.ucm.tfg.entities.Plan;
+import com.ucm.tfg.service.PlanService;
+import com.ucm.tfg.service.Service;
 import com.ucm.tfg.views.ExpandableTextView;
 
 import org.json.JSONException;
@@ -93,16 +98,38 @@ public class InfoActivity extends AppCompatActivity {
         });
 
         Button addToPlan = findViewById(R.id.add_to_plan);
+        addToPlan.setOnClickListener((View v) -> {
+            PlanService.createPlan(InfoActivity.this, "a", film.getUuid(), new Service.ClientResponse<Plan>() {
+
+                @Override
+                public void onSuccess(Plan result) {
+                    Toast.makeText(InfoActivity.this, getText(R.string.plan_created), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onError(String error) {
+                    Toast.makeText(InfoActivity.this, error, Toast.LENGTH_SHORT).show();
+                }
+
+            }, Plan.class);
+        });
 
         ImageButton expandable = findViewById(R.id.expandable_button);
         ExpandableTextView description = findViewById(R.id.description);
-        String text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt " +
-                "ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco " +
-                "laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate " +
-                "velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, " +
-                "sunt in culpa qui officia deserunt mollit anim id est laborum.";
-        description.setText(text);
+        description.setText(film.getSynopsis());
         description.setExpandListener(expandable);
+
+        TextView genre = findViewById(R.id.genre);
+        genre.setText(film.getGenre());
+        TextView director = findViewById(R.id.director);
+        director.setText(film.getdirector());
+
+        FloatingActionButton trailer = findViewById(R.id.trailer);
+        trailer.setOnClickListener((View v) -> {
+            Intent youtube = new Intent(Intent.ACTION_VIEW);
+            youtube.setData(Uri.parse(film.getTrailerURL()));
+            startActivity(youtube);
+        });
     }
 
     @Override

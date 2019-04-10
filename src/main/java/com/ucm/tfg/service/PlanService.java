@@ -23,6 +23,16 @@ public class PlanService {
                 .execute(callback, new ParameterizedTypeReference<ArrayList<Plan>>(){});
     }
 
+    public static <T> void createPlan(Activity activity, String creatorUuid, String filmUuid, Service.ClientResponse<T> callback, Class<T> c) {
+        Service.getInstance()
+                .setContext(activity)
+                .post()
+                .url(develop_url + "{creatorUuid}" + "/" + "{filmUuid}")
+                .addPathVariable("creatorUuid", creatorUuid)
+                .addPathVariable("filmUuid", filmUuid)
+                .execute(callback, c);
+    }
+
     public static <T> void getJoinedUsers(Activity activity, String uuid, Service.ClientResponse<ArrayList<User>> callback) {
         Service.getInstance()
                 .setContext(activity)
