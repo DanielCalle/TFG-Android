@@ -1,6 +1,7 @@
 package com.ucm.tfg.activities;
 
 import android.content.Intent;
+import android.icu.text.IDNA;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
@@ -34,7 +35,8 @@ import org.json.JSONObject;
 
 public class InfoActivity extends AppCompatActivity {
 
-    private static String LOGTAG = "InfoActivity";
+    private final static String LOGTAG = "FilmActivity";
+    private final static int FORM_REQUEST = 1;
 
     private ActionBar actionBar;
     private ImageView filmPoster;
@@ -99,7 +101,9 @@ public class InfoActivity extends AppCompatActivity {
 
         Button addToPlan = findViewById(R.id.add_to_plan);
         addToPlan.setOnClickListener((View v) -> {
-            PlanService.createPlan(InfoActivity.this, "a", film.getUuid(), new Service.ClientResponse<Plan>() {
+            Intent intent = new Intent(InfoActivity.this, FormActivity.class);
+            startActivityForResult(intent, FORM_REQUEST);
+            /*PlanService.createPlan(InfoActivity.this, "a", film.getUuid(), new Service.ClientResponse<Plan>() {
 
                 @Override
                 public void onSuccess(Plan result) {
@@ -111,7 +115,7 @@ public class InfoActivity extends AppCompatActivity {
                     Toast.makeText(InfoActivity.this, error, Toast.LENGTH_SHORT).show();
                 }
 
-            }, Plan.class);
+            }, Plan.class);*/
         });
 
         ImageButton expandable = findViewById(R.id.expandable_button);
@@ -130,6 +134,16 @@ public class InfoActivity extends AppCompatActivity {
             youtube.setData(Uri.parse(film.getTrailerURL()));
             startActivity(youtube);
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch(requestCode) {
+            case FORM_REQUEST:
+                Toast.makeText(InfoActivity.this, data.getStringExtra("res"), Toast.LENGTH_SHORT).show();
+                break;
+            default: break;
+        }
     }
 
     @Override

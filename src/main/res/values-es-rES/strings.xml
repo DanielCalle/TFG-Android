@@ -9,4 +9,5 @@
     <string name="film_genre">Género</string>
     <string name="film_director">Director</string>
     <string name="plan_created">Plan creado</string>
+    <string name="submit">Enviar</string>
 </resources>

@@ -82,6 +82,7 @@
         </activity>
         <activity android:name=".activities.InfoActivity" />
         <activity android:name=".activities.PlanActivity" />
+        <activity android:name=".activities.FormActivity" />
         <activity android:name=".activities.SavedFilmActivity"/>
     </application>
 
