@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FilmAR</string>
+    <string name="plans">Mis planes</string>
+    <string name="recommendations">Recomendaciones</string>
+    <string name="saved_films">Mis películas</string>
+    <string name="add_film_to_plan">Añadir al plan</string>
+    <string name="film_description">Sinopsis</string>
+    <string name="film_genre">Género</string>
+    <string name="film_director">Director</string>
+    <string name="plan_created">Plan creado</string>
+</resources>

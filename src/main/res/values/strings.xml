@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FilmAR</string>
+    <string name="plans">My plans</string>
+    <string name="recommendations">Recommendations</string>
+    <string name="saved_films">My films</string>
+    <string name="add_film_to_plan">Add to plan</string>
+    <string name="film_description">Synopsis</string>
+    <string name="film_genre">Genre</string>
+    <string name="film_director">Director</string>
+    <string name="plan_created">Plan created</string>
 </resources>

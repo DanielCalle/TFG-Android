@@ -2,6 +2,7 @@
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">tfg-spring.herokuapp.com</domain>
+        <domain includeSubdomains="true">filmar-develop.herokuapp.com</domain>
         <domain includeSubdomains="true">quirksmode.org</domain>
     </domain-config>
 </network-security-config>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="@android:color/transparent" />
+        </shape>
+    </item>
+
+    <item>
+        <shape
+            android:innerRadius="40dp"
+            android:shape="ring"
+            android:thickness="10dp"
+            android:useLevel="true">
+
+            <gradient
+                android:angle="0"
+                android:endColor="#00ff00"
+                android:centerColor="#ffff00"
+                android:startColor="#ff0000"
+                android:type="sweep"
+                android:useLevel="false"/>
+        </shape>
+    </item>
+    <item android:id="@android:id/background"
+        android:gravity="center_vertical|fill_horizontal">
+        <shape android:shape="rectangle">
+            <corners android:radius="8dp"/>
+            <size android:height="5dp" />
+            <solid android:color="#11000000" />
+        </shape>
+    </item>
+    <item android:id="@android:id/progress"
+        android:gravity="center_vertical|fill_horizontal">
+        <scale android:scaleWidth="100%">
+            <selector>
+                <item android:state_enabled="false"
+                    android:drawable="@android:color/transparent" />
+                <item>
+                    <shape android:shape="rectangle">
+                        <corners android:radius="8dp"/>
+                        <size android:height="5dp" />
+                        <gradient
+                            android:angle="0"
+                            android:endColor="#00ff00"
+                            android:centerColor="#ffff00"
+                            android:startColor="#ff0000"
+                            android:useLevel="false"/>
+                    </shape>
+                </item>
+            </selector>
+        </scale>
+    </item>
+</layer-list>
