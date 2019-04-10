@@ -102,6 +102,14 @@ public class InfoActivity extends AppCompatActivity {
         Button addToPlan = findViewById(R.id.add_to_plan);
         addToPlan.setOnClickListener((View v) -> {
             Intent intent = new Intent(InfoActivity.this, FormActivity.class);
+            intent.putExtra("1", "daw");
+            intent.putExtra("2", "daw");
+            intent.putExtra("3", "daw");
+            intent.putExtra("4", "daw");
+            intent.putExtra("5", "daw");
+            intent.putExtra("6", "daw");
+            intent.putExtra("7", "daw");
+            intent.putExtra("8", "daw");
             startActivityForResult(intent, FORM_REQUEST);
             /*PlanService.createPlan(InfoActivity.this, "a", film.getUuid(), new Service.ClientResponse<Plan>() {
 
