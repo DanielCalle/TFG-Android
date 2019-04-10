@@ -8,4 +8,5 @@
     <string name="film_description">Synopsis</string>
     <string name="film_genre">Genre</string>
     <string name="film_director">Director</string>
+    <string name="plan_created">Plan created</string>
 </resources>
