@@ -42,8 +42,7 @@ public class PlanUserAdapter extends RecyclerView.Adapter<PlanUserAdapter.Recycl
         Picasso.get()
                 .load(user.getImageURL()
                 )
-                .resize(600, 200)
-                .centerCrop()
+                .resize(100, 100)
                 .into(recyclerViewHolder.userImage);
     }
 

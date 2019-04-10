@@ -141,7 +141,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
             title = view.findViewById(R.id.title);
             users = view.findViewById(R.id.users);
             users.setHasFixedSize(true);
-            users.setLayoutManager(new LinearLayoutManager(context));
+            users.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         }
     }
 
