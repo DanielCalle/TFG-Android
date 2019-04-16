@@ -1,5 +1,7 @@
 package com.ucm.tfg.adapters;
 
+import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v4.util.Pair;
@@ -12,14 +14,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.ucm.tfg.R;
 import com.ucm.tfg.activities.FormActivity;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,13 +55,41 @@ public class FormInputAdapter extends RecyclerView.Adapter<FormInputAdapter.Recy
         recyclerViewHolder.label.setText(p.first);
 
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
 
         switch (p.second) {
             case "date":
-                Button button = new Button(context);
-                button.setLayoutParams(layoutParams);
-                recyclerViewHolder.container.addView(button);
+                TextView textView = new TextView(context);
+                textView.setLayoutParams(layoutParams);
+                Calendar currentDate = Calendar.getInstance();
+                int year = currentDate.get(Calendar.YEAR);
+                int month = currentDate.get(Calendar.MONTH);
+                int day = currentDate.get(Calendar.DAY_OF_MONTH);
+                textView.setOnClickListener((View v) -> {
+                    new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int month, int day) {
+                            String date = new StringBuilder()
+                                    .append(year)
+                                    .append("-")
+                                    .append(month + 1)
+                                    .append("-")
+                                    .append(day)
+                                    .toString();
+                            textView.setText(date);
+                            result.put(p.first, date);
+                        }
+                    }, year, month, day).show();
+                });
+                textView.setText(
+                        new StringBuilder()
+                                .append(year)
+                                .append("-")
+                                .append(month + 1)
+                                .append("-")
+                                .append(day)
+                );
+                recyclerViewHolder.container.addView(textView);
                 break;
             default:
                 EditText editText = new EditText(context);
