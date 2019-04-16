@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -102,14 +103,8 @@ public class InfoActivity extends AppCompatActivity {
         Button addToPlan = findViewById(R.id.add_to_plan);
         addToPlan.setOnClickListener((View v) -> {
             Intent intent = new Intent(InfoActivity.this, FormActivity.class);
-            intent.putExtra("1", "daw");
-            intent.putExtra("2", "daw");
-            intent.putExtra("3", "daw");
-            intent.putExtra("4", "daw");
-            intent.putExtra("5", "daw");
-            intent.putExtra("6", "daw");
-            intent.putExtra("7", "daw");
-            intent.putExtra("8", "daw");
+            intent.putExtra("date", "date");
+            intent.putExtra("location", "location");
             startActivityForResult(intent, FORM_REQUEST);
             /*PlanService.createPlan(InfoActivity.this, "a", film.getUuid(), new Service.ClientResponse<Plan>() {
 
@@ -148,7 +143,11 @@ public class InfoActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(requestCode) {
             case FORM_REQUEST:
-                Toast.makeText(InfoActivity.this, data.getStringExtra("res"), Toast.LENGTH_SHORT).show();
+                if (data != null) {
+                    for (String key : data.getExtras().keySet()) {
+                        Log.i(key, data.getExtras().getString(key));
+                    }
+                }
                 break;
             default: break;
         }

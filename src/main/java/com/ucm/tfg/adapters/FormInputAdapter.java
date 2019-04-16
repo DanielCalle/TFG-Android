@@ -2,21 +2,37 @@ package com.ucm.tfg.adapters;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ucm.tfg.R;
+import com.ucm.tfg.activities.FormActivity;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class FormInputAdapter extends RecyclerView.Adapter<FormInputAdapter.RecyclerViewHolder> {
 
     private Context context;
+    private Map<Integer, Pair<String, String>> data;
+    private Map<String, String> result;
 
     public FormInputAdapter(Context context) {
         this.context = context;
+        this.data = new HashMap<>();
+        this.result = new HashMap<>();
     }
 
     @NonNull
@@ -30,21 +46,66 @@ public class FormInputAdapter extends RecyclerView.Adapter<FormInputAdapter.Recy
 
     @Override
     public void onBindViewHolder(@NonNull FormInputAdapter.RecyclerViewHolder recyclerViewHolder, int i) {
+        Pair<String, String> p = data.get(i);
+        recyclerViewHolder.label.setText(p.first);
 
+        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+
+        switch (p.second) {
+            case "date":
+                Button button = new Button(context);
+                button.setLayoutParams(layoutParams);
+                recyclerViewHolder.container.addView(button);
+                break;
+            default:
+                EditText editText = new EditText(context);
+                editText.setInputType(InputType.TYPE_CLASS_TEXT);
+                editText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        result.put(p.first, s.toString());
+                    }
+                });
+                editText.setLayoutParams(layoutParams);
+                recyclerViewHolder.container.addView(editText);
+                break;
+        }
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return data.size();
     }
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
         public TextView label;
+        public FrameLayout container;
 
         public RecyclerViewHolder(View view) {
             super(view);
             label = view.findViewById(R.id.label);
+            container = view.findViewById(R.id.container);
         }
+    }
+
+    public void setData(Map<Integer, Pair<String, String>> data) {
+        this.data = data;
+        notifyDataSetChanged();
+    }
+
+    public Map<String, String> getResult() {
+        return result;
     }
 }

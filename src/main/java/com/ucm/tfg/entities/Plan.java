@@ -14,7 +14,7 @@ public class Plan implements Serializable {
 
     private String filmUuid;
 
-    private List<User> joinedUsers;
+    private List<String> joinedUsers;
 
     private Date date;
 
@@ -42,11 +42,11 @@ public class Plan implements Serializable {
         this.filmUuid = filmUuid;
     }
 
-    public List<User> getJoinedUsers() {
+    public List<String> getJoinedUsers() {
         return joinedUsers;
     }
 
-    public void setJoinedUsers(List<User> joinedUsers) {
+    public void setJoinedUsers(List<String> joinedUsers) {
         this.joinedUsers = joinedUsers;
     }
 
