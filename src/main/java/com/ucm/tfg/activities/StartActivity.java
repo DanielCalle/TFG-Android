@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
 import com.ucm.tfg.Session;
 import com.ucm.tfg.Utils;
@@ -25,14 +28,23 @@ public class StartActivity extends AppCompatActivity {
     private int time;
     private ProgressBar timerProgress;
     private TextView timerLabel;
+    private ImageView poster;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
-        timerProgress = findViewById(R.id.timer);
+        poster = findViewById(R.id.poster);
+        RelativeLayout relativeLayout = findViewById(R.id.timer);
+        relativeLayout.bringToFront();
+        timerProgress = findViewById(R.id.timer_progress);
         timerLabel = findViewById(R.id.timer_label);
+
+        Picasso.get()
+                .load("https://drive.google.com/uc?export=download&id=1RBiLM2II3tEXs-ZsdTSWroMu-xCzrbR2")
+                .fit()
+                .into(poster);
 
         time = 0;
         Timer timer = new Timer();
