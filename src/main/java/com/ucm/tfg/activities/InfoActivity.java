@@ -1,15 +1,12 @@
 package com.ucm.tfg.activities;
 
 import android.content.Intent;
-import android.icu.text.IDNA;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +31,9 @@ import com.ucm.tfg.views.ExpandableTextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 public class InfoActivity extends AppCompatActivity {
 
     private final static String LOGTAG = "FilmActivity";
@@ -42,12 +42,14 @@ public class InfoActivity extends AppCompatActivity {
     private ActionBar actionBar;
     private ImageView filmPoster;
 
+    private Film film;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
-        Film film = (Film) getIntent().getExtras().getSerializable("film");
+        film = (Film) getIntent().getExtras().getSerializable("film");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -104,21 +106,9 @@ public class InfoActivity extends AppCompatActivity {
         addToPlan.setOnClickListener((View v) -> {
             Intent intent = new Intent(InfoActivity.this, FormActivity.class);
             intent.putExtra("date", "date");
-            intent.putExtra("location", "location");
+            intent.putExtra("location", "text");
+            intent.putExtra("description", "text");
             startActivityForResult(intent, FORM_REQUEST);
-            /*PlanService.createPlan(InfoActivity.this, "a", film.getUuid(), new Service.ClientResponse<Plan>() {
-
-                @Override
-                public void onSuccess(Plan result) {
-                    Toast.makeText(InfoActivity.this, getText(R.string.plan_created), Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onError(String error) {
-                    Toast.makeText(InfoActivity.this, error, Toast.LENGTH_SHORT).show();
-                }
-
-            }, Plan.class);*/
         });
 
         ImageButton expandable = findViewById(R.id.expandable_button);
@@ -141,15 +131,40 @@ public class InfoActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch(requestCode) {
+        switch (requestCode) {
             case FORM_REQUEST:
                 if (data != null) {
                     for (String key : data.getExtras().keySet()) {
                         Log.i(key, data.getExtras().getString(key));
                     }
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    Plan plan = new Plan();
+                    plan.setCreator("a");
+                    plan.setFilmUuid(film.getUuid());
+                    try {
+                        plan.setDate(dateFormat.parse(data.getExtras().getString("date")));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    plan.setLocation(data.getExtras().getString("location"));
+                    plan.setDescription(data.getExtras().getString("description"));
+                    PlanService.createPlan(InfoActivity.this, plan, new Service.ClientResponse<Plan>() {
+
+                        @Override
+                        public void onSuccess(Plan result) {
+                            Toast.makeText(InfoActivity.this, getText(R.string.plan_created), Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            Toast.makeText(InfoActivity.this, error, Toast.LENGTH_SHORT).show();
+                        }
+
+                    }, Plan.class);
                 }
                 break;
-            default: break;
+            default:
+                break;
         }
     }
 

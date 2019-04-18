@@ -24,6 +24,8 @@ import android.widget.Toast;
 import com.ucm.tfg.R;
 import com.ucm.tfg.activities.FormActivity;
 
+import org.springframework.util.StringUtils;
+
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,7 +54,7 @@ public class FormInputAdapter extends RecyclerView.Adapter<FormInputAdapter.Recy
     @Override
     public void onBindViewHolder(@NonNull FormInputAdapter.RecyclerViewHolder recyclerViewHolder, int i) {
         Pair<String, String> p = data.get(i);
-        recyclerViewHolder.label.setText(p.first);
+        recyclerViewHolder.label.setText(StringUtils.capitalize(p.first));
 
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
@@ -91,7 +93,7 @@ public class FormInputAdapter extends RecyclerView.Adapter<FormInputAdapter.Recy
                 );
                 recyclerViewHolder.container.addView(textView);
                 break;
-            default:
+            case "text":
                 EditText editText = new EditText(context);
                 editText.setInputType(InputType.TYPE_CLASS_TEXT);
                 editText.addTextChangedListener(new TextWatcher() {
