@@ -83,14 +83,7 @@ public class FormInputAdapter extends RecyclerView.Adapter<FormInputAdapter.Recy
                         }
                     }, year, month, day).show();
                 });
-                textView.setText(
-                        new StringBuilder()
-                                .append(year)
-                                .append("-")
-                                .append(month + 1)
-                                .append("-")
-                                .append(day)
-                );
+                textView.setText(context.getText(R.string.date_format));
                 recyclerViewHolder.container.addView(textView);
                 break;
             case "text":

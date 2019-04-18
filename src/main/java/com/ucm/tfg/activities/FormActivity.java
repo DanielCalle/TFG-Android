@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.ucm.tfg.R;
 import com.ucm.tfg.adapters.FormInputAdapter;
@@ -53,8 +54,11 @@ public class FormActivity extends AppCompatActivity {
                     resultIntent.putExtra(key, result.get(key));
                 }
                 setResult(Activity.RESULT_OK, resultIntent);
+                finish();
             }
-            finish();
+            else {
+                Toast.makeText(FormActivity.this, getText(R.string.form_not_filled), Toast.LENGTH_SHORT).show();
+            }
         });
     }
 

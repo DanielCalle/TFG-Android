@@ -105,9 +105,9 @@ public class InfoActivity extends AppCompatActivity {
         Button addToPlan = findViewById(R.id.add_to_plan);
         addToPlan.setOnClickListener((View v) -> {
             Intent intent = new Intent(InfoActivity.this, FormActivity.class);
-            intent.putExtra("date", "date");
-            intent.putExtra("location", "text");
-            intent.putExtra("description", "text");
+            intent.putExtra(getString(R.string.plan_date), "date");
+            intent.putExtra(getString(R.string.plan_location), "text");
+            intent.putExtra(getString(R.string.plan_description), "text");
             startActivityForResult(intent, FORM_REQUEST);
         });
 
@@ -134,20 +134,17 @@ public class InfoActivity extends AppCompatActivity {
         switch (requestCode) {
             case FORM_REQUEST:
                 if (data != null) {
-                    for (String key : data.getExtras().keySet()) {
-                        Log.i(key, data.getExtras().getString(key));
-                    }
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     Plan plan = new Plan();
                     plan.setCreator("a");
                     plan.setFilmUuid(film.getUuid());
                     try {
-                        plan.setDate(dateFormat.parse(data.getExtras().getString("date")));
+                        plan.setDate(dateFormat.parse(data.getExtras().getString(getString(R.string.plan_date))));
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    plan.setLocation(data.getExtras().getString("location"));
-                    plan.setDescription(data.getExtras().getString("description"));
+                    plan.setLocation(data.getExtras().getString(getString(R.string.plan_location)));
+                    plan.setDescription(data.getExtras().getString(getString(R.string.plan_description)));
                     PlanService.createPlan(InfoActivity.this, plan, new Service.ClientResponse<Plan>() {
 
                         @Override
