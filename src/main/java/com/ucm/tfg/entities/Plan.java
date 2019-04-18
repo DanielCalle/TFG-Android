@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Plan implements Serializable {
 
@@ -14,9 +15,13 @@ public class Plan implements Serializable {
 
     private String filmUuid;
 
-    private List<User> joinedUsers;
+    private List<String> joinedUsers;
 
     private Date date;
+
+    private String location;
+
+    private String description;
 
     public String getId() {
         return id;
@@ -42,11 +47,11 @@ public class Plan implements Serializable {
         this.filmUuid = filmUuid;
     }
 
-    public List<User> getJoinedUsers() {
+    public List<String> getJoinedUsers() {
         return joinedUsers;
     }
 
-    public void setJoinedUsers(List<User> joinedUsers) {
+    public void setJoinedUsers(List<String> joinedUsers) {
         this.joinedUsers = joinedUsers;
     }
 
@@ -56,6 +61,22 @@ public class Plan implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
 }

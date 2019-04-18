@@ -3,7 +3,6 @@ package com.ucm.tfg.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -32,19 +31,25 @@ import com.ucm.tfg.views.ExpandableTextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
 public class InfoActivity extends AppCompatActivity {
 
-    private static String LOGTAG = "InfoActivity";
+    private final static String LOGTAG = "FilmActivity";
+    private final static int FORM_REQUEST = 1;
 
     private ActionBar actionBar;
     private ImageView filmPoster;
+
+    private Film film;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
-        Film film = (Film) getIntent().getExtras().getSerializable("film");
+        film = (Film) getIntent().getExtras().getSerializable("film");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -99,19 +104,11 @@ public class InfoActivity extends AppCompatActivity {
 
         Button addToPlan = findViewById(R.id.add_to_plan);
         addToPlan.setOnClickListener((View v) -> {
-            PlanService.createPlan(InfoActivity.this, "a", film.getUuid(), new Service.ClientResponse<Plan>() {
-
-                @Override
-                public void onSuccess(Plan result) {
-                    Toast.makeText(InfoActivity.this, getText(R.string.plan_created), Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onError(String error) {
-                    Toast.makeText(InfoActivity.this, error, Toast.LENGTH_SHORT).show();
-                }
-
-            }, Plan.class);
+            Intent intent = new Intent(InfoActivity.this, FormActivity.class);
+            intent.putExtra(getString(R.string.plan_date), "date");
+            intent.putExtra(getString(R.string.plan_location), "text");
+            intent.putExtra(getString(R.string.plan_description), "text");
+            startActivityForResult(intent, FORM_REQUEST);
         });
 
         ImageButton expandable = findViewById(R.id.expandable_button);
@@ -130,6 +127,42 @@ public class InfoActivity extends AppCompatActivity {
             youtube.setData(Uri.parse(film.getTrailerURL()));
             startActivity(youtube);
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case FORM_REQUEST:
+                if (data != null) {
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    Plan plan = new Plan();
+                    plan.setCreator("a");
+                    plan.setFilmUuid(film.getUuid());
+                    try {
+                        plan.setDate(dateFormat.parse(data.getExtras().getString(getString(R.string.plan_date))));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    plan.setLocation(data.getExtras().getString(getString(R.string.plan_location)));
+                    plan.setDescription(data.getExtras().getString(getString(R.string.plan_description)));
+                    PlanService.createPlan(InfoActivity.this, plan, new Service.ClientResponse<Plan>() {
+
+                        @Override
+                        public void onSuccess(Plan result) {
+                            Toast.makeText(InfoActivity.this, getText(R.string.plan_created), Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            Toast.makeText(InfoActivity.this, error, Toast.LENGTH_SHORT).show();
+                        }
+
+                    }, Plan.class);
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     @Override

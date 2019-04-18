@@ -9,4 +9,10 @@
     <string name="film_genre">Genre</string>
     <string name="film_director">Director</string>
     <string name="plan_created">Plan created</string>
+    <string name="submit">Submit</string>
+    <string name="plan_date">Date</string>
+    <string name="plan_location">Location</string>
+    <string name="plan_description">Description</string>
+    <string name="date_format">YYYY-MM-DD</string>
+    <string name="form_not_filled">Fill all content before submit</string>
 </resources>

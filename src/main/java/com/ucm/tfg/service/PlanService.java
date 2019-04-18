@@ -23,13 +23,12 @@ public class PlanService {
                 .execute(callback, new ParameterizedTypeReference<ArrayList<Plan>>(){});
     }
 
-    public static <T> void createPlan(Activity activity, String creatorUuid, String filmUuid, Service.ClientResponse<T> callback, Class<T> c) {
+    public static <T> void createPlan(Activity activity, Plan plan, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
                 .post()
-                .url(develop_url + "{creatorUuid}" + "/" + "{filmUuid}")
-                .addPathVariable("creatorUuid", creatorUuid)
-                .addPathVariable("filmUuid", filmUuid)
+                .url(develop_url)
+                .body(plan)
                 .execute(callback, c);
     }
 
