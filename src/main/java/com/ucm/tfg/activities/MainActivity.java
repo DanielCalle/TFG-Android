@@ -1,12 +1,14 @@
 package com.ucm.tfg.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.ucm.tfg.Session;
 import com.ucm.tfg.views.CustomViewPager;
 import com.ucm.tfg.fragments.FilmFragment;
 import com.ucm.tfg.fragments.RecommendationFragment;
@@ -18,6 +20,9 @@ public class MainActivity extends AppCompatActivity implements
         PlanFragment.OnFragmentInteractionListener,
         RecommendationFragment.OnFragmentInteractionListener,
         FilmFragment.OnFragmentInteractionListener {
+
+    private final static int START_REQUEST = 1;
+    private final static int LOGIN_REQUEST = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,17 @@ public class MainActivity extends AppCompatActivity implements
         floatingActionButton.setOnClickListener(view -> {
             startActivity(new Intent(this, UnityPlayerActivity.class));
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SharedPreferences sharedPreferences = getSharedPreferences(Session.SESSION_FILE, 0);
+        boolean isLogged = sharedPreferences.getBoolean(Session.IS_LOGGED, false);
+        if (!isLogged) {
+            Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
     }
 
     @Override

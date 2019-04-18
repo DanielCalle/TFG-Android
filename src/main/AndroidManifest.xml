@@ -73,13 +73,17 @@
                 android:value="true" />
         </activity>
         <activity
-            android:name=".activities.MainActivity">
+            android:name=".activities.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activities.MainActivity"
+            android:clearTaskOnLaunch="true"/>
+        <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.InfoActivity" />
         <activity android:name=".activities.PlanActivity" />
         <activity android:name=".activities.FormActivity" />

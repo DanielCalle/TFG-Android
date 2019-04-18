@@ -15,4 +15,7 @@
     <string name="plan_description">Description</string>
     <string name="date_format">YYYY-MM-DD</string>
     <string name="form_not_filled">Fill all content before submit</string>
+    <string name="login_email">Email</string>
+    <string name="login_password">Password</string>
+    <string name="login_button">Sign in</string>
 </resources>

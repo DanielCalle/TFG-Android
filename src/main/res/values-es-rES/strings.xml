@@ -15,4 +15,7 @@
     <string name="plan_description">Descripción</string>
     <string name="date_format">AAAA-MM-DD</string>
     <string name="form_not_filled">Rellena todo el contenido antes de enviar</string>
+    <string name="login_email">Email</string>
+    <string name="login_password">Contraseña</string>
+    <string name="login_button">Entrar</string>
 </resources>
