@@ -14,6 +14,8 @@ import com.ucm.tfg.entities.User;
 import com.ucm.tfg.service.Service;
 import com.ucm.tfg.service.UserService;
 
+import java.util.UUID;
+
 public class RegisterActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
@@ -34,7 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         registerButton.setOnClickListener((View view) -> {
             User user = new User();
-            user.setUuid("uuid");
+            user.setUuid(UUID.randomUUID().toString());
             user.setName(nameInput.getText().toString());
             user.setEmail(emailInput.getText().toString());
             user.setPassword(passwordInput.getText().toString());
