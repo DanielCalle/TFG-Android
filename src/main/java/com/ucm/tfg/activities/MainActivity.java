@@ -21,9 +21,6 @@ public class MainActivity extends AppCompatActivity implements
         RecommendationFragment.OnFragmentInteractionListener,
         FilmFragment.OnFragmentInteractionListener {
 
-    private final static int START_REQUEST = 1;
-    private final static int LOGIN_REQUEST = 2;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +47,11 @@ public class MainActivity extends AppCompatActivity implements
         floatingActionButton.setOnClickListener(view -> {
             startActivity(new Intent(this, UnityPlayerActivity.class));
         });
+
+        SharedPreferences sharedPreferences = getSharedPreferences(Session.SESSION_FILE, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(Session.IS_LOGGED, false);
+        editor.apply();
     }
 
     @Override

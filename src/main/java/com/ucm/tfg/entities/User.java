@@ -19,51 +19,22 @@ public class User implements Serializable {
 
     private String imageURL;
 
-    /**
-     * @return the uuid
-     */
     public String getUuid() {
         return uuid;
     }
 
-    /**
-     * @param uuid the uuid to set
-     */
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
-    /**
-     * @return the name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * @param name the name to set
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * @return the imageURL
-     */
-    public String getImageURL() {
-        return imageURL;
-    }
-
-    /**
-     * @param imageURL the name to set
-     */
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
-    }
-
-    /**
-     * @return the email
-     */
     public String getEmail() {
         return email;
     }
@@ -72,28 +43,19 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    /**
-     * @return the password
-     */
     public String getPassword() {
         return password;
     }
 
-
     public void setPassword(String password) {
         this.password = password;
     }
-    public JSONObject getJson(){
-        JSONObject json = new JSONObject();
-        try {
-            json.put("uuid", uuid);
-            json.put("name", name);
-            json.put("email", email);
-            json.put("password", password);
-            json.put("imageURL", imageURL);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return json;
+
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 }

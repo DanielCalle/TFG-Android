@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.Plan;
+import com.ucm.tfg.entities.User;
 
 import org.springframework.core.ParameterizedTypeReference;
 
@@ -14,6 +15,24 @@ public class UserService {
     private static String develop_url = "http://filmar-develop.herokuapp.com/users/";
 
     public UserService() {}
+
+    public static <T> void register(Activity activity, User user, Service.ClientResponse callback, Class<T> c) {
+        Service.getInstance()
+                .setContext(activity)
+                .post()
+                .body(user)
+                .url(develop_url)
+                .execute(callback, c);
+    }
+
+    public static <T> void login(Activity activity, User user, Service.ClientResponse<T> callback, Class<T> c) {
+        Service.getInstance()
+                .setContext(activity)
+                .post()
+                .body(user)
+                .url(develop_url + "login")
+                .execute(callback, c);
+    }
 
     public static <T> void getUserById(Activity activity, String uuid, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()

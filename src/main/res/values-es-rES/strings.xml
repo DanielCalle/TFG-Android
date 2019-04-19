@@ -15,7 +15,11 @@
     <string name="plan_description">Descripción</string>
     <string name="date_format">AAAA-MM-DD</string>
     <string name="form_not_filled">Rellena todo el contenido antes de enviar</string>
-    <string name="login_email">Email</string>
-    <string name="login_password">Contraseña</string>
-    <string name="login_button">Entrar</string>
+    <string name="user_email">Email</string>
+    <string name="user_password">Contraseña</string>
+    <string name="login">Entrar</string>
+    <string name="register">Registrar</string>
+    <string name="login_fail">Usuario o contraseña incorrectas</string>
+    <string name="register_success">Usuario creado correctamente</string>
+    <string name="user_name">Nombre</string>
 </resources>

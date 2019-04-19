@@ -15,7 +15,11 @@
     <string name="plan_description">Description</string>
     <string name="date_format">YYYY-MM-DD</string>
     <string name="form_not_filled">Fill all content before submit</string>
-    <string name="login_email">Email</string>
-    <string name="login_password">Password</string>
-    <string name="login_button">Sign in</string>
+    <string name="user_email">Email</string>
+    <string name="user_password">Password</string>
+    <string name="login">Sign in</string>
+    <string name="register">Sign up</string>
+    <string name="login_fail">User or password incorrect</string>
+    <string name="register_success">User successfully created</string>
+    <string name="user_name">Nickname</string>
 </resources>
