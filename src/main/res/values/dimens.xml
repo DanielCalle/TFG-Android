@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="app_bar_height">300dp</dimen>
+    <dimen name="sidebar_header_height">200dp</dimen>
     <dimen name="margin">8dp</dimen>
     <dimen name="double_margin">16dp</dimen>
 </resources>

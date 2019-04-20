@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.MainActivity">
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/unity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/double_margin"
+        android:clickable="true"
+        android:focusable="true"
+        app:backgroundTint="@color/secondaryLightColor"
+        app:layout_constraintBottom_toBottomOf="@+id/container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:rippleColor="@color/secondaryTextColor"
+        app:srcCompat="@drawable/ic_camera_alt_white_24dp" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:tabBackground="@color/primaryColor"
+        app:tabIndicatorColor="@color/secondaryColor"
+        app:tabMode="fixed">
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="@android:integer/config_shortAnimTime"
+            android:filterTouchesWhenObscured="true"
+            android:foreground="@color/secondaryTextColor"
+            android:icon="@drawable/ic_perm_contact_calendar_black_24dp"
+            android:text="@string/plans" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_search_white_24dp"
+            android:text="@string/recommendations" />
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_movie_white_24dp"
+            android:text="@string/saved_films" />
+
+    </android.support.design.widget.TabLayout>
+
+    <com.ucm.tfg.views.CustomViewPager
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toTopOf="@+id/tab"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" >
+
+    </com.ucm.tfg.views.CustomViewPager>
+
+</android.support.constraint.ConstraintLayout>
