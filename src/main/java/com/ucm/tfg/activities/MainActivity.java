@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import com.ucm.tfg.Session;
 import com.ucm.tfg.views.CustomViewPager;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements
     private Toolbar toolbar;
     private DrawerLayout drawer;
     private FragmentAdapter adapter;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +49,8 @@ public class MainActivity extends AppCompatActivity implements
         toolbar.getMenu().clear();
         toolbar.inflateMenu(R.menu.menu_plans);
 
-        CustomViewPager viewPager = (CustomViewPager) findViewById(R.id.container);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab);
+        CustomViewPager viewPager = findViewById(R.id.container);
+        TabLayout tabLayout = findViewById(R.id.tab);
 
         viewPager.setSwipePagingEnabled(false);
         viewPager.setAdapter(adapter);
@@ -101,13 +103,8 @@ public class MainActivity extends AppCompatActivity implements
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = findViewById(R.id.navigation_view);
+        navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(MainActivity.this);
-
-        //SharedPreferences sharedPreferences = getSharedPreferences(Session.SESSION_FILE, 0);
-        //SharedPreferences.Editor editor = sharedPreferences.edit();
-        //editor.putBoolean(Session.IS_LOGGED, false);
-        //editor.apply();
     }
 
     @Override
@@ -115,6 +112,10 @@ public class MainActivity extends AppCompatActivity implements
         super.onStart();
         SharedPreferences sharedPreferences = getSharedPreferences(Session.SESSION_FILE, 0);
         boolean isLogged = sharedPreferences.getBoolean(Session.IS_LOGGED, false);
+
+        TextView userName = navigationView.getHeaderView(0).findViewById(R.id.user_name);
+        userName.setText("USERNAME");
+
         if (!isLogged) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
@@ -138,6 +139,15 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
+            case R.id.logout:
+                SharedPreferences sharedPreferences = getSharedPreferences(Session.SESSION_FILE, 0);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean(Session.IS_LOGGED, false);
+                editor.apply();
+
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
+                break;
             default: break;
         }
 

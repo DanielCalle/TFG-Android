@@ -10,8 +10,6 @@ import com.ucm.tfg.fragments.FilmFragment;
 import com.ucm.tfg.fragments.RecommendationFragment;
 import com.ucm.tfg.fragments.PlanFragment;
 
-import java.nio.charset.Charset;
-
 public class FragmentAdapter extends FragmentPagerAdapter {
 
     private Context context;
@@ -39,9 +37,9 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int pos) {
         switch (pos) {
-            case 0: return context.getString(R.string.plans);
-            case 1: return context.getString(R.string.recommendations);
-            case 2: return context.getString(R.string.saved_films);
+            case 0: return context.getString(R.string.label_plans);
+            case 1: return context.getString(R.string.label_recommendations);
+            case 2: return context.getString(R.string.label_films);
             default: return null;
         }
     }

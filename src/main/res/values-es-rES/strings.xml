@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FilmAR</string>
-    <string name="plans">Mis planes</string>
-    <string name="recommendations">Recomendaciones</string>
-    <string name="saved_films">Mis películas</string>
+    <string name="label_plans">Mis planes</string>
+    <string name="label_recommendations">Recomendaciones</string>
+    <string name="label_films">Mis películas</string>
     <string name="add_film_to_plan">Añadir al plan</string>
     <string name="film_description">Sinopsis</string>
     <string name="film_genre">Género</string>
@@ -22,4 +22,6 @@
     <string name="login_fail">Usuario o contraseña incorrectas</string>
     <string name="register_success">Usuario creado correctamente</string>
     <string name="user_name">Nombre</string>
+    <string name="label_session">Sesión</string>
+    <string name="logout">Cerrar sesión</string>
 </resources>
