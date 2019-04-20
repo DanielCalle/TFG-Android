@@ -3,10 +3,19 @@ package com.ucm.tfg.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.ucm.tfg.Session;
 import com.ucm.tfg.views.CustomViewPager;
@@ -19,39 +28,84 @@ import com.ucm.tfg.adapters.FragmentAdapter;
 public class MainActivity extends AppCompatActivity implements
         PlanFragment.OnFragmentInteractionListener,
         RecommendationFragment.OnFragmentInteractionListener,
-        FilmFragment.OnFragmentInteractionListener {
+        FilmFragment.OnFragmentInteractionListener,
+        NavigationView.OnNavigationItemSelectedListener {
+
+    private Toolbar toolbar;
+    private FragmentAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        adapter = new FragmentAdapter(MainActivity.this, getSupportFragmentManager());
+        toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(adapter.getPageTitle(0));
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.menu_plans);
+
         CustomViewPager viewPager = (CustomViewPager) findViewById(R.id.container);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab);
 
         viewPager.setSwipePagingEnabled(false);
-
-        viewPager.setAdapter(
-                new FragmentAdapter(getSupportFragmentManager())
-        );
+        viewPager.setAdapter(adapter);
 
         viewPager.addOnPageChangeListener(
-                new TabLayout.TabLayoutOnPageChangeListener(tabLayout)
+                new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int i, float v, int i1) {
+
+                    }
+
+                    @Override
+                    public void onPageSelected(int i) {
+                        toolbar.setTitle(adapter.getPageTitle(i));
+                        toolbar.getMenu().clear();
+                        switch (i) {
+                            case 0:
+                                toolbar.inflateMenu(R.menu.menu_plans);
+                                break;
+                            case 1:
+                                toolbar.inflateMenu(R.menu.menu_recommendations);
+                                break;
+                            case 2:
+                                toolbar.inflateMenu(R.menu.menu_films);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int i) {
+
+                    }
+                }
         );
 
         tabLayout.addOnTabSelectedListener(
                 new TabLayout.ViewPagerOnTabSelectedListener(viewPager)
         );
 
-        FloatingActionButton floatingActionButton = (FloatingActionButton) findViewById(R.id.unity);
+        FloatingActionButton floatingActionButton = findViewById(R.id.unity);
         floatingActionButton.setOnClickListener(view -> {
             startActivity(new Intent(this, UnityPlayerActivity.class));
         });
 
-        SharedPreferences sharedPreferences = getSharedPreferences(Session.SESSION_FILE, 0);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(Session.IS_LOGGED, false);
-        editor.apply();
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = findViewById(R.id.navigation_view);
+        navigationView.setNavigationItemSelectedListener(MainActivity.this);
+
+        //SharedPreferences sharedPreferences = getSharedPreferences(Session.SESSION_FILE, 0);
+        //SharedPreferences.Editor editor = sharedPreferences.edit();
+        //editor.putBoolean(Session.IS_LOGGED, false);
+        //editor.apply();
     }
 
     @Override
@@ -68,5 +122,10 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        return false;
     }
 }

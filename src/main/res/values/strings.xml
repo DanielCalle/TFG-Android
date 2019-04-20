@@ -22,4 +22,6 @@
     <string name="login_fail">User or password incorrect</string>
     <string name="register_success">User successfully created</string>
     <string name="user_name">Nickname</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>
