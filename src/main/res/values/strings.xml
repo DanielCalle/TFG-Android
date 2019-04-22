@@ -10,6 +10,7 @@
     <string name="film_director">Director</string>
     <string name="plan_created">Plan created</string>
     <string name="submit">Submit</string>
+    <string name="plan">Plan</string>
     <string name="plan_date">Date</string>
     <string name="plan_location">Location</string>
     <string name="plan_description">Description</string>
