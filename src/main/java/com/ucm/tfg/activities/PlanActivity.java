@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
 import com.ucm.tfg.adapters.PlanJoinedUsersAdapter;
+import com.ucm.tfg.adapters.PlanUserAdapter;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.Plan;
 import com.ucm.tfg.entities.User;
@@ -56,17 +57,39 @@ public class PlanActivity extends AppCompatActivity {
         }
 
         filmPoster = findViewById(R.id.film_poster);
+        TextView date = findViewById(R.id.date);
+        TextView location = findViewById(R.id.location);
+        TextView description = findViewById(R.id.description);
+        RecyclerView users = findViewById(R.id.users);
 
-        recyclerView = (RecyclerView) findViewById(R.id.joined);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(PlanActivity.this));
+        date.setText(plan.getDate().toString());
+        location.setText(plan.getLocation());
+        description.setText(plan.getDescription());
+        users.setHasFixedSize(true);
+        users.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        PlanService.getJoinedUsers(this, plan.getId(), new Service.ClientResponse<ArrayList<User>>(){
+
+            @Override
+            public void onSuccess(ArrayList<User> result) {
+                PlanUserAdapter planUserAdapter = new PlanUserAdapter(PlanActivity.this);
+                users.setAdapter(planUserAdapter);
+                planUserAdapter.setData(result);
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        });
+
+       /*
 
         planJoinedUsersAdapter = new PlanJoinedUsersAdapter(PlanActivity.this);
         planJoinedUsersAdapter.addPlanOnClickListener((User u) -> {
             Toast.makeText(PlanActivity.this, u.getName(), Toast.LENGTH_SHORT).show();
         });
         recyclerView.setAdapter(planJoinedUsersAdapter);
-
+        */
         floatingActionButton = findViewById(R.id.film_info);
 
         FilmService.getFilmById(PlanActivity.this, plan.getFilmUuid(), new Service.ClientResponse<Film>() {
@@ -92,7 +115,7 @@ public class PlanActivity extends AppCompatActivity {
 
             }
         }, Film.class);
-
+        /*
         PlanService.getJoinedUsers(PlanActivity.this, plan.getId(), new Service.ClientResponse<ArrayList<User>>() {
 
             @Override
@@ -105,6 +128,7 @@ public class PlanActivity extends AppCompatActivity {
 
             }
         });
+        */
     }
 
     @Override
