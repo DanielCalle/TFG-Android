@@ -143,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements
                 SharedPreferences sharedPreferences = getSharedPreferences(Session.SESSION_FILE, 0);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean(Session.IS_LOGGED, false);
+                editor.putString(Session.USER, null);
                 editor.apply();
 
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);

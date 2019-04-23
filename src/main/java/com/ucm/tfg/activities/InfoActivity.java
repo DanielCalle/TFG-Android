@@ -98,7 +98,7 @@ public class InfoActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                Toast.makeText(InfoActivity.this, "stopped", Toast.LENGTH_SHORT).show();
             }
         });
 
