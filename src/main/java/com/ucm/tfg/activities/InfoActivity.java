@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -201,9 +202,18 @@ public class InfoActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_film, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
+        switch (item.getItemId()) {
+            case android.R.id.home: finish(); break;
+            case R.id.delete:
+                Toast.makeText(InfoActivity.this, "delete", Toast.LENGTH_SHORT).show();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
