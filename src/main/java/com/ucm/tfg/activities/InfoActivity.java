@@ -1,6 +1,7 @@
 package com.ucm.tfg.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -22,8 +23,11 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
+import com.ucm.tfg.Session;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.Plan;
+import com.ucm.tfg.entities.RatingFilm;
+import com.ucm.tfg.service.FilmService;
 import com.ucm.tfg.service.PlanService;
 import com.ucm.tfg.service.Service;
 import com.ucm.tfg.views.ExpandableTextView;
@@ -41,6 +45,10 @@ public class InfoActivity extends AppCompatActivity {
 
     private ActionBar actionBar;
     private ImageView filmPoster;
+
+    private ProgressBar progressBar;
+    private TextView progressText;
+    private SeekBar progressController;
 
     private Film film;
 
@@ -67,14 +75,12 @@ public class InfoActivity extends AppCompatActivity {
                 .load(film.getImageURL())
                 .into(filmPoster);
 
-        ProgressBar progressBar = findViewById(R.id.progress_bar);
-        TextView progressText = findViewById(R.id.progress_text);
-        SeekBar progressController = findViewById(R.id.progress_controller);
+        progressBar = findViewById(R.id.progress_bar);
+        progressText = findViewById(R.id.progress_text);
+        progressController = findViewById(R.id.progress_controller);
 
-        // setting film rating data
-        progressBar.setProgress((int) film.getRating() * 10);
-        progressText.setText("" + film.getRating() + "/10");
-        progressController.setProgress((int) film.getRating() * 10);
+        SharedPreferences sharedPreferences = getSharedPreferences(Session.SESSION_FILE, 0);
+        String user = sharedPreferences.getString(Session.USER, null);
 
         // enable/disable rating
         progressBar.setOnClickListener((View v) -> {
@@ -98,7 +104,21 @@ public class InfoActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                Toast.makeText(InfoActivity.this, "stopped", Toast.LENGTH_SHORT).show();
+                RatingFilm ratingFilm = new RatingFilm();
+                ratingFilm.setUserUuid(user);
+                ratingFilm.setFilmUuid(film.getUuid());
+                ratingFilm.setRating(((float) (seekBar.getProgress() / 10.0)));
+                FilmService.rate(InfoActivity.this, ratingFilm, new Service.ClientResponse<RatingFilm>() {
+                    @Override
+                    public void onSuccess(RatingFilm result) {
+                        Toast.makeText(InfoActivity.this, getString(R.string.rated_film), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                }, RatingFilm.class);
             }
         });
 
@@ -127,6 +147,21 @@ public class InfoActivity extends AppCompatActivity {
             youtube.setData(Uri.parse(film.getTrailerURL()));
             startActivity(youtube);
         });
+
+        FilmService.getRating(InfoActivity.this, user, film.getUuid(), new Service.ClientResponse<RatingFilm>() {
+            @Override
+            public void onSuccess(RatingFilm result) {
+                // setting film rating data
+                progressBar.setProgress((int) result.getRating() * 10);
+                progressController.setProgress((int) result.getRating() * 10);
+                progressText.setText("" + result.getRating() + "/10");
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        }, RatingFilm.class);
     }
 
     @Override

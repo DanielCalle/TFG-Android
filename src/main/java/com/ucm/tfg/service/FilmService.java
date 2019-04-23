@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.Plan;
+import com.ucm.tfg.entities.RatingFilm;
 
 import org.springframework.core.ParameterizedTypeReference;
 
@@ -14,7 +15,8 @@ public class FilmService {
     private static String url = "http://tfg-spring.herokuapp.com/films/";
     private static String develop_url = "http://filmar-develop.herokuapp.com/films/";
 
-    public FilmService() {}
+    public FilmService() {
+    }
 
     public static <T> void getFilmById(Activity activity, String uuid, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
@@ -30,7 +32,26 @@ public class FilmService {
                 .setContext(activity)
                 .get()
                 .url(develop_url)
-                .execute(callback, new ParameterizedTypeReference<ArrayList<Film>>(){});
+                .execute(callback, new ParameterizedTypeReference<ArrayList<Film>>() {
+                });
     }
 
+    public static <T> void getRating(Activity activity, String userUuid, String filmUuid, Service.ClientResponse<T> callback, Class<T> c) {
+        Service.getInstance()
+                .setContext(activity)
+                .get()
+                .url(develop_url + "{uuid}/user/{userUuid}/rating")
+                .addPathVariable("uuid", filmUuid)
+                .addPathVariable("userUuid", userUuid)
+                .execute(callback, c);
+    }
+
+    public static <T> void rate(Activity activity, RatingFilm ratingFilm, Service.ClientResponse<T> callback, Class<T> c) {
+        Service.getInstance()
+                .setContext(activity)
+                .post()
+                .url(develop_url + "rate")
+                .body(ratingFilm)
+                .execute(callback, c);
+    }
 }

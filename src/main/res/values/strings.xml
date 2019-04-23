@@ -26,4 +26,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="label_session">Session</string>
     <string name="logout">Logout</string>
+    <string name="no_rating">Click for rate</string>
+    <string name="rated_film">Film succesfully rated</string>
 </resources>
