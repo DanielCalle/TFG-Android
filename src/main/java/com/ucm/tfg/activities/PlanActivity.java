@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
+import com.ucm.tfg.Session;
 import com.ucm.tfg.adapters.PlanJoinedUsersAdapter;
 import com.ucm.tfg.adapters.PlanUserAdapter;
 import com.ucm.tfg.entities.Film;
@@ -116,20 +117,7 @@ public class PlanActivity extends AppCompatActivity {
 
             }
         }, Film.class);
-        /*
-        PlanService.getJoinedUsers(PlanActivity.this, plan.getId(), new Service.ClientResponse<ArrayList<User>>() {
 
-            @Override
-            public void onSuccess(ArrayList<User> result) {
-                planJoinedUsersAdapter.setData(result);
-            }
-
-            @Override
-            public void onError(String error) {
-
-            }
-        });
-        */
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -144,6 +132,17 @@ public class PlanActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.delete:
+                PlanService.deletePlan(PlanActivity.this, "", new Service.ClientResponse<String>() {
+                    @Override
+                    public void onSuccess(String result) {
+                        Toast.makeText(PlanActivity.this, "Plan eliminado", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        Toast.makeText(PlanActivity.this, "Error al borrar el plan", Toast.LENGTH_SHORT).show();
+                    }
+                }, String.class);
                 //Toast.makeText(PlanActivity.this, "delete", Toast.LENGTH_SHORT).show();
                 break;
         }

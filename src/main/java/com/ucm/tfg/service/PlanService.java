@@ -2,6 +2,7 @@ package com.ucm.tfg.service;
 
 import android.app.Activity;
 
+import com.ucm.tfg.activities.PlanActivity;
 import com.ucm.tfg.entities.Plan;
 import com.ucm.tfg.entities.User;
 
@@ -40,5 +41,13 @@ public class PlanService {
                 .url(develop_url + "{id}" + "/joined-users")
                 .execute(callback, new ParameterizedTypeReference<ArrayList<User>>() {
                 });
+    }
+    public static <T> void deletePlan(Activity activity, String id, Service.ClientResponse<T> callback, Class<T> c) {
+        Service.getInstance()
+                .setContext(activity)
+                .delete()
+                .addPathVariable("id", id)
+                .url(develop_url + "{id}")
+                .execute(callback, c);
     }
 }
