@@ -12,6 +12,7 @@
     <string name="submit">Submit</string>
     <string name="plan">Plan</string>
     <string name="plan_date">Date</string>
+    <string name="plan_time">Time</string>
     <string name="plan_users">Users</string>
     <string name="plan_location">Location</string>
     <string name="plan_description">Description</string>

@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
+import com.ucm.tfg.Utils;
 import com.ucm.tfg.adapters.PlanJoinedUsersAdapter;
 import com.ucm.tfg.adapters.PlanUserAdapter;
 import com.ucm.tfg.entities.Film;
@@ -58,22 +59,39 @@ public class PlanActivity extends AppCompatActivity {
 
         filmPoster = findViewById(R.id.film_poster);
         TextView date = findViewById(R.id.date);
+        TextView time = findViewById(R.id.time);
         TextView location = findViewById(R.id.location);
         TextView description = findViewById(R.id.description);
         RecyclerView users = findViewById(R.id.users);
 
-        date.setText(plan.getDate().toString());
+        date.setText(Utils.dateFormat(plan.getDate()));
+        time.setText(Utils.timeFormat(plan.getDate()));
         location.setText(plan.getLocation());
         description.setText(plan.getDescription());
         users.setHasFixedSize(true);
         users.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        ArrayList<User> usersList = new ArrayList<>();
+        PlanUserAdapter planUserAdapter = new PlanUserAdapter(PlanActivity.this);
+        users.setAdapter(planUserAdapter);
+
+        UserService.getUserById(this, plan.getCreatorUuid(), new Service.ClientResponse<User>() {
+
+            @Override
+            public void onSuccess(User result) {
+                usersList.add(result);
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        }, User.class);
+
         PlanService.getJoinedUsers(this, plan.getId(), new Service.ClientResponse<ArrayList<User>>(){
 
             @Override
             public void onSuccess(ArrayList<User> result) {
-                PlanUserAdapter planUserAdapter = new PlanUserAdapter(PlanActivity.this);
-                users.setAdapter(planUserAdapter);
-                planUserAdapter.setData(result);
+                usersList.addAll(result);
             }
 
             @Override
@@ -81,6 +99,8 @@ public class PlanActivity extends AppCompatActivity {
 
             }
         });
+
+        planUserAdapter.setData(usersList);
 
        /*
 
