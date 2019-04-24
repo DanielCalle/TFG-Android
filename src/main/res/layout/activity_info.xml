@@ -134,9 +134,10 @@
 
     <RelativeLayout
         android:id="@+id/rating"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="top"
+        android:layout_marginBottom="@dimen/double_margin"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|center|end"
         app:layout_behavior="com.ucm.tfg.views.AnchorVisibilityBehavior">
@@ -144,8 +145,8 @@
         <ProgressBar
             android:id="@+id/progress_bar"
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_centerInParent="true"
             android:layout_margin="@dimen/margin"
             android:progressDrawable="@drawable/rating_circular_bar"
@@ -155,11 +156,11 @@
 
         <TextView
             android:id="@+id/progress_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_centerInParent="true"
-            android:gravity="center"
             android:layout_margin="@dimen/double_margin"
+            android:gravity="center"
             android:ellipsize="none"
             android:scrollHorizontally="false"
             android:maxLines="5"

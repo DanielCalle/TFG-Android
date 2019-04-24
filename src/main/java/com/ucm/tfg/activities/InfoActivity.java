@@ -149,9 +149,8 @@ public class InfoActivity extends AppCompatActivity {
             @Override
             public void onSuccess(UserFilm result) {
                 userFilm = result;
-                favoriteResource.setIcon(R.drawable.ic_favorite_red_24dp);
-                favoriteResource.setTitle(R.string.favorite);
                 // setting film rating data
+                enableEdit(true);
                 progressBar.setProgress((int) result.getRating() * 10);
                 progressController.setProgress((int) result.getRating() * 10);
                 progressText.setText("" + result.getRating() + "/10");
@@ -160,11 +159,21 @@ public class InfoActivity extends AppCompatActivity {
             @Override
             public void onError(String error) {
                 runOnUiThread(() -> {
-                    favoriteResource.setIcon(R.drawable.ic_favorite_white_24dp);
-                    favoriteResource.setTitle(R.string.unfavorite);
+                    enableEdit(false);
                 });
             }
         }, UserFilm.class);
+    }
+
+    private void enableEdit(boolean enabled) {
+        progressBar.setEnabled(enabled);
+        progressController.setEnabled(enabled);
+        progressText.setEnabled(enabled);
+        progressBar.setVisibility(enabled ? View.VISIBLE : View.GONE);
+        progressController.setVisibility(enabled ? View.VISIBLE : View.GONE);
+        progressText.setVisibility(enabled ? View.VISIBLE : View.GONE);
+        favoriteResource.setIcon(enabled ? R.drawable.ic_favorite_red_24dp : R.drawable.ic_favorite_white_24dp);
+        favoriteResource.setTitle(enabled ? R.string.favorite : R.string.unfavorite);
     }
 
     @Override
@@ -224,10 +233,8 @@ public class InfoActivity extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(UserFilm result) {
                                     userFilm = null;
-                                    favoriteResource.setIcon(R.drawable.ic_favorite_white_24dp);
-                                    favoriteResource.setTitle(R.string.unfavorite);
+                                    enableEdit(false);
                                     Toast.makeText(InfoActivity.this, getString(R.string.user_film_unfavorite), Toast.LENGTH_SHORT).show();
-                                    finish();
                                 }
 
                                 @Override
@@ -243,8 +250,7 @@ public class InfoActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(UserFilm result) {
                             userFilm = result;
-                            favoriteResource.setIcon(R.drawable.ic_favorite_red_24dp);
-                            favoriteResource.setTitle(R.string.favorite);
+                            enableEdit(true);
                             Toast.makeText(InfoActivity.this, getString(R.string.user_film_favourite), Toast.LENGTH_SHORT).show();
                         }
 
