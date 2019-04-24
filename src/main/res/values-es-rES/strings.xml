@@ -27,6 +27,8 @@
     <string name="logout">Cerrar sesión</string>
     <string name="no_rating">Cliquear para valorar</string>
     <string name="rated_film">Película valorada</string>
-    <string name="delete">Eliminar</string>
-    <string name="film_deleted">Película borrada correctamente</string>
+    <string name="favorite">Me gusta</string>
+    <string name="user_film_unfavorite">Ya no te gusta esta película</string>
+    <string name="user_film_favourite">Película guardada</string>
+    <string name="unfavorite">No me gusta</string>
 </resources>

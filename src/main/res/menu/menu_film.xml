@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/delete"
-        android:icon="@drawable/ic_delete_white_24dp"
+        android:id="@+id/favorite"
+        android:icon="@drawable/ic_favorite_white_24dp"
         android:orderInCategory="100"
-        android:title="@string/delete"
+        android:title="@string/unfavorite"
         app:showAsAction="always" />
 </menu>

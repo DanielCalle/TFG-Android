@@ -31,6 +31,8 @@
     <string name="logout">Logout</string>
     <string name="no_rating">Click for rate</string>
     <string name="rated_film">Film succesfully rated</string>
-    <string name="delete">Delete</string>
-    <string name="film_deleted">Film successfully deleted</string>
+    <string name="favorite">Like</string>
+    <string name="user_film_unfavorite">Film disliked</string>
+    <string name="user_film_favourite">Film liked</string>
+    <string name="unfavorite">Dislike</string>
 </resources>

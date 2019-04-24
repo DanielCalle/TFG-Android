@@ -1,7 +1,6 @@
 package com.ucm.tfg.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -25,7 +24,6 @@ import com.ucm.tfg.Session;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.Plan;
 import com.ucm.tfg.entities.UserFilm;
-import com.ucm.tfg.service.FilmService;
 import com.ucm.tfg.service.PlanService;
 import com.ucm.tfg.service.Service;
 import com.ucm.tfg.service.UserFilmService;
@@ -48,6 +46,8 @@ public class InfoActivity extends AppCompatActivity {
 
     private Film film;
     private UserFilm userFilm;
+
+    private MenuItem favoriteResource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,6 +149,8 @@ public class InfoActivity extends AppCompatActivity {
             @Override
             public void onSuccess(UserFilm result) {
                 userFilm = result;
+                favoriteResource.setIcon(R.drawable.ic_favorite_red_24dp);
+                favoriteResource.setTitle(R.string.favorite);
                 // setting film rating data
                 progressBar.setProgress((int) result.getRating() * 10);
                 progressController.setProgress((int) result.getRating() * 10);
@@ -157,7 +159,10 @@ public class InfoActivity extends AppCompatActivity {
 
             @Override
             public void onError(String error) {
-
+                runOnUiThread(() -> {
+                    favoriteResource.setIcon(R.drawable.ic_favorite_white_24dp);
+                    favoriteResource.setTitle(R.string.unfavorite);
+                });
             }
         }, UserFilm.class);
     }
@@ -201,6 +206,7 @@ public class InfoActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_film, menu);
+        favoriteResource = menu.findItem(R.id.favorite);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -208,23 +214,46 @@ public class InfoActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home: finish(); break;
-            case R.id.delete:
-                UserFilmService.delete(
-                        InfoActivity.this,
-                        getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null),
-                        film.getUuid(),
-                        new Service.ClientResponse<UserFilm>() {
-                            @Override
-                            public void onSuccess(UserFilm result) {
-                                Toast.makeText(InfoActivity.this, getString(R.string.film_deleted), Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
+            case R.id.favorite:
+                if (userFilm != null) {
+                    UserFilmService.delete(
+                            InfoActivity.this,
+                            getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null),
+                            film.getUuid(),
+                            new Service.ClientResponse<UserFilm>() {
+                                @Override
+                                public void onSuccess(UserFilm result) {
+                                    userFilm = null;
+                                    favoriteResource.setIcon(R.drawable.ic_favorite_white_24dp);
+                                    favoriteResource.setTitle(R.string.unfavorite);
+                                    Toast.makeText(InfoActivity.this, getString(R.string.user_film_unfavorite), Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
 
-                            @Override
-                            public void onError(String error) {
+                                @Override
+                                public void onError(String error) {
 
-                            }
-                        }, UserFilm.class);
+                                }
+                            }, UserFilm.class);
+                } else {
+                    userFilm = new UserFilm();
+                    userFilm.setUserUuid(getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null));
+                    userFilm.setFilmUuid(film.getUuid());
+                    UserFilmService.postUserFilm(InfoActivity.this, userFilm, new Service.ClientResponse<UserFilm>() {
+                        @Override
+                        public void onSuccess(UserFilm result) {
+                            userFilm = result;
+                            favoriteResource.setIcon(R.drawable.ic_favorite_red_24dp);
+                            favoriteResource.setTitle(R.string.favorite);
+                            Toast.makeText(InfoActivity.this, getString(R.string.user_film_favourite), Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onError(String error) {
+
+                        }
+                    }, UserFilm.class);
+                }
                 break;
         }
 

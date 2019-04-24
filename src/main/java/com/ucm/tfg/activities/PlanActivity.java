@@ -131,7 +131,7 @@ public class PlanActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
-            case R.id.delete:
+            case R.id.favorite:
                 PlanService.deletePlan(PlanActivity.this, plan.getId(), new Service.ClientResponse<String>() {
                     @Override
                     public void onSuccess(String result) {
