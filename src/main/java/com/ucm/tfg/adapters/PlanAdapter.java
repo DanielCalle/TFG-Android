@@ -67,7 +67,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
                         .centerCrop()
                         .into(recyclerViewHolder.image);
                 recyclerViewHolder.title.setText(result.getName());
-                recyclerViewHolder.date.setText(plan.getDate().toString());
+                recyclerViewHolder.date.setText(Utils.dateFormat(plan.getDate()));
 
             }
 
@@ -76,18 +76,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
 
             }
         }, Film.class);
-        UserService.getUserById(this.context, plan.getCreatorUuid(), new Service.ClientResponse<User>() {
-
-            @Override
-            public void onSuccess(User result) {
-                //recyclerViewHolder.from.setText(result.getName());
-            }
-
-            @Override
-            public void onError(String error) {
-
-            }
-        }, User.class);
+        
 
         if(recyclerViewHolder.num == 0) {
             ++this.count;
@@ -97,11 +86,10 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
         recyclerViewHolder.plan.setText(recyclerViewHolder.planString + " " + recyclerViewHolder.num);
 
 
-        PlanService.getJoinedUsers(this.context, plan.getId(), new Service.ClientResponse<ArrayList<User>>(){
+        PlanService.getUsers(this.context, plan.getId(), new Service.ClientResponse<ArrayList<User>>(){
 
             @Override
             public void onSuccess(ArrayList<User> result) {
-                String users = "";
                 PlanUserAdapter planUserAdapter = new PlanUserAdapter(context);
                 recyclerViewHolder.users.setAdapter(planUserAdapter);
                 planUserAdapter.setData(result);
@@ -117,6 +105,8 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
                 planActionListener.onPlanClick(plan, recyclerViewHolder);
             }
         });
+
+
 
     }
 

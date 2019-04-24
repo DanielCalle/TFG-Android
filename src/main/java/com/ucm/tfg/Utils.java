@@ -1,19 +1,10 @@
 package com.ucm.tfg;
 
-
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-
-import android.net.Uri;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
-import com.squareup.picasso.Picasso;
-import com.ucm.tfg.entities.User;
-import com.ucm.tfg.service.Service;
-import com.ucm.tfg.service.UserService;
+import java.util.Date;
 
 
 public class Utils {
@@ -23,7 +14,17 @@ public class Utils {
         //view.setImageBitmap(bm);
     }
 
+    public static String timeFormat(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("hh:mm");
+        String strDate = dateFormat.format(date);
+        return strDate;
+    }
 
+    public static String dateFormat(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("dd-mm-yyyy");
+        String strDate = dateFormat.format(date);
+        return strDate;
+    }
 
 
 }

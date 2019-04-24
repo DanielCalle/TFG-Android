@@ -42,6 +42,17 @@ public class PlanService {
                 .execute(callback, new ParameterizedTypeReference<ArrayList<User>>() {
                 });
     }
+
+    public static <T> void getUsers(Activity activity, String uuid, Service.ClientResponse<ArrayList<User>> callback) {
+        Service.getInstance()
+                .setContext(activity)
+                .get()
+                .addPathVariable("id", uuid)
+                .url(develop_url + "{id}" + "/users")
+                .execute(callback, new ParameterizedTypeReference<ArrayList<User>>() {
+                });
+    }
+
     public static <T> void deletePlan(Activity activity, String id, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
