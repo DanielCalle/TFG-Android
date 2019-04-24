@@ -47,6 +47,7 @@ public class InfoActivity extends AppCompatActivity {
     private SeekBar progressController;
 
     private Film film;
+    private UserFilm userFilm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,9 +76,6 @@ public class InfoActivity extends AppCompatActivity {
         progressText = findViewById(R.id.progress_text);
         progressController = findViewById(R.id.progress_controller);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(Session.SESSION_FILE, 0);
-        String user = sharedPreferences.getString(Session.USER, null);
-
         // enable/disable rating
         progressBar.setOnClickListener((View v) -> {
             progressController.setVisibility(
@@ -100,21 +98,20 @@ public class InfoActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                UserFilm userFilm = new UserFilm();
-                userFilm.setUserUuid(user);
-                userFilm.setFilmUuid(film.getUuid());
-                userFilm.setRating(((float) (seekBar.getProgress() / 10.0)));
-                UserFilmService.rate(InfoActivity.this, userFilm, new Service.ClientResponse<UserFilm>() {
-                    @Override
-                    public void onSuccess(UserFilm result) {
-                        Toast.makeText(InfoActivity.this, getString(R.string.rated_film), Toast.LENGTH_SHORT).show();
-                    }
+                if (userFilm != null) {
+                    userFilm.setRating(((float) (seekBar.getProgress() / 10.0)));
+                    UserFilmService.rate(InfoActivity.this, userFilm, new Service.ClientResponse<UserFilm>() {
+                        @Override
+                        public void onSuccess(UserFilm result) {
+                            Toast.makeText(InfoActivity.this, getString(R.string.rated_film), Toast.LENGTH_SHORT).show();
+                        }
 
-                    @Override
-                    public void onError(String error) {
+                        @Override
+                        public void onError(String error) {
 
-                    }
-                }, UserFilm.class);
+                        }
+                    }, UserFilm.class);
+                }
             }
         });
 
@@ -144,9 +141,14 @@ public class InfoActivity extends AppCompatActivity {
             startActivity(youtube);
         });
 
-        UserFilmService.getRating(InfoActivity.this, user, film.getUuid(), new Service.ClientResponse<UserFilm>() {
+        UserFilmService.get(
+                InfoActivity.this,
+                getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null),
+                film.getUuid(),
+                new Service.ClientResponse<UserFilm>() {
             @Override
             public void onSuccess(UserFilm result) {
+                userFilm = result;
                 // setting film rating data
                 progressBar.setProgress((int) result.getRating() * 10);
                 progressController.setProgress((int) result.getRating() * 10);

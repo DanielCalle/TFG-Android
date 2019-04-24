@@ -22,11 +22,11 @@ public class UserFilmService {
                 .execute(callback, c);
     }
 
-    public static <T> void getRating(Activity activity, String userUuid, String filmUuid, Service.ClientResponse<T> callback, Class<T> c) {
+    public static <T> void get(Activity activity, String userUuid, String filmUuid, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
                 .get()
-                .url(develop_url + "{userUuid}/{filmUuid}/rating")
+                .url(develop_url + "{userUuid}/{filmUuid}")
                 .addPathVariable("userUuid", userUuid)
                 .addPathVariable("filmUuid", filmUuid)
                 .execute(callback, c);
@@ -35,8 +35,12 @@ public class UserFilmService {
     public static <T> void rate(Activity activity, UserFilm userFilm, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
-                .post()
+                .put()
                 .url(develop_url + "rate")
+                .url(develop_url + "{userUuid}/{filmUuid}/rate/{rating}")
+                .addPathVariable("userUuid", userFilm.getUserUuid())
+                .addPathVariable("filmUuid", userFilm.getFilmUuid())
+                .addPathVariable("rating", userFilm.getRating() + "")
                 .body(userFilm)
                 .execute(callback, c);
     }
