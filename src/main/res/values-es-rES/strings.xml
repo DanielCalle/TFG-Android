@@ -10,6 +10,7 @@
     <string name="film_director">Director</string>
     <string name="plan_created">Plan creado</string>
     <string name="submit">Enviar</string>
+    <string name="plan">Plan</string>
     <string name="plan_date">Tiempo</string>
     <string name="plan_location">Lugar</string>
     <string name="plan_description">Descripción</string>
@@ -26,6 +27,6 @@
     <string name="logout">Cerrar sesión</string>
     <string name="no_rating">Cliquear para valorar</string>
     <string name="rated_film">Película valorada</string>
-    <string name="delete">Borrar</string>
+    <string name="delete">Eliminar</string>
     <string name="film_deleted">Película borrada correctamente</string>
 </resources>

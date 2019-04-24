@@ -36,9 +36,11 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
     private Activity context;
     private List<Plan> plans;
     private PlanActionListener planActionListener;
+    private static int count;
 
     public PlanAdapter(Activity context) {
         this.context = context;
+        this.count = 0;
         plans = new ArrayList<>();
     }
 
@@ -66,6 +68,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
                         .into(recyclerViewHolder.image);
                 recyclerViewHolder.title.setText(result.getName());
                 recyclerViewHolder.date.setText(plan.getDate().toString());
+
             }
 
             @Override
@@ -73,7 +76,6 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
 
             }
         }, Film.class);
-
         UserService.getUserById(this.context, plan.getCreatorUuid(), new Service.ClientResponse<User>() {
 
             @Override
@@ -86,6 +88,13 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
 
             }
         }, User.class);
+
+        if(recyclerViewHolder.num == 0) {
+            ++this.count;
+            recyclerViewHolder.num = this.count;
+        }
+
+        recyclerViewHolder.plan.setText(recyclerViewHolder.planString + " " + recyclerViewHolder.num);
 
 
         PlanService.getJoinedUsers(this.context, plan.getId(), new Service.ClientResponse<ArrayList<User>>(){
@@ -131,7 +140,10 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
         public ImageView image;
         public TextView date;
         public TextView title;
+        public TextView plan;
         public RecyclerView users;
+        public int num;
+        public String planString;
 
         public RecyclerViewHolder(View view) {
             super(view);
@@ -140,6 +152,9 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
             date = view.findViewById(R.id.date);
             title = view.findViewById(R.id.title);
             users = view.findViewById(R.id.users);
+            plan = view.findViewById(R.id.plan);
+            planString = "#" + view.getResources().getString(R.string.plan);
+            num = 0;
             users.setHasFixedSize(true);
             users.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         }
