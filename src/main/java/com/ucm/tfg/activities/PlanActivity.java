@@ -33,9 +33,6 @@ import java.util.ArrayList;
 
 public class PlanActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView;
-    private PlanJoinedUsersAdapter planJoinedUsersAdapter;
-
     private ActionBar actionBar;
     private ImageView filmPoster;
     private FloatingActionButton floatingActionButton;
@@ -68,30 +65,18 @@ public class PlanActivity extends AppCompatActivity {
         time.setText(Utils.timeFormat(plan.getDate()));
         location.setText(plan.getLocation());
         description.setText(plan.getDescription());
-        users.setHasFixedSize(true);
-        users.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         ArrayList<User> usersList = new ArrayList<>();
-        PlanUserAdapter planUserAdapter = new PlanUserAdapter(PlanActivity.this);
-        users.setAdapter(planUserAdapter);
 
-        UserService.getUserById(this, plan.getCreatorUuid(), new Service.ClientResponse<User>() {
-
-            @Override
-            public void onSuccess(User result) {
-                usersList.add(result);
-            }
-
-            @Override
-            public void onError(String error) {
-
-            }
-        }, User.class);
-
-        PlanService.getJoinedUsers(this, plan.getId(), new Service.ClientResponse<ArrayList<User>>(){
+        PlanService.getUsers(this, plan.getId(), new Service.ClientResponse<ArrayList<User>>(){
 
             @Override
             public void onSuccess(ArrayList<User> result) {
-                usersList.addAll(result);
+                PlanUserAdapter planUserAdapter = new PlanUserAdapter(PlanActivity.this);
+                RecyclerView users = PlanActivity.this.findViewById(R.id.users);
+                users.setHasFixedSize(true);
+                users.setLayoutManager(new LinearLayoutManager(PlanActivity.this, LinearLayoutManager.HORIZONTAL, false));
+                users.setAdapter(planUserAdapter);
+                planUserAdapter.setData(result);
             }
 
             @Override
@@ -100,7 +85,6 @@ public class PlanActivity extends AppCompatActivity {
             }
         });
 
-        planUserAdapter.setData(usersList);
 
        /*
 
@@ -124,8 +108,8 @@ public class PlanActivity extends AppCompatActivity {
                         .into(filmPoster);
 
                 floatingActionButton.setOnClickListener((View v) -> {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(result.getInfoURL()));
+                    Intent intent = new Intent(PlanActivity.this, InfoActivity.class);
+                    intent.putExtra("film", result);
                     startActivity(intent);
                 });
             }
