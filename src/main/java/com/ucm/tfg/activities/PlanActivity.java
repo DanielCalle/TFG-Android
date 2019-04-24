@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -40,13 +41,14 @@ public class PlanActivity extends AppCompatActivity {
     private ActionBar actionBar;
     private ImageView filmPoster;
     private FloatingActionButton floatingActionButton;
+    private Plan plan;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plan);
 
-        Plan plan = (Plan) getIntent().getExtras().getSerializable("plan");
+        plan = (Plan) getIntent().getExtras().getSerializable("plan");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -132,7 +134,7 @@ public class PlanActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.delete:
-                PlanService.deletePlan(PlanActivity.this, "", new Service.ClientResponse<String>() {
+                PlanService.deletePlan(PlanActivity.this, plan.getId(), new Service.ClientResponse<String>() {
                     @Override
                     public void onSuccess(String result) {
                         Toast.makeText(PlanActivity.this, "Plan eliminado", Toast.LENGTH_SHORT).show();
