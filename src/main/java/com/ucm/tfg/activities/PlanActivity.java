@@ -27,6 +27,7 @@ import com.ucm.tfg.service.FilmService;
 import com.ucm.tfg.service.PlanService;
 import com.ucm.tfg.service.Service;
 import com.ucm.tfg.service.UserService;
+import android.view.Menu;
 
 import java.util.ArrayList;
 
@@ -130,11 +131,21 @@ public class PlanActivity extends AppCompatActivity {
         });
         */
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_plan, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                break;
+            case R.id.delete:
+                //Toast.makeText(PlanActivity.this, "delete", Toast.LENGTH_SHORT).show();
+                break;
         }
 
         return super.onOptionsItemSelected(item);
