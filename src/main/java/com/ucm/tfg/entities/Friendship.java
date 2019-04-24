@@ -12,6 +12,7 @@ public class Friendship implements Serializable {
     private String requesterUuid;
     private String friendUuid;
     private String date;
+    private Boolean active;
     public String getRequesterUuid() {
         return requesterUuid;
     }
@@ -31,4 +32,11 @@ public class Friendship implements Serializable {
         this.date = date;
     }
 
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 }

@@ -2,6 +2,7 @@ package com.ucm.tfg.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -11,18 +12,23 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v4.util.Pair;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.ucm.tfg.R;
+import com.ucm.tfg.Session;
 import com.ucm.tfg.Utils;
 import com.ucm.tfg.activities.MainActivity;
 import com.ucm.tfg.activities.PlanActivity;
 import com.ucm.tfg.adapters.PlanAdapter;
+import com.ucm.tfg.adapters.PlanFriendsAdapter;
 import com.ucm.tfg.entities.Film;
+import com.ucm.tfg.entities.Friendship;
 import com.ucm.tfg.entities.Plan;
+import com.ucm.tfg.entities.User;
 import com.ucm.tfg.service.FilmService;
 import com.ucm.tfg.service.PlanService;
 import com.ucm.tfg.service.Service;
@@ -51,6 +57,7 @@ public class PlanFragment extends Fragment {
     private String mParam2;
 
     private PlanAdapter planAdapter;
+    private PlanFriendsAdapter planFriendsAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     private OnFragmentInteractionListener mListener;
@@ -116,6 +123,27 @@ public class PlanFragment extends Fragment {
         });
 
         updatePlans();
+
+        planFriendsAdapter = new PlanFriendsAdapter(getActivity());
+        planFriendsAdapter.addPlanOnClickListener((Plan p, PlanFriendsAdapter.RecyclerViewHolder recyclerViewHolder) -> {
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(
+                            getActivity(),
+                            Pair.create(recyclerViewHolder.image, "film_poster")
+                    );
+            Intent i = new Intent(getActivity(), PlanActivity.class);
+            i.putExtra("plan", p);
+            startActivity(i, optionsCompat.toBundle());
+        });
+        recyclerView.setAdapter(planFriendsAdapter);
+
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            updateFriendsPlans();
+        });
+
+        updateFriendsPlans();
+
         return view;
     }
 
@@ -125,6 +153,29 @@ public class PlanFragment extends Fragment {
             @Override
             public void onSuccess(ArrayList<Plan> result) {
                 planAdapter.setData(result);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+    private void updateFriendsPlans() {
+        swipeRefreshLayout.setRefreshing(true);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Session.SESSION_FILE, 0);
+        String userUuid = sharedPreferences.getString(Session.USER, null);
+        UserService.getFriends(getActivity(), userUuid, new Service.ClientResponse<ArrayList<Friendship>>() {
+            @Override
+            public void onSuccess(ArrayList<Friendship> friendships) {
+                for(int i = 0; i < friendships.size(); i++){
+                    if(friendships.get(i).getActive()){
+                        PlanService.getPlans();
+                    }
+                }
+                planFriendsAdapter.setData(result);
                 swipeRefreshLayout.setRefreshing(false);
             }
 
