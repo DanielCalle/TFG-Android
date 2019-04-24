@@ -29,4 +29,5 @@
     <string name="no_rating">Click for rate</string>
     <string name="rated_film">Film succesfully rated</string>
     <string name="delete">delete</string>
+    <string name="film_deleted">Film successfully deleted</string>
 </resources>

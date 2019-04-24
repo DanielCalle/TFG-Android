@@ -15,6 +15,7 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.ucm.tfg.R;
+import com.ucm.tfg.Session;
 import com.ucm.tfg.activities.InfoActivity;
 import com.ucm.tfg.adapters.FilmAdapter;
 import com.ucm.tfg.entities.Film;
@@ -106,13 +107,23 @@ public class FilmFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(() -> {
             updateFilms();
         });
-        updateFilms();
 
         return view;
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        updateFilms();
+    }
+
     private void updateFilms() {
         swipeRefreshLayout.setRefreshing(true);
-        UserService.getUserFilmsById(getActivity(), "1", new Service.ClientResponse<ArrayList<Film>>() {
+
+        UserService.getUserFilmsById(getActivity(),
+                getActivity().getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null),
+                new Service.ClientResponse<ArrayList<Film>>() {
             @Override
             public void onSuccess(ArrayList<Film> result) {
                 filmAdapter.setData(result);

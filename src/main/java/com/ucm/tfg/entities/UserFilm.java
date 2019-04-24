@@ -11,6 +11,7 @@ public class UserFilm implements Serializable {
     private String userUuid;
     private String filmUuid;
     private Date date;
+    private float rating;
 
     public String getUserUuid() {
         return userUuid;
@@ -34,5 +35,13 @@ public class UserFilm implements Serializable {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
     }
 }

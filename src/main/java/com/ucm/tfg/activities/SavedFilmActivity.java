@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
+import com.ucm.tfg.Session;
 import com.ucm.tfg.Utils;
 import com.ucm.tfg.entities.User;
 import com.ucm.tfg.entities.UserFilm;
@@ -64,7 +65,7 @@ public class SavedFilmActivity extends AppCompatActivity {
                     Picasso.get().load(film.getImageURL()).into(image);
 
                     UserFilm userFilm = new UserFilm();
-                    userFilm.setUserUuid("1");
+                    userFilm.setUserUuid(getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null));
                     userFilm.setFilmUuid(film.getUuid());
                     userFilm.setDate(new Date());
                     UserFilmService.postUserFilm(SavedFilmActivity.this, userFilm, new Service.ClientResponse<UserFilm>(){

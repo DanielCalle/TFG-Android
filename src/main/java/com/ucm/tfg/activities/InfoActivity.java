@@ -8,7 +8,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,8 +15,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RatingBar;
-import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,14 +24,12 @@ import com.ucm.tfg.R;
 import com.ucm.tfg.Session;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.Plan;
-import com.ucm.tfg.entities.RatingFilm;
+import com.ucm.tfg.entities.UserFilm;
 import com.ucm.tfg.service.FilmService;
 import com.ucm.tfg.service.PlanService;
 import com.ucm.tfg.service.Service;
+import com.ucm.tfg.service.UserFilmService;
 import com.ucm.tfg.views.ExpandableTextView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -105,13 +100,13 @@ public class InfoActivity extends AppCompatActivity {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                RatingFilm ratingFilm = new RatingFilm();
-                ratingFilm.setUserUuid(user);
-                ratingFilm.setFilmUuid(film.getUuid());
-                ratingFilm.setRating(((float) (seekBar.getProgress() / 10.0)));
-                FilmService.rate(InfoActivity.this, ratingFilm, new Service.ClientResponse<RatingFilm>() {
+                UserFilm userFilm = new UserFilm();
+                userFilm.setUserUuid(user);
+                userFilm.setFilmUuid(film.getUuid());
+                userFilm.setRating(((float) (seekBar.getProgress() / 10.0)));
+                UserFilmService.rate(InfoActivity.this, userFilm, new Service.ClientResponse<UserFilm>() {
                     @Override
-                    public void onSuccess(RatingFilm result) {
+                    public void onSuccess(UserFilm result) {
                         Toast.makeText(InfoActivity.this, getString(R.string.rated_film), Toast.LENGTH_SHORT).show();
                     }
 
@@ -119,7 +114,7 @@ public class InfoActivity extends AppCompatActivity {
                     public void onError(String error) {
 
                     }
-                }, RatingFilm.class);
+                }, UserFilm.class);
             }
         });
 
@@ -149,9 +144,9 @@ public class InfoActivity extends AppCompatActivity {
             startActivity(youtube);
         });
 
-        FilmService.getRating(InfoActivity.this, user, film.getUuid(), new Service.ClientResponse<RatingFilm>() {
+        UserFilmService.getRating(InfoActivity.this, user, film.getUuid(), new Service.ClientResponse<UserFilm>() {
             @Override
-            public void onSuccess(RatingFilm result) {
+            public void onSuccess(UserFilm result) {
                 // setting film rating data
                 progressBar.setProgress((int) result.getRating() * 10);
                 progressController.setProgress((int) result.getRating() * 10);
@@ -162,7 +157,7 @@ public class InfoActivity extends AppCompatActivity {
             public void onError(String error) {
 
             }
-        }, RatingFilm.class);
+        }, UserFilm.class);
     }
 
     @Override
@@ -212,7 +207,22 @@ public class InfoActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case android.R.id.home: finish(); break;
             case R.id.delete:
-                Toast.makeText(InfoActivity.this, "delete", Toast.LENGTH_SHORT).show();
+                UserFilmService.delete(
+                        InfoActivity.this,
+                        getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null),
+                        film.getUuid(),
+                        new Service.ClientResponse<UserFilm>() {
+                            @Override
+                            public void onSuccess(UserFilm result) {
+                                Toast.makeText(InfoActivity.this, getString(R.string.film_deleted), Toast.LENGTH_SHORT).show();
+                                finish();
+                            }
+
+                            @Override
+                            public void onError(String error) {
+
+                            }
+                        }, UserFilm.class);
                 break;
         }
 
