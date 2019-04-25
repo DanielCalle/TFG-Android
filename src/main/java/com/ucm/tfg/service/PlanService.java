@@ -32,7 +32,15 @@ public class PlanService {
                 .body(plan)
                 .execute(callback, c);
     }
-
+    public static <T> void joinPlan(Activity activity, String id, String userUuid, Service.ClientResponse<T> callback, Class<T> c) {
+        Service.getInstance()
+                .setContext(activity)
+                .put()
+                .addPathVariable("id", id)
+                .addPathVariable("userUuid", userUuid)
+                .url(develop_url + "{id}" + "/join/" + "{userUuid}")
+                .execute(callback, c);
+    }
     public static <T> void getJoinedUsers(Activity activity, String uuid, Service.ClientResponse<ArrayList<User>> callback) {
         Service.getInstance()
                 .setContext(activity)
@@ -61,4 +69,5 @@ public class PlanService {
                 .url(develop_url + "{id}")
                 .execute(callback, c);
     }
+
 }

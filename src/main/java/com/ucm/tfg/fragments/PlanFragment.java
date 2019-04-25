@@ -2,6 +2,7 @@ package com.ucm.tfg.fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -11,18 +12,23 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v4.util.Pair;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.ucm.tfg.R;
+import com.ucm.tfg.Session;
 import com.ucm.tfg.Utils;
 import com.ucm.tfg.activities.MainActivity;
 import com.ucm.tfg.activities.PlanActivity;
 import com.ucm.tfg.adapters.PlanAdapter;
+import com.ucm.tfg.adapters.PlanFriendsAdapter;
 import com.ucm.tfg.entities.Film;
+import com.ucm.tfg.entities.Friendship;
 import com.ucm.tfg.entities.Plan;
+import com.ucm.tfg.entities.User;
 import com.ucm.tfg.service.FilmService;
 import com.ucm.tfg.service.PlanService;
 import com.ucm.tfg.service.Service;
@@ -51,6 +57,7 @@ public class PlanFragment extends Fragment {
     private String mParam2;
 
     private PlanAdapter planAdapter;
+
     private SwipeRefreshLayout swipeRefreshLayout;
 
     private OnFragmentInteractionListener mListener;
@@ -113,9 +120,13 @@ public class PlanFragment extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             updatePlans();
+            updateFriendsPlans();
         });
 
         updatePlans();
+        updateFriendsPlans();
+
+
         return view;
     }
 
@@ -124,7 +135,25 @@ public class PlanFragment extends Fragment {
         UserService.getUserPlansById(getActivity(), "5df9b1ab2e9742aa9bfd4a7d12dde033", new Service.ClientResponse<ArrayList<Plan>>() {
             @Override
             public void onSuccess(ArrayList<Plan> result) {
-                planAdapter.setData(result);
+                planAdapter.setPlansData(result);
+                swipeRefreshLayout.setRefreshing(false);
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+    }
+    private void updateFriendsPlans() {
+        swipeRefreshLayout.setRefreshing(true);
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(Session.SESSION_FILE, 0);
+        String userUuid = sharedPreferences.getString(Session.USER, null);
+        UserService.getFriendsPlans(getActivity(), "5df9b1ab2e9742aa9bfd4a7d12dde033", new Service.ClientResponse<ArrayList<Plan>>() {
+            @Override
+            public void onSuccess(ArrayList<Plan> result) {
+                planAdapter.setFriendsPlansData(result);
                 swipeRefreshLayout.setRefreshing(false);
             }
 

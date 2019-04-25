@@ -3,6 +3,7 @@ package com.ucm.tfg.service;
 import android.app.Activity;
 
 import com.ucm.tfg.entities.Film;
+import com.ucm.tfg.entities.Friendship;
 import com.ucm.tfg.entities.Plan;
 import com.ucm.tfg.entities.User;
 
@@ -56,6 +57,21 @@ public class UserService {
                 .setContext(activity)
                 .get().addPathVariable("id", uuid)
                 .url(develop_url + "{id}" + "/plans")
+                .execute(callback, new ParameterizedTypeReference<ArrayList<Plan>>(){});
+    }
+
+    public static <T> void getFriends(Activity activity, String uuid, Service.ClientResponse<ArrayList<Friendship>> callback) {
+        Service.getInstance()
+                .setContext(activity)
+                .get().addPathVariable("id", uuid)
+                .url(develop_url + "{id}" + "/friendships")
+                .execute(callback, new ParameterizedTypeReference<ArrayList<Friendship>>(){});
+    }
+    public static <T> void getFriendsPlans(Activity activity, String uuid, Service.ClientResponse<ArrayList<Plan>> callback) {
+        Service.getInstance()
+                .setContext(activity)
+                .get().addPathVariable("id", uuid)
+                .url(develop_url + "{id}" + "/friendships" + "/plans")
                 .execute(callback, new ParameterizedTypeReference<ArrayList<Plan>>(){});
     }
 

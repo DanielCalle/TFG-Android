@@ -5,6 +5,7 @@
     <string name="label_recommendations">Recomendaciones</string>
     <string name="label_films">Mis películas</string>
     <string name="add_film_to_plan">Añadir al plan</string>
+    <string name="join_plan">Unirse al plan</string>
     <string name="film_description">Sinopsis</string>
     <string name="film_genre">Género</string>
     <string name="film_director">Director</string>
@@ -14,6 +15,7 @@
     <string name="plan_date">Tiempo</string>
     <string name="plan_location">Lugar</string>
     <string name="plan_description">Descripción</string>
+    <string name="plan_joined">Te has unido al plan</string>
     <string name="date_format">AAAA-MM-DD</string>
     <string name="form_not_filled">Rellena todo el contenido antes de enviar</string>
     <string name="user_email">Email</string>

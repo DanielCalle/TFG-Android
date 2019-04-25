@@ -1,10 +1,9 @@
+
+
 package com.ucm.tfg.adapters;
 
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import android.graphics.drawable.Drawable;
+
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,8 +16,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
-import com.ucm.tfg.Utils;
-import com.ucm.tfg.activities.PlanActivity;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.Plan;
 import com.ucm.tfg.entities.User;
@@ -31,15 +28,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHolder> {
+public class PlanFriendsAdapter extends RecyclerView.Adapter<PlanFriendsAdapter.RecyclerViewHolder> {
 
     private Activity context;
     private List<Plan> plans;
-    private List<Plan> friendsPlans;
     private PlanActionListener planActionListener;
     private static int count;
 
-    public PlanAdapter(Activity context) {
+    public PlanFriendsAdapter(Activity context) {
         this.context = context;
         this.count = 0;
         plans = new ArrayList<>();
@@ -57,10 +53,6 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder recyclerViewHolder, int index) {
         Plan plan = plans.get(index);
-        updateView(plan, recyclerViewHolder);
-    }
-
-    public void updateView(Plan plan, @NonNull RecyclerViewHolder recyclerViewHolder){
         FilmService.getFilmById(this.context, plan.getFilmUuid(), new Service.ClientResponse<Film>() {
             @Override
             public void onSuccess(Film result) {
@@ -72,7 +64,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
                         .centerCrop()
                         .into(recyclerViewHolder.image);
                 recyclerViewHolder.title.setText(result.getName());
-                recyclerViewHolder.date.setText(Utils.dateFormat(plan.getDate()));
+                recyclerViewHolder.date.setText(plan.getDate().toString());
 
             }
 
@@ -81,7 +73,18 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
 
             }
         }, Film.class);
-        
+        UserService.getUserById(this.context, plan.getCreatorUuid(), new Service.ClientResponse<User>() {
+
+            @Override
+            public void onSuccess(User result) {
+                //recyclerViewHolder.from.setText(result.getName());
+            }
+
+            @Override
+            public void onError(String error) {
+
+            }
+        }, User.class);
 
         if(recyclerViewHolder.num == 0) {
             ++this.count;
@@ -91,10 +94,11 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
         recyclerViewHolder.plan.setText(recyclerViewHolder.planString + " " + recyclerViewHolder.num);
 
 
-        PlanService.getUsers(this.context, plan.getId(), new Service.ClientResponse<ArrayList<User>>(){
+        PlanService.getJoinedUsers(this.context, plan.getId(), new Service.ClientResponse<ArrayList<User>>(){
 
             @Override
             public void onSuccess(ArrayList<User> result) {
+                String users = "";
                 PlanUserAdapter planUserAdapter = new PlanUserAdapter(context);
                 recyclerViewHolder.users.setAdapter(planUserAdapter);
                 planUserAdapter.setData(result);
@@ -111,8 +115,6 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
             }
         });
 
-
-
     }
 
     @Override
@@ -120,15 +122,8 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
         return plans.size();
     }
 
-    public void setPlansData(List<Plan> data) {
-
-        this.plans = data;
-        notifyDataSetChanged();
-    }
-
-    public void setFriendsPlansData(List<Plan> data) {
-
-        this.friendsPlans = data;
+    public void setData(List<Plan> data) {
+        plans = data;
         notifyDataSetChanged();
     }
 
