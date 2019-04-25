@@ -6,6 +6,7 @@
     <string name="label_films">Mis películas</string>
     <string name="add_film_to_plan">Añadir al plan</string>
     <string name="join_plan">Unirse al plan</string>
+    <string name="quit_plan">Salir del plan</string>
     <string name="film_description">Sinopsis</string>
     <string name="film_genre">Género</string>
     <string name="film_director">Director</string>
@@ -33,4 +34,5 @@
     <string name="user_film_unfavorite">Ya no te gusta esta película</string>
     <string name="user_film_favourite">Película guardada</string>
     <string name="unfavorite">No me gusta</string>
+    <string name="plan_quit">Saliste del plan</string>
 </resources>

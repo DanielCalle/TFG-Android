@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
+import com.ucm.tfg.Session;
 import com.ucm.tfg.Utils;
 import com.ucm.tfg.adapters.PlanUserAdapter;
 import com.ucm.tfg.entities.Film;
@@ -27,6 +28,7 @@ import com.ucm.tfg.service.PlanService;
 import com.ucm.tfg.service.Service;
 import android.view.Menu;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class PlanActivity extends AppCompatActivity {
@@ -34,6 +36,7 @@ public class PlanActivity extends AppCompatActivity {
     private ActionBar actionBar;
     private ImageView filmPoster;
     private FloatingActionButton floatingActionButton;
+    private boolean contains;
     private Plan plan;
 
     @Override
@@ -118,21 +121,53 @@ public class PlanActivity extends AppCompatActivity {
 
             }
         }, Film.class);
+
+        /*contains = plan.getJoinedUsers().contains(
+                getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null)
+        );
         Button joinPlan = findViewById(R.id.join_plan);
+
+        joinPlan.setText(getString(contains ? R.string.quit_plan : R.string.join_plan));
+
         joinPlan.setOnClickListener((View v) -> {
-            PlanService.joinPlan(PlanActivity.this, plan.getId(), "a", new Service.ClientResponse<Plan>() {
+            if(!contains) {
+                PlanService.joinPlan(PlanActivity.this, plan.getId(),
+                        getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null),
+                        new Service.ClientResponse<Plan>() {
 
-                @Override
-                public void onSuccess(Plan result) {
-                    Toast.makeText(PlanActivity.this, getText(R.string.plan_joined), Toast.LENGTH_SHORT).show();
-                }
+                            @Override
+                            public void onSuccess(Plan result) {
+                                Toast.makeText(PlanActivity.this, getText(R.string.plan_joined), Toast.LENGTH_SHORT).show();
+                                joinPlan.setText(getString(R.string.quit_plan));
+                                contains = true;
+                            }
 
-                @Override
-                public void onError(String error) {
+                            @Override
+                            public void onError(String error) {
 
-                }
-            }, Plan.class);
-        });
+                            }
+                        }, Plan.class);
+            }
+            else {
+                PlanService.quitPlan(PlanActivity.this, plan.getId(),
+                        getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null),
+                        new Service.ClientResponse<Plan>() {
+
+                            @Override
+                            public void onSuccess(Plan result) {
+                                Toast.makeText(PlanActivity.this, getText(R.string.plan_quit), Toast.LENGTH_SHORT).show();
+                                joinPlan.setText(getString(R.string.join_plan));
+                                contains = false;
+                            }
+
+                            @Override
+                            public void onError(String error) {
+
+                            }
+                        }, Plan.class);
+            }
+
+        });*/
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

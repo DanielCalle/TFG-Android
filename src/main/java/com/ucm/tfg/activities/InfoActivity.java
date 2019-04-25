@@ -183,7 +183,10 @@ public class InfoActivity extends AppCompatActivity {
                 if (data != null) {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     Plan plan = new Plan();
-                    plan.setCreator("a");
+                    plan.setCreator(
+                            getSharedPreferences(Session.SESSION_FILE, 0)
+                            .getString(Session.USER, null)
+                    );
                     plan.setFilmUuid(film.getUuid());
                     try {
                         plan.setDate(dateFormat.parse(data.getExtras().getString(getString(R.string.plan_date))));

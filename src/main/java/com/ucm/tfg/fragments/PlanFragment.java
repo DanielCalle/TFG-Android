@@ -120,37 +120,43 @@ public class PlanFragment extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             updatePlans();
-            updateFriendsPlans();
         });
-
-        updatePlans();
-        updateFriendsPlans();
-
 
         return view;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        updatePlans();
+    }
+
+
     private void updatePlans() {
         swipeRefreshLayout.setRefreshing(true);
-        UserService.getUserPlansById(getActivity(), "5df9b1ab2e9742aa9bfd4a7d12dde033", new Service.ClientResponse<ArrayList<Plan>>() {
-            @Override
-            public void onSuccess(ArrayList<Plan> result) {
-                planAdapter.setPlansData(result);
-                swipeRefreshLayout.setRefreshing(false);
-            }
+        UserService.getUserPlansById(getActivity(),
+                getActivity().getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null),
+                new Service.ClientResponse<ArrayList<Plan>>() {
+                    @Override
+                    public void onSuccess(ArrayList<Plan> result) {
+                        planAdapter.setPlansData(result);
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
 
-            @Override
-            public void onError(String error) {
-                Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
+                    @Override
+                    public void onError(String error) {
+                        Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                });
     }
+
     private void updateFriendsPlans() {
         swipeRefreshLayout.setRefreshing(true);
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(Session.SESSION_FILE, 0);
         String userUuid = sharedPreferences.getString(Session.USER, null);
-        UserService.getFriendsPlans(getActivity(), "5df9b1ab2e9742aa9bfd4a7d12dde033", new Service.ClientResponse<ArrayList<Plan>>() {
+        UserService.getFriendsPlans(getActivity(), userUuid, new Service.ClientResponse<ArrayList<Plan>>() {
             @Override
             public void onSuccess(ArrayList<Plan> result) {
                 planAdapter.setFriendsPlansData(result);
