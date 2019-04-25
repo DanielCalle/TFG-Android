@@ -11,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -129,6 +130,21 @@ public class PlanActivity extends AppCompatActivity {
             }
         });
         */
+        Button joinPlan = findViewById(R.id.join_plan);
+        joinPlan.setOnClickListener((View v) -> {
+            PlanService.joinPlan(PlanActivity.this, plan.getId(), "a", new Service.ClientResponse<Plan>() {
+
+                @Override
+                public void onSuccess(Plan result) {
+                    Toast.makeText(PlanActivity.this, getText(R.string.plan_joined), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onError(String error) {
+
+                }
+            }, Plan.class);
+        });
     }
 
     @Override

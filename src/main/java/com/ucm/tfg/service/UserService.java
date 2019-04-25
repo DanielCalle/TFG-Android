@@ -67,5 +67,12 @@ public class UserService {
                 .url(develop_url + "{id}" + "/friendships")
                 .execute(callback, new ParameterizedTypeReference<ArrayList<Friendship>>(){});
     }
+    public static <T> void getFriendsPlans(Activity activity, String uuid, Service.ClientResponse<ArrayList<Plan>> callback) {
+        Service.getInstance()
+                .setContext(activity)
+                .get().addPathVariable("id", uuid)
+                .url(develop_url + "{id}" + "/friendships" + "/plans")
+                .execute(callback, new ParameterizedTypeReference<ArrayList<Plan>>(){});
+    }
 
 }

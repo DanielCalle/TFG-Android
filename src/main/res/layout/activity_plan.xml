@@ -7,6 +7,15 @@
     android:layout_height="match_parent"
     tools:context=".activities.PlanActivity">
 
+    <Button
+        android:id="@+id/join_plan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/primaryColor"
+        android:text="@string/join_plan"
+        android:textColor="@color/primaryTextColor" />
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"

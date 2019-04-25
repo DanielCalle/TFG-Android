@@ -35,6 +35,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
 
     private Activity context;
     private List<Plan> plans;
+    private List<Plan> friendsPlans;
     private PlanActionListener planActionListener;
     private static int count;
 
@@ -56,6 +57,10 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder recyclerViewHolder, int index) {
         Plan plan = plans.get(index);
+        updateView(plan, recyclerViewHolder);
+    }
+
+    public void updateView(Plan plan, @NonNull RecyclerViewHolder recyclerViewHolder){
         FilmService.getFilmById(this.context, plan.getFilmUuid(), new Service.ClientResponse<Film>() {
             @Override
             public void onSuccess(Film result) {
@@ -117,7 +122,6 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
                 planActionListener.onPlanClick(plan, recyclerViewHolder);
             }
         });
-
     }
 
     @Override
@@ -125,8 +129,15 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
         return plans.size();
     }
 
-    public void setData(List<Plan> data) {
-        plans = data;
+    public void setPlansData(List<Plan> data) {
+
+        this.plans = data;
+        notifyDataSetChanged();
+    }
+
+    public void setFriendsPlansData(List<Plan> data) {
+
+        this.friendsPlans = data;
         notifyDataSetChanged();
     }
 

@@ -57,7 +57,7 @@ public class PlanFragment extends Fragment {
     private String mParam2;
 
     private PlanAdapter planAdapter;
-    private PlanFriendsAdapter planFriendsAdapter;
+
     private SwipeRefreshLayout swipeRefreshLayout;
 
     private OnFragmentInteractionListener mListener;
@@ -120,29 +120,12 @@ public class PlanFragment extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             updatePlans();
-        });
-
-        updatePlans();
-
-        planFriendsAdapter = new PlanFriendsAdapter(getActivity());
-        planFriendsAdapter.addPlanOnClickListener((Plan p, PlanFriendsAdapter.RecyclerViewHolder recyclerViewHolder) -> {
-            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                    .makeSceneTransitionAnimation(
-                            getActivity(),
-                            Pair.create(recyclerViewHolder.image, "film_poster")
-                    );
-            Intent i = new Intent(getActivity(), PlanActivity.class);
-            i.putExtra("plan", p);
-            startActivity(i, optionsCompat.toBundle());
-        });
-        recyclerView.setAdapter(planFriendsAdapter);
-
-        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
-        swipeRefreshLayout.setOnRefreshListener(() -> {
             updateFriendsPlans();
         });
 
+        updatePlans();
         updateFriendsPlans();
+
 
         return view;
     }
@@ -152,7 +135,7 @@ public class PlanFragment extends Fragment {
         UserService.getUserPlansById(getActivity(), "5df9b1ab2e9742aa9bfd4a7d12dde033", new Service.ClientResponse<ArrayList<Plan>>() {
             @Override
             public void onSuccess(ArrayList<Plan> result) {
-                planAdapter.setData(result);
+                planAdapter.setPlansData(result);
                 swipeRefreshLayout.setRefreshing(false);
             }
 
@@ -165,17 +148,12 @@ public class PlanFragment extends Fragment {
     }
     private void updateFriendsPlans() {
         swipeRefreshLayout.setRefreshing(true);
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Session.SESSION_FILE, 0);
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(Session.SESSION_FILE, 0);
         String userUuid = sharedPreferences.getString(Session.USER, null);
-        UserService.getFriends(getActivity(), userUuid, new Service.ClientResponse<ArrayList<Friendship>>() {
+        UserService.getFriendsPlans(getActivity(), "5df9b1ab2e9742aa9bfd4a7d12dde033", new Service.ClientResponse<ArrayList<Plan>>() {
             @Override
-            public void onSuccess(ArrayList<Friendship> friendships) {
-                for(int i = 0; i < friendships.size(); i++){
-                    if(friendships.get(i).getActive()){
-                        PlanService.getPlans();
-                    }
-                }
-                planFriendsAdapter.setData(result);
+            public void onSuccess(ArrayList<Plan> result) {
+                planAdapter.setFriendsPlansData(result);
                 swipeRefreshLayout.setRefreshing(false);
             }
 
