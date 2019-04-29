@@ -79,29 +79,11 @@ public class MainActivity extends AppCompatActivity implements
                                 break;
                             case 2:
                                 toolbar.inflateMenu(R.menu.menu_films);
-                                activeFragment = (Fragment) viewPager
-                                        .getAdapter()
-                                        .instantiateItem(viewPager, viewPager.getCurrentItem());
                                 MenuItem menuItem = toolbar.getMenu().findItem(R.id.action_search);
-                                SearchView searchView = (SearchView)menuItem.getActionView();
-
-                                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                                    @Override
-                                    public boolean onQueryTextSubmit(String s) {
-                                        return false;
-                                    }
-
-                                    @Override
-                                    public boolean onQueryTextChange(String s) {
-                                        ((FilmFragment) activeFragment).searchFilms(s);
-                                        return false;
-                                    }
-                                });
-
-                                searchView.setOnCloseListener(() -> {
-                                    ((FilmFragment) activeFragment).updateFilms();
-                                    return false;
-                                });
+                                ((FilmFragment) viewPager
+                                        .getAdapter()
+                                        .instantiateItem(viewPager, viewPager.getCurrentItem()))
+                                .setSearchView((SearchView) menuItem.getActionView());
                                 break;
                             default:
                                 break;

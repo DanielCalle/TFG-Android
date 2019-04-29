@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.ucm.tfg.R;
@@ -118,7 +119,7 @@ public class FilmFragment extends Fragment {
         updateFilms();
     }
 
-    public void updateFilms() {
+    private void updateFilms() {
         swipeRefreshLayout.setRefreshing(true);
         String user = getActivity().getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null);
         if (!Utils.isNullOrEmpty(user)) {
@@ -138,7 +139,7 @@ public class FilmFragment extends Fragment {
         }
     }
 
-    public void searchFilms(String name) {
+    private void searchFilms(String name) {
         if (!Utils.isNullOrEmpty(name)) {
             swipeRefreshLayout.setRefreshing(true);
             FilmService.searchFilmsByName(getActivity(), name, new Service.ClientResponse<ArrayList<Film>>() {
@@ -155,6 +156,28 @@ public class FilmFragment extends Fragment {
                 }
             });
         }
+    }
+
+    public void setSearchView(SearchView searchView) {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                if (!Utils.isNullOrEmpty(s)) {
+                    searchFilms(s);
+                }
+                return false;
+            }
+        });
+
+        searchView.setOnCloseListener(() -> {
+            updateFilms();
+            return false;
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
