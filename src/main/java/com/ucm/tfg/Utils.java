@@ -25,6 +25,10 @@ public class Utils {
         String strDate = dateFormat.format(date);
         return strDate;
     }
+    
+    public static boolean isNullOrEmpty(String s) {
+        return s == null || s.trim().isEmpty();
+    }
 
 
 }
