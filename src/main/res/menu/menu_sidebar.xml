@@ -22,7 +22,7 @@
             android:title="Tools" />
     </group>
 
-    <item android:title="@string/label_session">
+    <item android:title="@string/action_session">
         <menu>
             <item
                 android:id="@+id/logout"

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FilmAR</string>
-    <string name="label_plans">My plans</string>
-    <string name="label_recommendations">Recommendations</string>
-    <string name="label_films">My films</string>
+    <string name="action_plans">My plans</string>
+    <string name="action_recommendations">Recommendations</string>
+    <string name="action_films">My films</string>
     <string name="add_film_to_plan">Add to plan</string>
     <string name="join_plan">Join plan</string>
     <string name="quit_plan">Quit plan</string>
@@ -31,7 +31,7 @@
     <string name="user_name">Nickname</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="label_session">Session</string>
+    <string name="action_session">Session</string>
     <string name="logout">Logout</string>
     <string name="no_rating">Click for rate</string>
     <string name="rated_film">Film succesfully rated</string>
@@ -39,4 +39,5 @@
     <string name="user_film_unfavorite">Film disliked</string>
     <string name="user_film_favourite">Film liked</string>
     <string name="unfavorite">Dislike</string>
+    <string name="action_search">Search</string>
 </resources>

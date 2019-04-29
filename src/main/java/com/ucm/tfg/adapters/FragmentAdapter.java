@@ -37,9 +37,9 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     @Override
     public CharSequence getPageTitle(int pos) {
         switch (pos) {
-            case 0: return context.getString(R.string.label_plans);
-            case 1: return context.getString(R.string.label_recommendations);
-            case 2: return context.getString(R.string.label_films);
+            case 0: return context.getString(R.string.action_plans);
+            case 1: return context.getString(R.string.action_recommendations);
+            case 2: return context.getString(R.string.action_films);
             default: return null;
         }
     }

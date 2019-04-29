@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -17,7 +18,9 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ucm.tfg.Session;
 import com.ucm.tfg.views.CustomViewPager;
@@ -37,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements
     private DrawerLayout drawer;
     private FragmentAdapter adapter;
     private NavigationView navigationView;
+    private Fragment activeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +79,29 @@ public class MainActivity extends AppCompatActivity implements
                                 break;
                             case 2:
                                 toolbar.inflateMenu(R.menu.menu_films);
+                                activeFragment = (Fragment) viewPager
+                                        .getAdapter()
+                                        .instantiateItem(viewPager, viewPager.getCurrentItem());
+                                MenuItem menuItem = toolbar.getMenu().findItem(R.id.action_search);
+                                SearchView searchView = (SearchView)menuItem.getActionView();
+
+                                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                                    @Override
+                                    public boolean onQueryTextSubmit(String s) {
+                                        return false;
+                                    }
+
+                                    @Override
+                                    public boolean onQueryTextChange(String s) {
+                                        ((FilmFragment) activeFragment).searchFilms(s);
+                                        return false;
+                                    }
+                                });
+
+                                searchView.setOnCloseListener(() -> {
+                                    ((FilmFragment) activeFragment).updateFilms();
+                                    return false;
+                                });
                                 break;
                             default:
                                 break;

@@ -2,6 +2,7 @@ package com.ucm.tfg.service;
 
 import android.app.Activity;
 
+import com.ucm.tfg.Session;
 import com.ucm.tfg.entities.Film;
 
 import org.springframework.core.ParameterizedTypeReference;
@@ -23,6 +24,16 @@ public class FilmService {
                 .addPathVariable("id", uuid)
                 .url(develop_url + "{id}")
                 .execute(callback, c);
+    }
+
+    public static <T> void searchFilmsByName(Activity activity, String name, Service.ClientResponse<ArrayList<Film>> callback) {
+        Service.getInstance()
+                .setContext(activity)
+                .get()
+                .addPathVariable("name", name)
+                .url(develop_url + "search/{name}")
+                .execute(callback, new ParameterizedTypeReference<ArrayList<Film>>() {
+                });
     }
 
     public static <T> void getFilms(Activity activity, Service.ClientResponse<ArrayList<Film>> callback) {
