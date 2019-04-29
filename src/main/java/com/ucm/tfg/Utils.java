@@ -23,7 +23,9 @@ public class Utils {
         //view.setImageBitmap(bm);
     }
 
-
+    public static boolean isNullOrEmpty(String s) {
+        return s == null || s.trim().isEmpty();
+    }
 
 
 }

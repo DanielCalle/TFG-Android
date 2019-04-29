@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.ucm.tfg.R;
 import com.ucm.tfg.Session;
+import com.ucm.tfg.Utils;
 import com.ucm.tfg.entities.User;
 import com.ucm.tfg.service.Service;
 import com.ucm.tfg.service.UserService;
@@ -38,24 +39,33 @@ public class LoginActivity extends AppCompatActivity {
         editor = sharedPreferences.edit();
 
         loginButton.setOnClickListener((View view) -> {
-            User user = new User();
-            user.setEmail(emailInput.getText().toString());
-            user.setPassword(passwordInput.getText().toString());
-            UserService.login(LoginActivity.this, user, new Service.ClientResponse<User>() {
-                @Override
-                public void onSuccess(User result) {
-                    editor.putBoolean(Session.IS_LOGGED, true);
-                    editor.apply();
-                    finish();
-                }
+            if (!Utils.isNullOrEmpty(emailInput.getText().toString()) &&
+                    !Utils.isNullOrEmpty(passwordInput.getText().toString())
+            ) {
+                loginButton.setEnabled(false);
+                User user = new User();
+                user.setEmail(emailInput.getText().toString());
+                user.setPassword(passwordInput.getText().toString());
+                UserService.login(LoginActivity.this, user, new Service.ClientResponse<User>() {
+                    @Override
+                    public void onSuccess(User result) {
+                        editor.putBoolean(Session.IS_LOGGED, true);
+                        editor.apply();
+                        loginButton.setEnabled(true);
+                        finish();
+                    }
 
-                @Override
-                public void onError(String error) {
-                    runOnUiThread(() -> {
-                        Toast.makeText(LoginActivity.this, getText(R.string.login_fail), Toast.LENGTH_SHORT).show();
-                    });
-                }
-            }, User.class);
+                    @Override
+                    public void onError(String error) {
+                        runOnUiThread(() -> {
+                            loginButton.setEnabled(true);
+                            Toast.makeText(LoginActivity.this, getText(R.string.login_fail), Toast.LENGTH_SHORT).show();
+                        });
+                    }
+                }, User.class);
+            } else {
+                Toast.makeText(LoginActivity.this, getString(R.string.form_not_filled), Toast.LENGTH_SHORT).show();
+            }
         });
 
         registerButton.setOnClickListener((View view) -> {

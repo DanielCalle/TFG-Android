@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.ucm.tfg.R;
 import com.ucm.tfg.Session;
+import com.ucm.tfg.Utils;
 import com.ucm.tfg.entities.User;
 import com.ucm.tfg.service.Service;
 import com.ucm.tfg.service.UserService;
@@ -20,6 +21,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+
+    private boolean send;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,29 +38,39 @@ public class RegisterActivity extends AppCompatActivity {
         editor = sharedPreferences.edit();
 
         registerButton.setOnClickListener((View view) -> {
-            User user = new User();
-            user.setUuid(UUID.randomUUID().toString());
-            user.setName(nameInput.getText().toString());
-            user.setEmail(emailInput.getText().toString());
-            user.setPassword(passwordInput.getText().toString());
-            UserService.register(RegisterActivity.this, user, new Service.ClientResponse<User>() {
-                @Override
-                public void onSuccess(User result) {
-                    runOnUiThread(() -> {
-                        Toast.makeText(RegisterActivity.this, getString(R.string.register_success), Toast.LENGTH_SHORT).show();
-                        editor.putBoolean(Session.IS_LOGGED, true);
-                        editor.apply();
-                        finish();
-                    });
-                }
+            if (!Utils.isNullOrEmpty(nameInput.getText().toString()) &&
+                    !Utils.isNullOrEmpty(emailInput.getText().toString()) &&
+                    !Utils.isNullOrEmpty(passwordInput.getText().toString())
+            ) {
+                registerButton.setEnabled(false);
+                User user = new User();
+                user.setUuid(UUID.randomUUID().toString());
+                user.setName(nameInput.getText().toString());
+                user.setEmail(emailInput.getText().toString());
+                user.setPassword(passwordInput.getText().toString());
+                UserService.register(RegisterActivity.this, user, new Service.ClientResponse<User>() {
+                    @Override
+                    public void onSuccess(User result) {
+                        runOnUiThread(() -> {
+                            Toast.makeText(RegisterActivity.this, getString(R.string.register_success), Toast.LENGTH_SHORT).show();
+                            editor.putBoolean(Session.IS_LOGGED, true);
+                            editor.apply();
+                            registerButton.setEnabled(true);
+                            finish();
+                        });
+                    }
 
-                @Override
-                public void onError(String error) {
-                    runOnUiThread(() -> {
-                        Toast.makeText(RegisterActivity.this, error, Toast.LENGTH_SHORT).show();
-                    });
-                }
-            }, User.class);
+                    @Override
+                    public void onError(String error) {
+                        runOnUiThread(() -> {
+                            registerButton.setEnabled(true);
+                            Toast.makeText(RegisterActivity.this, error, Toast.LENGTH_SHORT).show();
+                        });
+                    }
+                }, User.class);
+            } else {
+                Toast.makeText(RegisterActivity.this, getString(R.string.form_not_filled), Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }
