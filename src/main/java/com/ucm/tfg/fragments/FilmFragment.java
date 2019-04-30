@@ -18,13 +18,11 @@ import android.widget.Toast;
 import com.ucm.tfg.R;
 import com.ucm.tfg.Session;
 import com.ucm.tfg.Utils;
-import com.ucm.tfg.activities.InfoActivity;
+import com.ucm.tfg.activities.FilmActivity;
 import com.ucm.tfg.adapters.FilmAdapter;
 import com.ucm.tfg.entities.Film;
-import com.ucm.tfg.entities.UserFilm;
 import com.ucm.tfg.service.FilmService;
 import com.ucm.tfg.service.Service;
-import com.ucm.tfg.service.UserFilmService;
 import com.ucm.tfg.service.UserService;
 
 import java.util.ArrayList;
@@ -98,7 +96,7 @@ public class FilmFragment extends Fragment {
                             getActivity(),
                             Pair.create(v, "film_poster")
                     );
-            Intent i = new Intent(getActivity(), InfoActivity.class);
+            Intent i = new Intent(getActivity(), FilmActivity.class);
             i.putExtra("film", film);
             startActivity(i, optionsCompat.toBundle());
         });

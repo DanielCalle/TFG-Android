@@ -32,7 +32,7 @@ import com.ucm.tfg.views.ExpandableTextView;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-public class InfoActivity extends AppCompatActivity {
+public class FilmActivity extends AppCompatActivity {
 
     private final static String LOGTAG = "FilmActivity";
     private final static int FORM_REQUEST = 1;
@@ -52,7 +52,7 @@ public class InfoActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info);
+        setContentView(R.layout.activity_film);
 
         film = (Film) getIntent().getExtras().getSerializable("film");
 
@@ -100,10 +100,10 @@ public class InfoActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 if (userFilm != null) {
                     userFilm.setRating(((float) (seekBar.getProgress() / 10.0)));
-                    UserFilmService.rate(InfoActivity.this, userFilm, new Service.ClientResponse<UserFilm>() {
+                    UserFilmService.rate(FilmActivity.this, userFilm, new Service.ClientResponse<UserFilm>() {
                         @Override
                         public void onSuccess(UserFilm result) {
-                            Toast.makeText(InfoActivity.this, getString(R.string.rated_film), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(FilmActivity.this, getString(R.string.rated_film), Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -117,7 +117,7 @@ public class InfoActivity extends AppCompatActivity {
 
         Button addToPlan = findViewById(R.id.add_to_plan);
         addToPlan.setOnClickListener((View v) -> {
-            Intent intent = new Intent(InfoActivity.this, FormActivity.class);
+            Intent intent = new Intent(FilmActivity.this, FormActivity.class);
             intent.putExtra(getString(R.string.plan_title), "text");
             intent.putExtra(getString(R.string.plan_date), "date");
             intent.putExtra(getString(R.string.plan_location), "text");
@@ -143,7 +143,7 @@ public class InfoActivity extends AppCompatActivity {
         });
 
         UserFilmService.get(
-                InfoActivity.this,
+                FilmActivity.this,
                 getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null),
                 film.getUuid(),
                 new Service.ClientResponse<UserFilm>() {
@@ -197,16 +197,16 @@ public class InfoActivity extends AppCompatActivity {
                     }
                     plan.setLocation(data.getExtras().getString(getString(R.string.plan_location)));
                     plan.setDescription(data.getExtras().getString(getString(R.string.plan_description)));
-                    PlanService.createPlan(InfoActivity.this, plan, new Service.ClientResponse<Plan>() {
+                    PlanService.createPlan(FilmActivity.this, plan, new Service.ClientResponse<Plan>() {
 
                         @Override
                         public void onSuccess(Plan result) {
-                            Toast.makeText(InfoActivity.this, getText(R.string.plan_created), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(FilmActivity.this, getText(R.string.plan_created), Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
                         public void onError(String error) {
-                            Toast.makeText(InfoActivity.this, error, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(FilmActivity.this, error, Toast.LENGTH_SHORT).show();
                         }
 
                     }, Plan.class);
@@ -231,7 +231,7 @@ public class InfoActivity extends AppCompatActivity {
             case R.id.favorite:
                 if (userFilm != null) {
                     UserFilmService.delete(
-                            InfoActivity.this,
+                            FilmActivity.this,
                             getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null),
                             film.getUuid(),
                             new Service.ClientResponse<UserFilm>() {
@@ -239,7 +239,7 @@ public class InfoActivity extends AppCompatActivity {
                                 public void onSuccess(UserFilm result) {
                                     userFilm = null;
                                     enableEdit(false);
-                                    Toast.makeText(InfoActivity.this, getString(R.string.user_film_unfavorite), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(FilmActivity.this, getString(R.string.user_film_unfavorite), Toast.LENGTH_SHORT).show();
                                 }
 
                                 @Override
@@ -251,12 +251,12 @@ public class InfoActivity extends AppCompatActivity {
                     userFilm = new UserFilm();
                     userFilm.setUserUuid(getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null));
                     userFilm.setFilmUuid(film.getUuid());
-                    UserFilmService.postUserFilm(InfoActivity.this, userFilm, new Service.ClientResponse<UserFilm>() {
+                    UserFilmService.postUserFilm(FilmActivity.this, userFilm, new Service.ClientResponse<UserFilm>() {
                         @Override
                         public void onSuccess(UserFilm result) {
                             userFilm = result;
                             enableEdit(true);
-                            Toast.makeText(InfoActivity.this, getString(R.string.user_film_favourite), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(FilmActivity.this, getString(R.string.user_film_favourite), Toast.LENGTH_SHORT).show();
                         }
 
                         @Override

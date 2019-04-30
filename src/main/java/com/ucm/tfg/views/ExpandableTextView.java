@@ -4,13 +4,10 @@ import android.content.Context;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.SpannableStringBuilder;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.ucm.tfg.R;
-import com.ucm.tfg.activities.InfoActivity;
 
 public class ExpandableTextView extends AppCompatTextView {
 

@@ -10,14 +10,12 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
-import com.ucm.tfg.Session;
 import com.ucm.tfg.Utils;
 import com.ucm.tfg.adapters.PlanUserAdapter;
 import com.ucm.tfg.entities.Film;
@@ -28,7 +26,6 @@ import com.ucm.tfg.service.PlanService;
 import com.ucm.tfg.service.Service;
 import android.view.Menu;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class PlanActivity extends AppCompatActivity {
@@ -110,7 +107,7 @@ public class PlanActivity extends AppCompatActivity {
                         .into(filmPoster);
 
                 floatingActionButton.setOnClickListener((View v) -> {
-                    Intent intent = new Intent(PlanActivity.this, InfoActivity.class);
+                    Intent intent = new Intent(PlanActivity.this, FilmActivity.class);
                     intent.putExtra("film", result);
                     startActivity(intent);
                 });
