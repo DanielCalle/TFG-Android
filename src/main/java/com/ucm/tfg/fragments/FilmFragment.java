@@ -8,6 +8,7 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +50,7 @@ public class FilmFragment extends Fragment {
 
     private OnFragmentInteractionListener mListener;
     private FilmAdapter filmAdapter;
+    private SearchView searchView;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     public FilmFragment() {
@@ -107,6 +109,31 @@ public class FilmFragment extends Fragment {
             updateFilms();
         });
 
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.menu_plans);
+        searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                if (!Utils.isNullOrEmpty(s)) {
+                    searchFilms(s);
+                }
+                return false;
+            }
+        });
+
+        searchView.setOnCloseListener(() -> {
+            updateFilms();
+            return false;
+        });
+
         return view;
     }
 
@@ -154,28 +181,6 @@ public class FilmFragment extends Fragment {
                 }
             });
         }
-    }
-
-    public void setSearchView(SearchView searchView) {
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                if (!Utils.isNullOrEmpty(s)) {
-                    searchFilms(s);
-                }
-                return false;
-            }
-        });
-
-        searchView.setOnCloseListener(() -> {
-            updateFilms();
-            return false;
-        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event

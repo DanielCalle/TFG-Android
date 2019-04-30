@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements
     private DrawerLayout drawer;
     private FragmentAdapter adapter;
     private NavigationView navigationView;
-    private Fragment activeFragment;
+    private CustomViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,51 +54,14 @@ public class MainActivity extends AppCompatActivity implements
         toolbar.getMenu().clear();
         toolbar.inflateMenu(R.menu.menu_plans);
 
-        CustomViewPager viewPager = findViewById(R.id.container);
+        viewPager = findViewById(R.id.container);
         TabLayout tabLayout = findViewById(R.id.tab);
 
         viewPager.setSwipePagingEnabled(false);
         viewPager.setAdapter(adapter);
 
         viewPager.addOnPageChangeListener(
-                new ViewPager.OnPageChangeListener() {
-                    @Override
-                    public void onPageScrolled(int i, float v, int i1) {
-
-                    }
-
-                    @Override
-                    public void onPageSelected(int i) {
-                        toolbar.setTitle(adapter.getPageTitle(i));
-                        toolbar.getMenu().clear();
-                        switch (i) {
-                            case 0:
-                                toolbar.inflateMenu(R.menu.menu_plans);
-                                ((PlanFragment) viewPager
-                                        .getAdapter()
-                                        .instantiateItem(viewPager, viewPager.getCurrentItem()))
-                                        .setSearchView((SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView());
-                                break;
-                            case 1:
-                                toolbar.inflateMenu(R.menu.menu_recommendations);
-                                break;
-                            case 2:
-                                toolbar.inflateMenu(R.menu.menu_films);
-                                ((FilmFragment) viewPager
-                                        .getAdapter()
-                                        .instantiateItem(viewPager, viewPager.getCurrentItem()))
-                                .setSearchView((SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView());
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-
-                    @Override
-                    public void onPageScrollStateChanged(int i) {
-
-                    }
-                }
+                new TabLayout.TabLayoutOnPageChangeListener(tabLayout)
         );
 
         tabLayout.addOnTabSelectedListener(

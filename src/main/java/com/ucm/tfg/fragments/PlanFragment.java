@@ -8,10 +8,12 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v4.util.Pair;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,6 +62,8 @@ public class PlanFragment extends Fragment {
     private PlanAdapter planAdapter;
 
     private SwipeRefreshLayout swipeRefreshLayout;
+
+    private SearchView searchView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -123,6 +127,31 @@ public class PlanFragment extends Fragment {
             updatePlans();
         });
 
+        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.menu_plans);
+        searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                if (!Utils.isNullOrEmpty(s)) {
+                    searchPlans(s);
+                }
+                return false;
+            }
+        });
+
+        searchView.setOnCloseListener(() -> {
+            updatePlans();
+            return false;
+        });
+
         return view;
     }
 
@@ -171,28 +200,6 @@ public class PlanFragment extends Fragment {
                 }
             });
         }
-    }
-
-    public void setSearchView(SearchView searchView) {
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                if (!Utils.isNullOrEmpty(s)) {
-                    searchPlans(s);
-                }
-                return false;
-            }
-        });
-
-        searchView.setOnCloseListener(() -> {
-            updatePlans();
-            return false;
-        });
     }
 
     private void updateFriendsPlans() {
