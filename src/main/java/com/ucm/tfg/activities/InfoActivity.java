@@ -118,6 +118,7 @@ public class InfoActivity extends AppCompatActivity {
         Button addToPlan = findViewById(R.id.add_to_plan);
         addToPlan.setOnClickListener((View v) -> {
             Intent intent = new Intent(InfoActivity.this, FormActivity.class);
+            intent.putExtra(getString(R.string.plan_title), "text");
             intent.putExtra(getString(R.string.plan_date), "date");
             intent.putExtra(getString(R.string.plan_location), "text");
             intent.putExtra(getString(R.string.plan_description), "text");
@@ -188,6 +189,7 @@ public class InfoActivity extends AppCompatActivity {
                             .getString(Session.USER, null)
                     );
                     plan.setFilmUuid(film.getUuid());
+                    plan.setTitle(data.getExtras().getString(getString(R.string.plan_title)));
                     try {
                         plan.setDate(dateFormat.parse(data.getExtras().getString(getString(R.string.plan_date))));
                     } catch (ParseException e) {

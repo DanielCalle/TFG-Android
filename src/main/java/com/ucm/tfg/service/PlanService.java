@@ -79,4 +79,14 @@ public class PlanService {
                 .execute(callback, c);
     }
 
+    public static <T> void searchPlansByTitle(Activity activity, String title, Service.ClientResponse<ArrayList<Plan>> callback) {
+        Service.getInstance()
+                .setContext(activity)
+                .get()
+                .addPathVariable("title", title)
+                .url(develop_url + "search/{title}")
+                .execute(callback, new ParameterizedTypeReference<ArrayList<Plan>>() {
+                });
+    }
+
 }

@@ -11,6 +11,8 @@ public class Plan implements Serializable {
 
     private String id;
 
+    private String title;
+
     private String creatorUuid;
 
     private String filmUuid;
@@ -29,6 +31,14 @@ public class Plan implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getCreatorUuid() {

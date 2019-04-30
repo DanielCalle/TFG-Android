@@ -73,17 +73,20 @@ public class MainActivity extends AppCompatActivity implements
                         switch (i) {
                             case 0:
                                 toolbar.inflateMenu(R.menu.menu_plans);
+                                ((PlanFragment) viewPager
+                                        .getAdapter()
+                                        .instantiateItem(viewPager, viewPager.getCurrentItem()))
+                                        .setSearchView((SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView());
                                 break;
                             case 1:
                                 toolbar.inflateMenu(R.menu.menu_recommendations);
                                 break;
                             case 2:
                                 toolbar.inflateMenu(R.menu.menu_films);
-                                MenuItem menuItem = toolbar.getMenu().findItem(R.id.action_search);
                                 ((FilmFragment) viewPager
                                         .getAdapter()
                                         .instantiateItem(viewPager, viewPager.getCurrentItem()))
-                                .setSearchView((SearchView) menuItem.getActionView());
+                                .setSearchView((SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView());
                                 break;
                             default:
                                 break;

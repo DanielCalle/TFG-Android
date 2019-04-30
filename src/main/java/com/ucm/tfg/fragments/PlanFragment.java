@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.ucm.tfg.R;
@@ -151,6 +152,47 @@ public class PlanFragment extends Fragment {
                 }
             });
         }
+    }
+
+    private void searchPlans(String title) {
+        if (!Utils.isNullOrEmpty(title)) {
+            swipeRefreshLayout.setRefreshing(true);
+            PlanService.searchPlansByTitle(getActivity(), title, new Service.ClientResponse<ArrayList<Plan>>() {
+                @Override
+                public void onSuccess(ArrayList<Plan> result) {
+                    planAdapter.setPlansData(result);
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+
+                @Override
+                public void onError(String error) {
+                    Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            });
+        }
+    }
+
+    public void setSearchView(SearchView searchView) {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                if (!Utils.isNullOrEmpty(s)) {
+                    searchPlans(s);
+                }
+                return false;
+            }
+        });
+
+        searchView.setOnCloseListener(() -> {
+            updatePlans();
+            return false;
+        });
     }
 
     private void updateFriendsPlans() {

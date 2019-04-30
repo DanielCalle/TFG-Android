@@ -36,4 +36,5 @@
     <string name="unfavorite">No me gusta</string>
     <string name="plan_quit">Saliste del plan</string>
     <string name="action_search">Buscar</string>
+    <string name="plan_title">Título</string>
 </resources>
