@@ -71,7 +71,6 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
                         .resize(600, 200)
                         .centerCrop()
                         .into(recyclerViewHolder.image);
-                recyclerViewHolder.title.setText(result.getName());
                 recyclerViewHolder.date.setText(Utils.dateFormat(plan.getDate()));
 
             }
@@ -88,6 +87,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
             recyclerViewHolder.num = this.count;
         }
 
+        recyclerViewHolder.title.setText(plan.getTitle());
         recyclerViewHolder.plan.setText(recyclerViewHolder.planString + " " + recyclerViewHolder.num);
 
 
