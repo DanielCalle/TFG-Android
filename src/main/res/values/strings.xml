@@ -41,4 +41,6 @@
     <string name="unfavorite">Dislike</string>
     <string name="action_search">Search</string>
     <string name="plan_title">Title</string>
+    <string name="action_friends">Friends</string>
+    <string name="action_settings">Settings</string>
 </resources>

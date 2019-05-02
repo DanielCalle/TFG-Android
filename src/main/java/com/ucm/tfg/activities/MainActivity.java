@@ -89,12 +89,13 @@ public class MainActivity extends AppCompatActivity implements
         SharedPreferences sharedPreferences = getSharedPreferences(Session.SESSION_FILE, 0);
         boolean isLogged = sharedPreferences.getBoolean(Session.IS_LOGGED, false);
 
-        TextView userName = navigationView.getHeaderView(0).findViewById(R.id.user_name);
-        userName.setText("USERNAME");
-
         if (!isLogged) {
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
+        } else {
+            String user = getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null);
+            TextView userName = navigationView.getHeaderView(0).findViewById(R.id.user_name);
+            userName.setText(user);
         }
     }
 
@@ -115,15 +116,17 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {
-            case R.id.logout:
+            case R.id.action_logout:
                 SharedPreferences sharedPreferences = getSharedPreferences(Session.SESSION_FILE, 0);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean(Session.IS_LOGGED, false);
                 editor.putString(Session.USER, null);
                 editor.apply();
 
-                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                break;
+            case R.id.action_friends:
+                startActivity(new Intent(MainActivity.this, FriendActivity.class));
                 break;
             default: break;
         }

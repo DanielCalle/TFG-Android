@@ -89,6 +89,8 @@
         <activity android:name=".activities.PlanActivity" />
         <activity android:name=".activities.FormActivity" />
         <activity android:name=".activities.SavedFilmActivity"/>
+        <activity android:name=".activities.FriendActivity"/>
+        <activity android:name=".activities.UserActivity"/>
     </application>
 
 </manifest>

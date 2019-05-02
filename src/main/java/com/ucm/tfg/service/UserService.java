@@ -60,13 +60,24 @@ public class UserService {
                 .execute(callback, new ParameterizedTypeReference<ArrayList<Plan>>(){});
     }
 
-    public static <T> void getFriends(Activity activity, String uuid, Service.ClientResponse<ArrayList<Friendship>> callback) {
+    public static <T> void getFriends(Activity activity, String uuid, Service.ClientResponse<ArrayList<User>> callback) {
         Service.getInstance()
                 .setContext(activity)
                 .get().addPathVariable("id", uuid)
-                .url(develop_url + "{id}" + "/friendships")
-                .execute(callback, new ParameterizedTypeReference<ArrayList<Friendship>>(){});
+                .url(develop_url + "{id}" + "/friends")
+                .execute(callback, new ParameterizedTypeReference<ArrayList<User>>(){});
     }
+
+    public static <T> void searchUsersByName(Activity activity, String name, Service.ClientResponse<ArrayList<User>> callback) {
+        Service.getInstance()
+                .setContext(activity)
+                .get()
+                .addPathVariable("name", name)
+                .url(develop_url + "search/{name}")
+                .execute(callback, new ParameterizedTypeReference<ArrayList<User>>() {
+                });
+    }
+
     public static <T> void getFriendsPlans(Activity activity, String uuid, Service.ClientResponse<ArrayList<Plan>> callback) {
         Service.getInstance()
                 .setContext(activity)

@@ -42,7 +42,7 @@ public class StartActivity extends AppCompatActivity {
         timerLabel = findViewById(R.id.timer_label);
 
         Picasso.get()
-                .load("https://drive.google.com/uc?export=download&id=1RBiLM2II3tEXs-ZsdTSWroMu-xCzrbR2")
+                .load("http://filmar-develop.herokuapp.com/images/one-piece.jpg")
                 .fit()
                 .into(poster);
 
