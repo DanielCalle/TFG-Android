@@ -9,25 +9,31 @@ import java.util.Date;
 
 public class Friendship implements Serializable {
 
-    private String requesterUuid;
-    private String friendUuid;
+    private long requesterId;
+    private long friendId;
     private String date;
     private Boolean active;
-    public String getRequesterUuid() {
-        return requesterUuid;
+
+    public long getRequesterId() {
+        return requesterId;
     }
-    public void setRequesterUuid(String requesterUuid) {
-        this.requesterUuid = requesterUuid;
+
+    public void setRequesterId(long requesterId) {
+        this.requesterId = requesterId;
     }
-    public String getFriendUuid() {
-        return friendUuid;
+
+    public long getFriendId() {
+        return friendId;
     }
-    public void setFriendUuid(String friendUuid) {
-        this.friendUuid = friendUuid;
+
+    public void setFriendId(long friendId) {
+        this.friendId = friendId;
     }
+
     public String getDate() {
         return date;
     }
+
     public void setDate(String date) {
         this.date = date;
     }

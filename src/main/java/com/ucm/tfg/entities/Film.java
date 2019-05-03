@@ -13,6 +13,8 @@ import java.sql.Blob;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Film implements Serializable {
 
+    private long id;
+
     private String uuid;
 
     private String name;
@@ -23,9 +25,7 @@ public class Film implements Serializable {
 
     private String synopsis;
 
-    private String infoURL;
-
-    private String image;
+    private String imageURL;
 
     private String genre;
 
@@ -35,78 +35,44 @@ public class Film implements Serializable {
 
     private String country;
 
-    public Film() {
+    public long getId() {
+        return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
 
-    /**
-     * @return the uuid
-     */
     public String getUuid() {
         return uuid;
     }
 
-    /**
-     * @param uuid the uuid to set
-     */
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
-    /**
-     * @return the name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * @param name the name to set
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * @return the director
-     */
-    public String getdirector() {
+    public String getDirector() {
         return director;
     }
 
-    /**
-     * @param director the director to set
-     */
     public void setDirector(String director) {
         this.director = director;
     }
 
-    /**
-     * @return the trailerURL
-     */
     public String getTrailerURL() {
         return trailerURL;
     }
 
-    /**
-     * @param trailerURL the trailer to set
-     */
     public void setTrailerURL(String trailerURL) {
         this.trailerURL = trailerURL;
-    }
-
-    /**
-     * @return the infoURL
-     */
-    public String getInfoURL() {
-        return infoURL;
-    }
-
-    /**
-     * @param infoURL the description to set
-     */
-    public void setInfoURL(String infoURL) {
-        this.infoURL = infoURL;
     }
 
     public String getSynopsis() {
@@ -117,74 +83,43 @@ public class Film implements Serializable {
         this.synopsis = synopsis;
     }
 
-    /**
-     * @return the image
-     */
     public String getImageURL() {
-        return image;
+        return imageURL;
     }
 
-    /**
-     * @param image the description to set
-     */
-    public void setImageURL(String image) {
-        this.image = image;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
-    /**
-     * @return the genre
-     */
     public String getGenre() {
         return genre;
     }
 
-    /**
-     * @param genre the genre to set
-     */
     public void setGenre(String genre) {
         this.genre = genre;
     }
 
-    /**
-     * @return the duration
-     */
     public int getDuration() {
         return duration;
     }
 
-    /**
-     * @param duration the duration to set
-     */
     public void setDuration(int duration) {
         this.duration = duration;
     }
 
-    /**
-     * @return the rating
-     */
     public float getRating() {
         return rating;
     }
 
-    /**
-     * @param rating the valoration to set
-     */
     public void setRating(float rating) {
         this.rating = rating;
     }
 
-    /**
-     * @return the country
-     */
     public String getCountry() {
         return country;
     }
 
-    /**
-     * @param country the country to set
-     */
     public void setCountry(String country) {
         this.country = country;
     }
-
 }

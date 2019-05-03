@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(User result) {
                         editor.putBoolean(Session.IS_LOGGED, true);
-                        editor.putString(Session.USER, result.getUuid());
+                        editor.putLong(Session.USER, result.getId());
                         editor.apply();
                         loginButton.setEnabled(true);
                         finish();

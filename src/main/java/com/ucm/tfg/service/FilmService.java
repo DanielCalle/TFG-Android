@@ -17,12 +17,12 @@ public class FilmService {
     public FilmService() {
     }
 
-    public static <T> void getFilmById(Activity activity, String uuid, Service.ClientResponse<T> callback, Class<T> c) {
+    public static <T> void getFilmById(Activity activity, long id, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
                 .get()
-                .addPathVariable("id", uuid)
                 .url(develop_url + "{id}")
+                .addPathVariable("id", "" + id)
                 .execute(callback, c);
     }
 

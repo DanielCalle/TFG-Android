@@ -95,7 +95,7 @@ public class PlanActivity extends AppCompatActivity {
         */
         floatingActionButton = findViewById(R.id.film_info);
 
-        FilmService.getFilmById(PlanActivity.this, plan.getFilmUuid(), new Service.ClientResponse<Film>() {
+        FilmService.getFilmById(PlanActivity.this, plan.getFilmId(), new Service.ClientResponse<Film>() {
             @Override
             public void onSuccess(Film result) {
                 if (actionBar != null) {
@@ -120,7 +120,7 @@ public class PlanActivity extends AppCompatActivity {
         }, Film.class);
 
         /*contains = plan.getJoinedUsers().contains(
-                getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null)
+                getSharedPreferences(Session.SESSION_FILE, 0).getLong(Session.USER, 0)
         );
         Button joinPlan = findViewById(R.id.join_plan);
 
@@ -129,7 +129,7 @@ public class PlanActivity extends AppCompatActivity {
         joinPlan.setOnClickListener((View v) -> {
             if(!contains) {
                 PlanService.joinPlan(PlanActivity.this, plan.getId(),
-                        getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null),
+                        getSharedPreferences(Session.SESSION_FILE, 0).getLong(Session.USER, 0),
                         new Service.ClientResponse<Plan>() {
 
                             @Override
@@ -147,7 +147,7 @@ public class PlanActivity extends AppCompatActivity {
             }
             else {
                 PlanService.quitPlan(PlanActivity.this, plan.getId(),
-                        getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null),
+                        getSharedPreferences(Session.SESSION_FILE, 0).getLong(Session.USER, 0),
                         new Service.ClientResponse<Plan>() {
 
                             @Override

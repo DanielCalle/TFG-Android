@@ -53,7 +53,7 @@ public class PlanFriendsAdapter extends RecyclerView.Adapter<PlanFriendsAdapter.
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder recyclerViewHolder, int index) {
         Plan plan = plans.get(index);
-        FilmService.getFilmById(this.context, plan.getFilmUuid(), new Service.ClientResponse<Film>() {
+        FilmService.getFilmById(this.context, plan.getFilmId(), new Service.ClientResponse<Film>() {
             @Override
             public void onSuccess(Film result) {
                 Picasso.get()
@@ -73,7 +73,7 @@ public class PlanFriendsAdapter extends RecyclerView.Adapter<PlanFriendsAdapter.
 
             }
         }, Film.class);
-        UserService.getUserById(this.context, plan.getCreatorUuid(), new Service.ClientResponse<User>() {
+        UserService.getUserById(this.context, plan.getCreatorId(), new Service.ClientResponse<User>() {
 
             @Override
             public void onSuccess(User result) {

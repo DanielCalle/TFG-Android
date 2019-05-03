@@ -8,25 +8,28 @@ import java.util.Date;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserFilm implements Serializable {
 
-    private String userUuid;
-    private String filmUuid;
+    private long userId;
+
+    private long filmId;
+
     private Date date;
+
     private float rating;
 
-    public String getUserUuid() {
-        return userUuid;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setUserUuid(String userUuid) {
-        this.userUuid = userUuid;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
-    public String getFilmUuid() {
-        return filmUuid;
+    public long getFilmId() {
+        return filmId;
     }
 
-    public void setFilmUuid(String filmUuid) {
-        this.filmUuid = filmUuid;
+    public void setFilmId(long filmId) {
+        this.filmId = filmId;
     }
 
     public Date getDate() {

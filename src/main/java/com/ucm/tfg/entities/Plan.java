@@ -13,9 +13,9 @@ public class Plan implements Serializable {
 
     private String title;
 
-    private String creatorUuid;
+    private long creatorId;
 
-    private String filmUuid;
+    private long filmId;
 
     private List<String> joinedUsers;
 
@@ -41,20 +41,20 @@ public class Plan implements Serializable {
         this.title = title;
     }
 
-    public String getCreatorUuid() {
-        return creatorUuid;
+    public long getCreatorId() {
+        return creatorId;
     }
 
-    public void setCreator(String creatorUuid) {
-        this.creatorUuid = creatorUuid;
+    public void setCreatorId(long creatorId) {
+        this.creatorId = creatorId;
     }
 
-    public String getFilmUuid() {
-        return filmUuid;
+    public long getFilmId() {
+        return filmId;
     }
 
-    public void setFilmUuid(String filmUuid) {
-        this.filmUuid = filmUuid;
+    public void setFilmId(long filmId) {
+        this.filmId = filmId;
     }
 
     public List<String> getJoinedUsers() {
@@ -88,5 +88,4 @@ public class Plan implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-
 }

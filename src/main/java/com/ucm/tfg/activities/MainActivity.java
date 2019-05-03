@@ -93,9 +93,9 @@ public class MainActivity extends AppCompatActivity implements
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
         } else {
-            String user = getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null);
+            long userId = sharedPreferences.getLong(Session.USER, 0);
             TextView userName = navigationView.getHeaderView(0).findViewById(R.id.user_name);
-            userName.setText(user);
+            userName.setText("" + userId);
         }
     }
 
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity implements
                 SharedPreferences sharedPreferences = getSharedPreferences(Session.SESSION_FILE, 0);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean(Session.IS_LOGGED, false);
-                editor.putString(Session.USER, null);
+                editor.putLong(Session.USER, 0);
                 editor.apply();
 
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));

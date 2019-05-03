@@ -61,7 +61,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
     }
 
     public void updateView(Plan plan, @NonNull RecyclerViewHolder recyclerViewHolder){
-        FilmService.getFilmById(this.context, plan.getFilmUuid(), new Service.ClientResponse<Film>() {
+        FilmService.getFilmById(this.context, plan.getFilmId(), new Service.ClientResponse<Film>() {
             @Override
             public void onSuccess(Film result) {
                 Picasso.get()

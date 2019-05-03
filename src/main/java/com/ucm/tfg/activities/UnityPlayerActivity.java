@@ -53,53 +53,6 @@ public class UnityPlayerActivity extends Activity {
         finish();
     }
 
-
-    public void info(String info) {
-        /*
-        DaoFriendship daoFriendship = new DaoFriendship();
-        if(daoFriendship.areFriends("5df9b1ab2e9742aa9bfd4a7d12dde033", "1")){
-            Log.wtf("Friendship", "true");
-        }
-        else{
-            Log.wtf("Friendship", "false");
-        }
-        */
-        /*
-            FriendshipService.getFriendsById("5df9b1ab2e9742aa9bfd4a7d12dde033", new ClientResponse<String>() {
-                @Override
-                public void onSuccess(String result) {
-                    Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
-                }
-
-                @Override
-                public void onError(String error) {
-                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
-                }
-            }, String.class); //5 seconds
-            */
-        JSONObject json = null;
-        try {
-            json = new JSONObject(info);
-            FilmService.getFilmById(this, json.getString("uuid"), new Service.ClientResponse<Film>() {
-
-                @Override
-                public void onSuccess(Film film) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse(film.getInfoURL()));
-                    startActivity(intent);
-                }
-
-                @Override
-                public void onError(String error) {
-                    Log.e("Error", "Exception: " + error);
-                }
-            }, Film.class); //5 seconds
-
-        } catch (Exception e) {
-            Log.e("Error", "Exception: " + e.getMessage());
-        }
-    }
-
     public void plan(String id) {
         Log.d("PLAN", id);
 

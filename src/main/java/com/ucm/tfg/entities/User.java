@@ -9,7 +9,8 @@ import java.io.Serializable;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class User implements Serializable {
-    private String uuid;
+
+    private long id;
 
     private String name;
 
@@ -19,12 +20,12 @@ public class User implements Serializable {
 
     private String imageURL;
 
-    public String getUuid() {
-        return uuid;
+    public long getId() {
+        return id;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {

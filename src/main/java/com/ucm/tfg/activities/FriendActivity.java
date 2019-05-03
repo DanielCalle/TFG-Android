@@ -43,11 +43,14 @@ public class FriendActivity extends AppCompatActivity implements
     private SwipeRefreshLayout swipeRefreshLayout;
     private FriendAdapter friendAdapter;
     private SearchView searchView;
+    private long userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend);
+
+        userId = getSharedPreferences(Session.SESSION_FILE, 0).getLong(Session.USER, 0);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -90,9 +93,9 @@ public class FriendActivity extends AppCompatActivity implements
 
         navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(FriendActivity.this);
-        String user = getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null);
+
         TextView userName = navigationView.getHeaderView(0).findViewById(R.id.user_name);
-        userName.setText(user);
+        userName.setText("" + userId);
     }
 
     @Override
@@ -104,9 +107,8 @@ public class FriendActivity extends AppCompatActivity implements
 
     private void updateFriends() {
         swipeRefreshLayout.setRefreshing(true);
-        String user = getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null);
-        if (!Utils.isNullOrEmpty(user)) {
-            UserService.getFriends(FriendActivity.this, user, new Service.ClientResponse<ArrayList<User>>() {
+        if (userId != 0) {
+            UserService.getFriends(FriendActivity.this, userId, new Service.ClientResponse<ArrayList<User>>() {
                 @Override
                 public void onSuccess(ArrayList<User> result) {
                     friendAdapter.setFriendData(result);
@@ -188,7 +190,7 @@ public class FriendActivity extends AppCompatActivity implements
                 SharedPreferences sharedPreferences = getSharedPreferences(Session.SESSION_FILE, 0);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putBoolean(Session.IS_LOGGED, false);
-                editor.putString(Session.USER, null);
+                editor.putLong(Session.USER, 0);
                 editor.apply();
 
                 startActivity(new Intent(FriendActivity.this, LoginActivity.class));

@@ -14,7 +14,7 @@ public class CommandGetFilmById implements Command {
 
     @Override
     public Film execute(Object... objects) {
-        FilmService.getFilmById((Activity) objects[0], (String) objects[1], (Service.ClientResponse) objects[2], (Class) objects[3]);
+        FilmService.getFilmById((Activity) objects[0], (long) objects[1], (Service.ClientResponse) objects[2], (Class) objects[3]);
         return null;
     }
 

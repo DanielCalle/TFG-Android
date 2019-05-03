@@ -22,13 +22,13 @@ public class UserFilmService {
                 .execute(callback, c);
     }
 
-    public static <T> void get(Activity activity, String userUuid, String filmUuid, Service.ClientResponse<T> callback, Class<T> c) {
+    public static <T> void get(Activity activity, long userId, long filmId, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
                 .get()
-                .url(develop_url + "{userUuid}/{filmUuid}")
-                .addPathVariable("userUuid", userUuid)
-                .addPathVariable("filmUuid", filmUuid)
+                .url(develop_url + "{userId}/{filmId}")
+                .addPathVariable("userId", "" + userId)
+                .addPathVariable("filmId", "" + filmId)
                 .execute(callback, c);
     }
 
@@ -37,21 +37,21 @@ public class UserFilmService {
                 .setContext(activity)
                 .put()
                 .url(develop_url + "rate")
-                .url(develop_url + "{userUuid}/{filmUuid}/rate/{rating}")
-                .addPathVariable("userUuid", userFilm.getUserUuid())
-                .addPathVariable("filmUuid", userFilm.getFilmUuid())
+                .url(develop_url + "{userId}/{filmId}/rate/{rating}")
+                .addPathVariable("userId", "" + userFilm.getUserId())
+                .addPathVariable("filmId", "" + userFilm.getFilmId())
                 .addPathVariable("rating", userFilm.getRating() + "")
                 .body(userFilm)
                 .execute(callback, c);
     }
 
-    public static <T> void delete(Activity activity, String userUuid, String filmUuid, Service.ClientResponse<T> callback, Class<T> c) {
+    public static <T> void delete(Activity activity, long userId, long filmId, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
                 .delete()
-                .url(develop_url + "{userUuid}/{filmUuid}")
-                .addPathVariable("userUuid", userUuid)
-                .addPathVariable("filmUuid", filmUuid)
+                .url(develop_url + "{userId}/{filmId}")
+                .addPathVariable("userId", "" + userId)
+                .addPathVariable("filmId", "" + filmId)
                 .execute(callback, c);
     }
 }

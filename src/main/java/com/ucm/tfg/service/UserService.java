@@ -35,36 +35,39 @@ public class UserService {
                 .execute(callback, c);
     }
 
-    public static <T> void getUserById(Activity activity, String uuid, Service.ClientResponse<T> callback, Class<T> c) {
+    public static <T> void getUserById(Activity activity, long id, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
                 .get()
-                .addPathVariable("id", uuid)
                 .url(develop_url + "{id}")
+                .addPathVariable("id", "" + id)
                 .execute(callback, c);
     }
 
-    public static <T> void getUserFilmsById(Activity activity,String uuid, Service.ClientResponse<ArrayList<Film>> callback) {
+    public static <T> void getUserFilmsById(Activity activity, long id, Service.ClientResponse<ArrayList<Film>> callback) {
         Service.getInstance()
                 .setContext(activity)
-                .get().addPathVariable("id", uuid)
+                .get()
                 .url(develop_url + "{id}" + "/films")
+                .addPathVariable("id", "" + id)
                 .execute(callback, new ParameterizedTypeReference<ArrayList<Film>>(){});
     }
 
-    public static <T> void getUserPlansById(Activity activity, String uuid, Service.ClientResponse<ArrayList<Plan>> callback) {
+    public static <T> void getUserPlansById(Activity activity, long id, Service.ClientResponse<ArrayList<Plan>> callback) {
         Service.getInstance()
                 .setContext(activity)
-                .get().addPathVariable("id", uuid)
+                .get()
                 .url(develop_url + "{id}" + "/plans")
+                .addPathVariable("id", "" + id)
                 .execute(callback, new ParameterizedTypeReference<ArrayList<Plan>>(){});
     }
 
-    public static <T> void getFriends(Activity activity, String uuid, Service.ClientResponse<ArrayList<User>> callback) {
+    public static <T> void getFriends(Activity activity, long id, Service.ClientResponse<ArrayList<User>> callback) {
         Service.getInstance()
                 .setContext(activity)
-                .get().addPathVariable("id", uuid)
+                .get()
                 .url(develop_url + "{id}" + "/friends")
+                .addPathVariable("id", "" + id)
                 .execute(callback, new ParameterizedTypeReference<ArrayList<User>>(){});
     }
 
@@ -78,11 +81,12 @@ public class UserService {
                 });
     }
 
-    public static <T> void getFriendsPlans(Activity activity, String uuid, Service.ClientResponse<ArrayList<Plan>> callback) {
+    public static <T> void getFriendsPlans(Activity activity, long id, Service.ClientResponse<ArrayList<Plan>> callback) {
         Service.getInstance()
                 .setContext(activity)
-                .get().addPathVariable("id", uuid)
+                .get()
                 .url(develop_url + "{id}" + "/friendships" + "/plans")
+                .addPathVariable("id", "" + id)
                 .execute(callback, new ParameterizedTypeReference<ArrayList<Plan>>(){});
     }
 

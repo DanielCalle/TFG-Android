@@ -13,7 +13,7 @@ public class CommandGetUserById implements Command {
 
     @Override
     public User execute(Object... objects) {
-        UserService.getUserById((Activity) objects[0], (String) objects[1], (Service.ClientResponse) objects[2], (Class) objects[3]);
+        UserService.getUserById((Activity) objects[0], (long) objects[1], (Service.ClientResponse) objects[2], (Class) objects[3]);
         return null;
     }
 

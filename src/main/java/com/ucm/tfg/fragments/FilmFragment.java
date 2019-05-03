@@ -146,9 +146,9 @@ public class FilmFragment extends Fragment {
 
     private void updateFilms() {
         swipeRefreshLayout.setRefreshing(true);
-        String user = getActivity().getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null);
-        if (!Utils.isNullOrEmpty(user)) {
-            UserService.getUserFilmsById(getActivity(), user, new Service.ClientResponse<ArrayList<Film>>() {
+        long userId = getActivity().getSharedPreferences(Session.SESSION_FILE, 0).getLong(Session.USER, 0);
+        if (userId != 0) {
+            UserService.getUserFilmsById(getActivity(), userId, new Service.ClientResponse<ArrayList<Film>>() {
                 @Override
                 public void onSuccess(ArrayList<Film> result) {
                     filmAdapter.setData(result);

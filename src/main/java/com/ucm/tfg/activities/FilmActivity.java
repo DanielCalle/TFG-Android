@@ -133,7 +133,7 @@ public class FilmActivity extends AppCompatActivity {
         TextView genre = findViewById(R.id.genre);
         genre.setText(film.getGenre());
         TextView director = findViewById(R.id.director);
-        director.setText(film.getdirector());
+        director.setText(film.getDirector());
 
         FloatingActionButton trailer = findViewById(R.id.trailer);
         trailer.setOnClickListener((View v) -> {
@@ -144,8 +144,8 @@ public class FilmActivity extends AppCompatActivity {
 
         UserFilmService.get(
                 FilmActivity.this,
-                getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null),
-                film.getUuid(),
+                getSharedPreferences(Session.SESSION_FILE, 0).getLong(Session.USER, 0),
+                film.getId(),
                 new Service.ClientResponse<UserFilm>() {
             @Override
             public void onSuccess(UserFilm result) {
@@ -184,11 +184,11 @@ public class FilmActivity extends AppCompatActivity {
                 if (data != null) {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     Plan plan = new Plan();
-                    plan.setCreator(
+                    plan.setCreatorId(
                             getSharedPreferences(Session.SESSION_FILE, 0)
-                            .getString(Session.USER, null)
+                            .getLong(Session.USER, 0)
                     );
-                    plan.setFilmUuid(film.getUuid());
+                    plan.setFilmId(film.getId());
                     plan.setTitle(data.getExtras().getString(getString(R.string.plan_title)));
                     try {
                         plan.setDate(dateFormat.parse(data.getExtras().getString(getString(R.string.plan_date))));
@@ -232,8 +232,8 @@ public class FilmActivity extends AppCompatActivity {
                 if (userFilm != null) {
                     UserFilmService.delete(
                             FilmActivity.this,
-                            getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null),
-                            film.getUuid(),
+                            getSharedPreferences(Session.SESSION_FILE, 0).getLong(Session.USER, 0),
+                            film.getId(),
                             new Service.ClientResponse<UserFilm>() {
                                 @Override
                                 public void onSuccess(UserFilm result) {
@@ -249,8 +249,8 @@ public class FilmActivity extends AppCompatActivity {
                             }, UserFilm.class);
                 } else {
                     userFilm = new UserFilm();
-                    userFilm.setUserUuid(getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null));
-                    userFilm.setFilmUuid(film.getUuid());
+                    userFilm.setUserId(getSharedPreferences(Session.SESSION_FILE, 0).getLong(Session.USER, 0));
+                    userFilm.setFilmId(film.getId());
                     UserFilmService.postUserFilm(FilmActivity.this, userFilm, new Service.ClientResponse<UserFilm>() {
                         @Override
                         public void onSuccess(UserFilm result) {

@@ -22,8 +22,6 @@ public class RegisterActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
-    private boolean send;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +42,6 @@ public class RegisterActivity extends AppCompatActivity {
             ) {
                 registerButton.setEnabled(false);
                 User user = new User();
-                user.setUuid(UUID.randomUUID().toString());
                 user.setName(nameInput.getText().toString());
                 user.setEmail(emailInput.getText().toString());
                 user.setPassword(passwordInput.getText().toString());
@@ -54,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
                         runOnUiThread(() -> {
                             Toast.makeText(RegisterActivity.this, getString(R.string.register_success), Toast.LENGTH_SHORT).show();
                             editor.putBoolean(Session.IS_LOGGED, true);
-                            editor.putString(Session.USER, result.getUuid());
+                            editor.putLong(Session.USER, result.getId());
                             editor.apply();
                             registerButton.setEnabled(true);
                             finish();

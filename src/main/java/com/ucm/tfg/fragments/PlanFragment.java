@@ -165,9 +165,9 @@ public class PlanFragment extends Fragment {
 
     private void updatePlans() {
         swipeRefreshLayout.setRefreshing(true);
-        String user = getActivity().getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null);
-        if (!Utils.isNullOrEmpty(user)) {
-            UserService.getUserPlansById(getActivity(), user, new Service.ClientResponse<ArrayList<Plan>>() {
+        long userId = getActivity().getSharedPreferences(Session.SESSION_FILE, 0).getLong(Session.USER, 0);
+        if (userId != 0) {
+            UserService.getUserPlansById(getActivity(), userId, new Service.ClientResponse<ArrayList<Plan>>() {
                 @Override
                 public void onSuccess(ArrayList<Plan> result) {
                     planAdapter.setPlansData(result);
@@ -205,8 +205,8 @@ public class PlanFragment extends Fragment {
     private void updateFriendsPlans() {
         swipeRefreshLayout.setRefreshing(true);
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(Session.SESSION_FILE, 0);
-        String userUuid = sharedPreferences.getString(Session.USER, null);
-        UserService.getFriendsPlans(getActivity(), userUuid, new Service.ClientResponse<ArrayList<Plan>>() {
+        long userId = sharedPreferences.getLong(Session.USER, 0);
+        UserService.getFriendsPlans(getActivity(), userId, new Service.ClientResponse<ArrayList<Plan>>() {
             @Override
             public void onSuccess(ArrayList<Plan> result) {
                 planAdapter.setFriendsPlansData(result);

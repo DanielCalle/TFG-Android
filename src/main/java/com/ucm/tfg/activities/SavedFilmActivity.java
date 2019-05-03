@@ -51,7 +51,7 @@ public class SavedFilmActivity extends AppCompatActivity {
         JSONObject json = null;
         try {
             json = new JSONObject(uuid);
-            FilmService.getFilmById(SavedFilmActivity.this, json.getString("uuid"), new Service.ClientResponse<Film>() {
+            FilmService.getFilmById(SavedFilmActivity.this, json.getLong("id"), new Service.ClientResponse<Film>() {
 
                 @Override
                 public void onSuccess(Film film) {
@@ -65,19 +65,18 @@ public class SavedFilmActivity extends AppCompatActivity {
                     Picasso.get().load(film.getImageURL()).into(image);
 
                     UserFilm userFilm = new UserFilm();
-                    userFilm.setUserUuid(getSharedPreferences(Session.SESSION_FILE, 0).getString(Session.USER, null));
-                    userFilm.setFilmUuid(film.getUuid());
+                    userFilm.setUserId(getSharedPreferences(Session.SESSION_FILE, 0).getLong(Session.USER, 0));
+                    userFilm.setFilmId(film.getId());
                     userFilm.setDate(new Date());
                     UserFilmService.postUserFilm(SavedFilmActivity.this, userFilm, new Service.ClientResponse<UserFilm>(){
                         @Override
                         public void onSuccess(UserFilm userFilm) {
-                            Log.i(LOGTAG, userFilm.getFilmUuid());
                             Button button = (Button) findViewById(R.id.button);
-                            button.setOnClickListener(view -> {
+                            /*button.setOnClickListener(view -> {
                                 Intent intentInfo = new Intent(Intent.ACTION_VIEW);
                                 intentInfo.setData(Uri.parse(film.getInfoURL()));
                                 startActivity(intentInfo);
-                            });
+                            });*/
                         }
                         @Override
                         public void onError(String error) {
