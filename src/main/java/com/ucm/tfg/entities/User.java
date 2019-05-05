@@ -12,6 +12,8 @@ public class User implements Serializable {
 
     private long id;
 
+    private String uuid;
+
     private String name;
 
     private String email;
@@ -26,6 +28,14 @@ public class User implements Serializable {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getName() {
