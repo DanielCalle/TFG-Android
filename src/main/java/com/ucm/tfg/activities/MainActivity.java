@@ -24,6 +24,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ucm.tfg.Session;
+import com.ucm.tfg.entities.User;
+import com.ucm.tfg.service.Service;
+import com.ucm.tfg.service.UserService;
 import com.ucm.tfg.views.CustomViewPager;
 import com.ucm.tfg.fragments.FilmFragment;
 import com.ucm.tfg.fragments.RecommendationFragment;
@@ -94,8 +97,19 @@ public class MainActivity extends AppCompatActivity implements
             startActivity(intent);
         } else {
             long userId = sharedPreferences.getLong(Session.USER, 0);
-            TextView userName = navigationView.getHeaderView(0).findViewById(R.id.user_name);
-            userName.setText("" + userId);
+            UserService.getUserById(MainActivity.this, userId, new Service.ClientResponse<User>() {
+                @Override
+                public void onSuccess(User result) {
+                    Session.user = result;
+                    TextView userName = navigationView.getHeaderView(0).findViewById(R.id.user_name);
+                    userName.setText(Session.user.getName());
+                }
+
+                @Override
+                public void onError(String error) {
+
+                }
+            }, User.class);
         }
     }
 

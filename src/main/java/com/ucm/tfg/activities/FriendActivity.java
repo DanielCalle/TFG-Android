@@ -95,7 +95,7 @@ public class FriendActivity extends AppCompatActivity implements
         navigationView.setNavigationItemSelectedListener(FriendActivity.this);
 
         TextView userName = navigationView.getHeaderView(0).findViewById(R.id.user_name);
-        userName.setText("" + userId);
+        userName.setText(Session.user.getName());
     }
 
     @Override
