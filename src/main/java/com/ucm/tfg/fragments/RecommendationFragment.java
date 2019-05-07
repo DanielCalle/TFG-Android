@@ -8,11 +8,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.ucm.tfg.R;
+import com.ucm.tfg.Utils;
 import com.ucm.tfg.adapters.PlanAdapter;
 import com.ucm.tfg.adapters.RecommendationListAdapter;
 
@@ -36,6 +40,8 @@ public class RecommendationFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private SearchView searchView;
+    private Toolbar toolbar;
 
     public RecommendationFragment() {
         // Required empty public constructor
@@ -90,7 +96,36 @@ public class RecommendationFragment extends Fragment {
             }, 5000);   //5 seconds
         });
 
+        toolbar = getActivity().findViewById(R.id.toolbar);
+
         return view;
+    }
+
+    public void setActive() {
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.menu_recommendations);
+        toolbar.setTitle(R.string.action_recommendations);
+        searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                if (!Utils.isNullOrEmpty(s)) {
+                    Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+                }
+                return false;
+            }
+        });
+
+        searchView.setOnCloseListener(() -> {
+            Toast.makeText(getActivity(), "closed", Toast.LENGTH_SHORT).show();
+            return false;
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event

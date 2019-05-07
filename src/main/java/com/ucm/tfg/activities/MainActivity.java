@@ -64,7 +64,38 @@ public class MainActivity extends AppCompatActivity implements
         viewPager.setAdapter(adapter);
 
         viewPager.addOnPageChangeListener(
-                new TabLayout.TabLayoutOnPageChangeListener(tabLayout)
+                new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageScrolled(int i, float v, int i1) {
+
+                    }
+
+                    @Override
+                    public void onPageSelected(int i) {
+                        switch (i) {
+                            case 0: ((PlanFragment) viewPager
+                                    .getAdapter()
+                                    .instantiateItem(viewPager, viewPager.getCurrentItem()))
+                                    .setActive();
+                                break;
+                            case 1: ((RecommendationFragment) viewPager
+                                    .getAdapter()
+                                    .instantiateItem(viewPager, viewPager.getCurrentItem()))
+                                    .setActive();
+                            break;
+                            case 2: ((FilmFragment) viewPager
+                                    .getAdapter()
+                                    .instantiateItem(viewPager, viewPager.getCurrentItem()))
+                                    .setActive();
+                            break;
+                        }
+                    }
+
+                    @Override
+                    public void onPageScrollStateChanged(int i) {
+
+                    }
+                }
         );
 
         tabLayout.addOnTabSelectedListener(
@@ -142,7 +173,8 @@ public class MainActivity extends AppCompatActivity implements
             case R.id.action_friends:
                 startActivity(new Intent(MainActivity.this, FriendActivity.class));
                 break;
-            default: break;
+            default:
+                break;
         }
 
         drawer.closeDrawer(GravityCompat.START);

@@ -50,9 +50,6 @@
             android:id="@+id/left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:alpha="@android:integer/config_shortAnimTime"
-            android:filterTouchesWhenObscured="true"
-            android:foreground="@color/secondaryTextColor"
             android:icon="@drawable/ic_perm_contact_calendar_black_24dp"
             android:text="@string/action_plans" />
 

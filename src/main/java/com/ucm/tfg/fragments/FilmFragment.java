@@ -51,6 +51,7 @@ public class FilmFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private FilmAdapter filmAdapter;
     private SearchView searchView;
+    private Toolbar toolbar;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     public FilmFragment() {
@@ -109,9 +110,15 @@ public class FilmFragment extends Fragment {
             updateFilms();
         });
 
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar = getActivity().findViewById(R.id.toolbar);
+
+        return view;
+    }
+
+    public void setActive() {
         toolbar.getMenu().clear();
-        toolbar.inflateMenu(R.menu.menu_plans);
+        toolbar.inflateMenu(R.menu.menu_films);
+        toolbar.setTitle(R.string.action_films);
         searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -133,13 +140,6 @@ public class FilmFragment extends Fragment {
             updateFilms();
             return false;
         });
-
-        return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
 
         updateFilms();
     }

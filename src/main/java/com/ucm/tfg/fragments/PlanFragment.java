@@ -60,11 +60,9 @@ public class PlanFragment extends Fragment {
     private String mParam2;
 
     private PlanAdapter planAdapter;
-
     private SwipeRefreshLayout swipeRefreshLayout;
-
     private SearchView searchView;
-
+    private Toolbar toolbar;
     private OnFragmentInteractionListener mListener;
 
     public PlanFragment() {
@@ -127,9 +125,15 @@ public class PlanFragment extends Fragment {
             updatePlans();
         });
 
-        Toolbar toolbar = getActivity().findViewById(R.id.toolbar);
+        toolbar = getActivity().findViewById(R.id.toolbar);
+
+        return view;
+    }
+
+    public void setActive() {
         toolbar.getMenu().clear();
         toolbar.inflateMenu(R.menu.menu_plans);
+        toolbar.setTitle(R.string.action_plans);
         searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -151,13 +155,6 @@ public class PlanFragment extends Fragment {
             updatePlans();
             return false;
         });
-
-        return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
 
         updatePlans();
     }
