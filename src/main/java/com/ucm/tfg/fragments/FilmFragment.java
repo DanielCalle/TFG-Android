@@ -93,7 +93,7 @@ public class FilmFragment extends Fragment {
 
         GridView gridView = (GridView) view.findViewById(R.id.films);
         filmAdapter = new FilmAdapter(getActivity());
-        filmAdapter.addPlanOnClickListener((Film film, View v) -> {
+        filmAdapter.addFilmOnClickListener((Film film, View v) -> {
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
                     .makeSceneTransitionAnimation(
                             getActivity(),
@@ -140,6 +140,13 @@ public class FilmFragment extends Fragment {
             updateFilms();
             return false;
         });
+
+        updateFilms();
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
 
         updateFilms();
     }

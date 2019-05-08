@@ -39,4 +39,7 @@
     <string name="plan_title">Título</string>
     <string name="action_friends">Amigos</string>
     <string name="action_settings">Configuración</string>
+    <string name="film_recommendations_premiere">En estreno</string>
+    <string name="film_recommendations_trending">Populares</string>
+    <string name="film_recommendations_user">Películas recomendadas</string>
 </resources>

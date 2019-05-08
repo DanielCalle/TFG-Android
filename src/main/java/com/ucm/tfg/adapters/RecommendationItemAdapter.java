@@ -10,33 +10,22 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
+import com.ucm.tfg.entities.Film;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecommendationItemAdapter extends RecyclerView.Adapter<RecommendationItemAdapter.RecyclerViewHolder> {
 
-    String [][] data = {
-            {"Moana","Diego", "Carlos"},
-            {"Deadpool","Carlos", "Zihao"},
-            {"1","Diego", "Daniel"},
-            {"2","Carlos", "Diego"},
-            {"3","Zihao", "Carlos"},
-            {"4","Zihao", "Daniel"},
-            {"5","Diego", "Carlos"},
-            {"8","Diego", "Zihao"},
-            {"6","Carlos", "Carlos"},
-            {"454","Zihao", "Carlos"},
-            {"34","Diego", "Carlos"},
-            {"5","Diego", "Zihao"},
-            {"64","Diego", "Carlos"},
-            {"De77adpool","Carlos", "Diego"},
-            {"Moan86a","Diego", "Daniel"},
-            {"Dea232dpool","Zihao", "Diego"}
-    };
-
     private Context context;
+    private List<Film> data;
+    private FilmActionListener filmActionListener;
 
     public RecommendationItemAdapter(Context context) {
         this.context = context;
+        data = new ArrayList<>();
     }
 
     @NonNull
@@ -50,12 +39,30 @@ public class RecommendationItemAdapter extends RecyclerView.Adapter<Recommendati
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder recyclerViewHolder, int i) {
-        recyclerViewHolder.title.setText(data[i][0]);
+        Film film = data.get(i);
+
+        recyclerViewHolder.title.setText(film.getName());
+        Picasso.get()
+                .load(film.getImageURL()
+                )
+                .resize(400, 600)
+                .into(recyclerViewHolder.image);
+
+        recyclerViewHolder.image.setOnClickListener((View v) -> {
+            if (filmActionListener != null) {
+                filmActionListener.onFilmClick(film, v);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
-        return data.length;
+        return data.size();
+    }
+
+    public void setData(List<Film> data) {
+        this.data = data;
+        notifyDataSetChanged();
     }
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
@@ -65,9 +72,20 @@ public class RecommendationItemAdapter extends RecyclerView.Adapter<Recommendati
 
         public RecyclerViewHolder(View view){
             super(view);
-            image = view.findViewById(R.id.image);
+            image = view.findViewById(R.id.film_poster);
             title = view.findViewById(R.id.title);
         }
+    }
+
+
+    public void addFilmOnClickListener(FilmActionListener filmActionListener) {
+        this.filmActionListener = filmActionListener;
+    }
+
+    public interface FilmActionListener {
+
+        void onFilmClick(Film film, View v);
+
     }
 
 }

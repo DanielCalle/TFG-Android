@@ -155,6 +155,13 @@ public class PlanFragment extends Fragment {
             updatePlans();
             return false;
         });
+        
+        updatePlans();
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
 
         updatePlans();
     }

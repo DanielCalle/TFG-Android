@@ -1,10 +1,13 @@
 package com.ucm.tfg.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -16,9 +19,16 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 import com.ucm.tfg.R;
+import com.ucm.tfg.Session;
 import com.ucm.tfg.Utils;
+import com.ucm.tfg.activities.FilmActivity;
 import com.ucm.tfg.adapters.PlanAdapter;
 import com.ucm.tfg.adapters.RecommendationListAdapter;
+import com.ucm.tfg.entities.Film;
+import com.ucm.tfg.service.RecommendationService;
+import com.ucm.tfg.service.Service;
+
+import java.util.ArrayList;
 
 
 /**
@@ -42,6 +52,8 @@ public class RecommendationFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private SearchView searchView;
     private Toolbar toolbar;
+    private SwipeRefreshLayout swipeRefreshLayout;
+    private RecommendationListAdapter recommendationListAdapter;
 
     public RecommendationFragment() {
         // Required empty public constructor
@@ -84,16 +96,22 @@ public class RecommendationFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        recyclerView.setAdapter(new RecommendationListAdapter(getActivity()));
+        recommendationListAdapter = new RecommendationListAdapter(getActivity());
+        recommendationListAdapter.addFilmOnClickListener((Film film, View v) -> {
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(
+                            getActivity(),
+                            Pair.create(v, "film_poster")
+                    );
+            Intent i = new Intent(getActivity(), FilmActivity.class);
+            i.putExtra("film", film);
+            startActivity(i, optionsCompat.toBundle());
+        });
+        recyclerView.setAdapter(recommendationListAdapter);
 
-        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                public void run() {
-                    swipeRefreshLayout.setRefreshing(false);
-                }
-            }, 5000);   //5 seconds
+            updateRecommendations();
         });
 
         toolbar = getActivity().findViewById(R.id.toolbar);
@@ -123,9 +141,63 @@ public class RecommendationFragment extends Fragment {
         });
 
         searchView.setOnCloseListener(() -> {
-            Toast.makeText(getActivity(), "closed", Toast.LENGTH_SHORT).show();
+            updateRecommendations();
             return false;
         });
+
+        updateRecommendations();
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+
+        updateRecommendations();
+    }
+
+    private void updateRecommendations() {
+        swipeRefreshLayout.setRefreshing(true);
+        if (Session.user != null) {
+            RecommendationService.getRecommendedFilms(getActivity(), Session.user.getId(), new Service.ClientResponse<ArrayList<Film>>() {
+                @Override
+                public void onSuccess(ArrayList<Film> result) {
+                    recommendationListAdapter.setRecommendedData(result);
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+
+                @Override
+                public void onError(String error) {
+                    Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            });
+            RecommendationService.getTrendingFilms(getActivity(), new Service.ClientResponse<ArrayList<Film>>() {
+                @Override
+                public void onSuccess(ArrayList<Film> result) {
+                    recommendationListAdapter.setTrendingData(result);
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+
+                @Override
+                public void onError(String error) {
+                    Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            });
+            RecommendationService.getPremiereFilms(getActivity(), new Service.ClientResponse<ArrayList<Film>>() {
+                @Override
+                public void onSuccess(ArrayList<Film> result) {
+                    recommendationListAdapter.setPremiereData(result);
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+
+                @Override
+                public void onError(String error) {
+                    Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+                    swipeRefreshLayout.setRefreshing(false);
+                }
+            });
+        }
     }
 
     // TODO: Rename method, update argument and hook method into UI event

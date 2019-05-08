@@ -88,7 +88,7 @@ public class PlanActivity extends AppCompatActivity {
        /*
 
         planJoinedUsersAdapter = new PlanJoinedUsersAdapter(PlanActivity.this);
-        planJoinedUsersAdapter.addPlanOnClickListener((User u) -> {
+        planJoinedUsersAdapter.addFilmOnClickListener((User u) -> {
             Toast.makeText(PlanActivity.this, u.getName(), Toast.LENGTH_SHORT).show();
         });
         recyclerView.setAdapter(planJoinedUsersAdapter);
