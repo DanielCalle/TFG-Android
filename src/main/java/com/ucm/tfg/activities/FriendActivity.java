@@ -34,12 +34,9 @@ import com.ucm.tfg.views.CustomViewPager;
 
 import java.util.ArrayList;
 
-public class FriendActivity extends AppCompatActivity implements
-        NavigationView.OnNavigationItemSelectedListener {
+public class FriendActivity extends AppCompatActivity{
 
     private Toolbar toolbar;
-    private DrawerLayout drawer;
-    private NavigationView navigationView;
     private SwipeRefreshLayout swipeRefreshLayout;
     private FriendAdapter friendAdapter;
     private SearchView searchView;
@@ -84,18 +81,6 @@ public class FriendActivity extends AppCompatActivity implements
         swipeRefreshLayout.setOnRefreshListener(() -> {
             updateFriends();
         });
-
-        drawer = findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-
-        navigationView = findViewById(R.id.navigation_view);
-        navigationView.setNavigationItemSelectedListener(FriendActivity.this);
-
-        TextView userName = navigationView.getHeaderView(0).findViewById(R.id.user_name);
-        userName.setText(Session.user.getName());
     }
 
     @Override
@@ -144,15 +129,6 @@ public class FriendActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_friends, menu);
@@ -184,26 +160,13 @@ public class FriendActivity extends AppCompatActivity implements
     }
 
     @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-        switch (menuItem.getItemId()) {
-            case R.id.action_logout:
-                SharedPreferences sharedPreferences = getSharedPreferences(Session.SESSION_FILE, 0);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean(Session.IS_LOGGED, false);
-                editor.putLong(Session.USER, 0);
-                editor.apply();
-
-                startActivity(new Intent(FriendActivity.this, LoginActivity.class));
-                break;
-            case R.id.action_friends:
-                startActivity(new Intent(FriendActivity.this, FriendActivity.class));
-                break;
-            default:
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
                 break;
         }
 
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+        return super.onOptionsItemSelected(item);
     }
-
 }

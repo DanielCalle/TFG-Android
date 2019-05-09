@@ -128,7 +128,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
 
     public void setFriendsPlansData(List<Plan> data) {
 
-        this.friendsPlans = data;
+        this.plans.addAll(data);
         notifyDataSetChanged();
     }
 

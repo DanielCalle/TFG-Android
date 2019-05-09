@@ -16,6 +16,9 @@ import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
 import com.ucm.tfg.Session;
 import com.ucm.tfg.Utils;
+import com.ucm.tfg.entities.Film;
+import com.ucm.tfg.service.RecommendationService;
+import com.ucm.tfg.service.Service;
 
 import java.util.Locale;
 import java.util.Timer;
@@ -41,29 +44,39 @@ public class StartActivity extends AppCompatActivity {
         timerProgress = findViewById(R.id.timer_progress);
         timerLabel = findViewById(R.id.timer_label);
 
-        Picasso.get()
-                .load("http://filmar-develop.herokuapp.com/images/one-piece.jpg")
-                .fit()
-                .into(poster);
-
-        time = 0;
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
+        RecommendationService.getRandomFilm(StartActivity.this, new Service.ClientResponse<Film>() {
             @Override
-            public void run() {
-                time += INTERVAL;
-                if (time < MAX_TIME){
-                    runOnUiThread(() -> {
-                        timerProgress.setProgress(time * 100 / MAX_TIME);
-                        timerLabel.setText(String.format(Locale.getDefault(), "%d", ((MAX_TIME / 1000) - (time * (MAX_TIME / 1000) / MAX_TIME))));
-                    });
-                } else {
-                    timer.cancel();
-                    Intent intent = new Intent(StartActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
+            public void onSuccess(Film result) {
+                Picasso.get()
+                        .load(result.getImageURL())
+                        .fit()
+                        .into(poster);
+
+                time = 0;
+                Timer timer = new Timer();
+                timer.scheduleAtFixedRate(new TimerTask() {
+                    @Override
+                    public void run() {
+                        time += INTERVAL;
+                        if (time < MAX_TIME){
+                            runOnUiThread(() -> {
+                                timerProgress.setProgress(time * 100 / MAX_TIME);
+                                timerLabel.setText(String.format(Locale.getDefault(), "%d", ((MAX_TIME / 1000) - (time * (MAX_TIME / 1000) / MAX_TIME))));
+                            });
+                        } else {
+                            timer.cancel();
+                            Intent intent = new Intent(StartActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                }, INTERVAL, INTERVAL);
             }
-        }, INTERVAL, INTERVAL);
+
+            @Override
+            public void onError(String error) {
+
+            }
+        }, Film.class);
     }
 }
