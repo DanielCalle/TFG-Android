@@ -43,4 +43,13 @@ public class RecommendationService {
                 .execute(callback, new ParameterizedTypeReference<ArrayList<Film>>() {
                 });
     }
+    public static <T> void getThreePlans(Activity activity, long id, long friendId, Service.ClientResponse<T> callback, Class<T> c) {
+        Service.getInstance()
+                .setContext(activity)
+                .get()
+                .url(develop_url + "{id}/plans/{friendId}")
+                .addPathVariable("id", "" + id)
+                .addPathVariable("friendId", "" + friendId)
+                .execute(callback, c);
+    }
 }
