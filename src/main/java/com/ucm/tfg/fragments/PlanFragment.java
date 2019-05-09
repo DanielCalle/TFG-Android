@@ -166,7 +166,6 @@ public class PlanFragment extends Fragment {
         updatePlans();
     }
 
-
     private void updatePlans() {
         swipeRefreshLayout.setRefreshing(true);
         if (Session.user != null) {
