@@ -15,7 +15,7 @@ public class CommandAreFriends implements Command {
     public Object execute(Object... objects) {
         Log.wtf("command friendship objects[1]", (String) objects[1]);
         //Log.wtf("Session.user.getId()", "" + Session.user.getId());
-        FriendshipService.areFriends((Activity) objects[0], 4, (String) objects[1], (Service.ClientResponse) objects[2], (Class) objects[3]);
+        FriendshipService.areFriends((Activity) objects[0], 4, Long.parseLong((String) objects[1]), (Service.ClientResponse) objects[2], (Class) objects[3]);
         return null;
     }
 
