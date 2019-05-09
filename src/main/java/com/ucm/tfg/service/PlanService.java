@@ -32,50 +32,50 @@ public class PlanService {
                 .body(plan)
                 .execute(callback, c);
     }
-    public static <T> void joinPlan(Activity activity, String id, String userUuid, Service.ClientResponse<T> callback, Class<T> c) {
+    public static <T> void joinPlan(Activity activity, long id, long userId, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
                 .put()
-                .addPathVariable("id", id)
-                .addPathVariable("userUuid", userUuid)
-                .url(develop_url + "{id}" + "/join/" + "{userUuid}")
+                .url(develop_url + "{id}" + "/join/" + "{userId}")
+                .addPathVariable("id", "" + id)
+                .addPathVariable("userId", "" + userId)
                 .execute(callback, c);
     }
-    public static <T> void quitPlan(Activity activity, String id, String userUuid, Service.ClientResponse<T> callback, Class<T> c) {
+    public static <T> void quitPlan(Activity activity, long id, long userId, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
                 .put()
-                .addPathVariable("id", id)
-                .addPathVariable("userUuid", userUuid)
-                .url(develop_url + "{id}" + "/quit/" + "{userUuid}")
+                .url(develop_url + "{id}" + "/quit/" + "{userId}")
+                .addPathVariable("id", "" + id)
+                .addPathVariable("userId", "" + userId)
                 .execute(callback, c);
     }
-    public static <T> void getJoinedUsers(Activity activity, String uuid, Service.ClientResponse<ArrayList<User>> callback) {
+    public static <T> void getJoinedUsers(Activity activity, long id, Service.ClientResponse<ArrayList<User>> callback) {
         Service.getInstance()
                 .setContext(activity)
                 .get()
-                .addPathVariable("id", uuid)
                 .url(develop_url + "{id}" + "/joined-users")
+                .addPathVariable("id", "" + id)
                 .execute(callback, new ParameterizedTypeReference<ArrayList<User>>() {
                 });
     }
 
-    public static <T> void getUsers(Activity activity, String uuid, Service.ClientResponse<ArrayList<User>> callback) {
+    public static <T> void getUsers(Activity activity, long id, Service.ClientResponse<ArrayList<User>> callback) {
         Service.getInstance()
                 .setContext(activity)
                 .get()
-                .addPathVariable("id", uuid)
                 .url(develop_url + "{id}" + "/users")
+                .addPathVariable("id", "" + id)
                 .execute(callback, new ParameterizedTypeReference<ArrayList<User>>() {
                 });
     }
 
-    public static <T> void deletePlan(Activity activity, String id, Service.ClientResponse<T> callback, Class<T> c) {
+    public static <T> void deletePlan(Activity activity, long id, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
                 .delete()
-                .addPathVariable("id", id)
                 .url(develop_url + "{id}")
+                .addPathVariable("id", "" + id)
                 .execute(callback, c);
     }
 

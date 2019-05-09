@@ -123,7 +123,6 @@ public class PlanFragment extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             updatePlans();
-            updateFriendsPlans();
         });
 
         toolbar = getActivity().findViewById(R.id.toolbar);
@@ -154,7 +153,6 @@ public class PlanFragment extends Fragment {
 
         searchView.setOnCloseListener(() -> {
             updatePlans();
-            updateFriendsPlans();
             return false;
         });
         
@@ -166,15 +164,13 @@ public class PlanFragment extends Fragment {
         super.onStart();
 
         updatePlans();
-        updateFriendsPlans();
     }
 
 
     private void updatePlans() {
         swipeRefreshLayout.setRefreshing(true);
-        long userId = getActivity().getSharedPreferences(Session.SESSION_FILE, 0).getLong(Session.USER, 0);
-        if (userId != 0) {
-            UserService.getUserPlansById(getActivity(), userId, new Service.ClientResponse<ArrayList<Plan>>() {
+        if (Session.user != null) {
+            UserService.getUserPlansById(getActivity(), Session.user.getId(), new Service.ClientResponse<ArrayList<Plan>>() {
                 @Override
                 public void onSuccess(ArrayList<Plan> result) {
                     planAdapter.setPlansData(result);
@@ -207,25 +203,6 @@ public class PlanFragment extends Fragment {
                 }
             });
         }
-    }
-
-    private void updateFriendsPlans() {
-        swipeRefreshLayout.setRefreshing(true);
-        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences(Session.SESSION_FILE, 0);
-        long userId = sharedPreferences.getLong(Session.USER, 0);
-        UserService.getFriendsPlans(getActivity(), userId, new Service.ClientResponse<ArrayList<Plan>>() {
-            @Override
-            public void onSuccess(ArrayList<Plan> result) {
-                planAdapter.setFriendsPlansData(result);
-                swipeRefreshLayout.setRefreshing(false);
-            }
-
-            @Override
-            public void onError(String error) {
-                Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event

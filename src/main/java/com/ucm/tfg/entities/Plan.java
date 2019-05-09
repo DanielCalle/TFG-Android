@@ -9,7 +9,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Plan implements Serializable {
 
-    private String id;
+    private long id;
 
     private String title;
 
@@ -25,11 +25,11 @@ public class Plan implements Serializable {
 
     private String description;
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(long id) {
         this.id = id;
     }
 

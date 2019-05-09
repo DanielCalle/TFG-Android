@@ -46,4 +46,6 @@
     <string name="film_recommendations_user">Recommended films</string>
     <string name="film_recommendations_premiere">On premiere</string>
     <string name="film_recommendations_trending">Popular</string>
+    <string name="action_delete">Delete</string>
+    <string name="plan_deleted">You deleted the plan</string>
 </resources>

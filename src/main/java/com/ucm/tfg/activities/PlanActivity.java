@@ -26,6 +26,7 @@ import com.ucm.tfg.entities.User;
 import com.ucm.tfg.service.FilmService;
 import com.ucm.tfg.service.PlanService;
 import com.ucm.tfg.service.Service;
+
 import android.view.Menu;
 
 import java.util.ArrayList;
@@ -36,9 +37,11 @@ public class PlanActivity extends AppCompatActivity {
     private ActionBar actionBar;
     private ImageView filmPoster;
     private FloatingActionButton floatingActionButton;
-    private boolean contains;
     private Plan plan;
-    private List<User> joinedUsers;
+    private PlanUserAdapter planUserAdapter;
+    private Button joinPlan;
+    private boolean isCreator;
+    private boolean joined;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,41 +66,21 @@ public class PlanActivity extends AppCompatActivity {
         TextView location = findViewById(R.id.location);
         TextView description = findViewById(R.id.description);
         RecyclerView users = findViewById(R.id.users);
+        joinPlan = findViewById(R.id.join_plan);
+        isCreator = plan.getCreatorId() == Session.user.getId();
+        joinPlan.setEnabled(!isCreator);
+        joinPlan.setVisibility(isCreator ? View.GONE : View.VISIBLE);
+
+        planUserAdapter = new PlanUserAdapter(PlanActivity.this);
+        users.setHasFixedSize(true);
+        users.setLayoutManager(new LinearLayoutManager(PlanActivity.this, LinearLayoutManager.HORIZONTAL, false));
+        users.setAdapter(planUserAdapter);
 
         date.setText(Utils.dateFormat(plan.getDate()));
         time.setText(Utils.timeFormat(plan.getDate()));
         location.setText(plan.getLocation());
         description.setText(plan.getDescription());
-        ArrayList<User> usersList = new ArrayList<>();
 
-        PlanService.getUsers(this, plan.getId(), new Service.ClientResponse<ArrayList<User>>(){
-
-            @Override
-            public void onSuccess(ArrayList<User> result) {
-                PlanUserAdapter planUserAdapter = new PlanUserAdapter(PlanActivity.this);
-                RecyclerView users = PlanActivity.this.findViewById(R.id.users);
-                users.setHasFixedSize(true);
-                users.setLayoutManager(new LinearLayoutManager(PlanActivity.this, LinearLayoutManager.HORIZONTAL, false));
-                users.setAdapter(planUserAdapter);
-                planUserAdapter.setData(result);
-
-            }
-
-            @Override
-            public void onError(String error) {
-
-            }
-        });
-
-
-       /*
-
-        planJoinedUsersAdapter = new PlanJoinedUsersAdapter(PlanActivity.this);
-        planJoinedUsersAdapter.addFilmOnClickListener((User u) -> {
-            Toast.makeText(PlanActivity.this, u.getName(), Toast.LENGTH_SHORT).show();
-        });
-        recyclerView.setAdapter(planJoinedUsersAdapter);
-        */
         floatingActionButton = findViewById(R.id.film_info);
 
         FilmService.getFilmById(PlanActivity.this, plan.getFilmId(), new Service.ClientResponse<Film>() {
@@ -123,70 +106,55 @@ public class PlanActivity extends AppCompatActivity {
 
             }
         }, Film.class);
-        PlanService.getUsers(this, plan.getId(), new Service.ClientResponse<ArrayList<User>>(){
+
+        joinPlan.setOnClickListener((View v) -> {
+            if (!joined) {
+                PlanService.joinPlan(PlanActivity.this, plan.getId(), Session.user.getId(), new Service.ClientResponse<Plan>() {
+
+                    @Override
+                    public void onSuccess(Plan result) {
+                        updateJoinedUsers();
+                        Toast.makeText(PlanActivity.this, getText(R.string.plan_joined), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                }, Plan.class);
+            } else {
+                PlanService.quitPlan(PlanActivity.this, plan.getId(), Session.user.getId(), new Service.ClientResponse<Plan>() {
+
+                    @Override
+                    public void onSuccess(Plan result) {
+                        updateJoinedUsers();
+                        Toast.makeText(PlanActivity.this, getText(R.string.plan_quit), Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                }, Plan.class);
+            }
+        });
+
+        updateJoinedUsers();
+    }
+
+    private void updateJoinedUsers() {
+        PlanService.getUsers(this, plan.getId(), new Service.ClientResponse<ArrayList<User>>() {
 
             @Override
             public void onSuccess(ArrayList<User> result) {
-                joinedUsers = result;
-                if(joinedUsers!= null) {
-                    int i = 0;
-                    while(i < joinedUsers.size() && !contains){
-                        if (joinedUsers.get(i).getId() == Session.user.getId()) {
-                            contains = true;
-                        }
-                        i++;
+                planUserAdapter.setData(result);
+                if (!isCreator) {
+                    joined = false;
+                    for (int i = 0; i < result.size() && !joined; i++) {
+                        joined = result.get(i).getId() == Session.user.getId();
                     }
-                } else {
-                    if(plan.getCreatorId() == Session.user.getId()){
-                        contains = true;
-                    } else{
-                        contains = false;
-                    }
+                    joinPlan.setText(joined ? R.string.quit_plan : R.string.join_plan);
                 }
-                Button joinPlan = findViewById(R.id.join_plan);
-
-                joinPlan.setText(getString(contains ? R.string.quit_plan : R.string.join_plan));
-
-                joinPlan.setOnClickListener((View v) -> {
-                    if(!contains) {
-                        PlanService.joinPlan(PlanActivity.this, plan.getId(),
-                                Long.toString(Session.user.getId()),
-                                new Service.ClientResponse<Plan>() {
-
-                                    @Override
-                                    public void onSuccess(Plan result) {
-                                        Toast.makeText(PlanActivity.this, getText(R.string.plan_joined), Toast.LENGTH_SHORT).show();
-                                        joinPlan.setText(getString(R.string.quit_plan));
-                                        contains = true;
-                                    }
-
-                                    @Override
-                                    public void onError(String error) {
-
-                                    }
-                                }, Plan.class);
-                    }
-                    else {
-                        PlanService.quitPlan(PlanActivity.this, plan.getId(),
-                                Long.toString(Session.user.getId()),
-                                new Service.ClientResponse<Plan>() {
-
-                                    @Override
-                                    public void onSuccess(Plan result) {
-                                        Toast.makeText(PlanActivity.this, getText(R.string.plan_quit), Toast.LENGTH_SHORT).show();
-                                        joinPlan.setText(getString(R.string.join_plan));
-                                        contains = false;
-                                    }
-
-                                    @Override
-                                    public void onError(String error) {
-
-                                    }
-                                }, Plan.class);
-                    }
-
-                });
-
             }
 
             @Override
@@ -194,15 +162,15 @@ public class PlanActivity extends AppCompatActivity {
 
             }
         });
-
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_plan, menu);
-
+        MenuItem deleteResource = menu.findItem(R.id.delete);
+        deleteResource.setEnabled(isCreator);
+        deleteResource.setVisible(isCreator);
         return super.onCreateOptionsMenu(menu);
-        
-
     }
 
     @Override
@@ -211,19 +179,17 @@ public class PlanActivity extends AppCompatActivity {
             case android.R.id.home:
                 finish();
                 break;
-            case R.id.favorite:
+            case R.id.delete:
                 PlanService.deletePlan(PlanActivity.this, plan.getId(), new Service.ClientResponse<String>() {
                     @Override
                     public void onSuccess(String result) {
-                        Toast.makeText(PlanActivity.this, "Plan eliminado", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(PlanActivity.this, getString(R.string.plan_deleted), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(String error) {
-                        Toast.makeText(PlanActivity.this, "Error al borrar el plan", Toast.LENGTH_SHORT).show();
                     }
                 }, String.class);
-                //Toast.makeText(PlanActivity.this, "delete", Toast.LENGTH_SHORT).show();
                 break;
         }
 
