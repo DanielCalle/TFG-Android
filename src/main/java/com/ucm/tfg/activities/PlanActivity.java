@@ -10,12 +10,14 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
+import com.ucm.tfg.Session;
 import com.ucm.tfg.Utils;
 import com.ucm.tfg.adapters.PlanUserAdapter;
 import com.ucm.tfg.entities.Film;
@@ -27,6 +29,7 @@ import com.ucm.tfg.service.Service;
 import android.view.Menu;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlanActivity extends AppCompatActivity {
 
@@ -35,6 +38,7 @@ public class PlanActivity extends AppCompatActivity {
     private FloatingActionButton floatingActionButton;
     private boolean contains;
     private Plan plan;
+    private List<User> joinedUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,6 +80,7 @@ public class PlanActivity extends AppCompatActivity {
                 users.setLayoutManager(new LinearLayoutManager(PlanActivity.this, LinearLayoutManager.HORIZONTAL, false));
                 users.setAdapter(planUserAdapter);
                 planUserAdapter.setData(result);
+
             }
 
             @Override
@@ -118,53 +123,78 @@ public class PlanActivity extends AppCompatActivity {
 
             }
         }, Film.class);
+        PlanService.getUsers(this, plan.getId(), new Service.ClientResponse<ArrayList<User>>(){
 
-        /*contains = plan.getJoinedUsers().contains(
-                getSharedPreferences(Session.SESSION_FILE, 0).getLong(Session.USER, 0)
-        );
-        Button joinPlan = findViewById(R.id.join_plan);
+            @Override
+            public void onSuccess(ArrayList<User> result) {
+                joinedUsers = result;
+                if(joinedUsers!= null) {
+                    int i = 0;
+                    while(i < joinedUsers.size() && !contains){
+                        if (joinedUsers.get(i).getId() == Session.user.getId()) {
+                            contains = true;
+                        }
+                        i++;
+                    }
+                } else {
+                    if(plan.getCreatorId() == Session.user.getId()){
+                        contains = true;
+                    } else{
+                        contains = false;
+                    }
+                }
+                Button joinPlan = findViewById(R.id.join_plan);
 
-        joinPlan.setText(getString(contains ? R.string.quit_plan : R.string.join_plan));
+                joinPlan.setText(getString(contains ? R.string.quit_plan : R.string.join_plan));
 
-        joinPlan.setOnClickListener((View v) -> {
-            if(!contains) {
-                PlanService.joinPlan(PlanActivity.this, plan.getId(),
-                        getSharedPreferences(Session.SESSION_FILE, 0).getLong(Session.USER, 0),
-                        new Service.ClientResponse<Plan>() {
+                joinPlan.setOnClickListener((View v) -> {
+                    if(!contains) {
+                        PlanService.joinPlan(PlanActivity.this, plan.getId(),
+                                Long.toString(Session.user.getId()),
+                                new Service.ClientResponse<Plan>() {
 
-                            @Override
-                            public void onSuccess(Plan result) {
-                                Toast.makeText(PlanActivity.this, getText(R.string.plan_joined), Toast.LENGTH_SHORT).show();
-                                joinPlan.setText(getString(R.string.quit_plan));
-                                contains = true;
-                            }
+                                    @Override
+                                    public void onSuccess(Plan result) {
+                                        Toast.makeText(PlanActivity.this, getText(R.string.plan_joined), Toast.LENGTH_SHORT).show();
+                                        joinPlan.setText(getString(R.string.quit_plan));
+                                        contains = true;
+                                    }
 
-                            @Override
-                            public void onError(String error) {
+                                    @Override
+                                    public void onError(String error) {
 
-                            }
-                        }, Plan.class);
+                                    }
+                                }, Plan.class);
+                    }
+                    else {
+                        PlanService.quitPlan(PlanActivity.this, plan.getId(),
+                                Long.toString(Session.user.getId()),
+                                new Service.ClientResponse<Plan>() {
+
+                                    @Override
+                                    public void onSuccess(Plan result) {
+                                        Toast.makeText(PlanActivity.this, getText(R.string.plan_quit), Toast.LENGTH_SHORT).show();
+                                        joinPlan.setText(getString(R.string.join_plan));
+                                        contains = false;
+                                    }
+
+                                    @Override
+                                    public void onError(String error) {
+
+                                    }
+                                }, Plan.class);
+                    }
+
+                });
+
             }
-            else {
-                PlanService.quitPlan(PlanActivity.this, plan.getId(),
-                        getSharedPreferences(Session.SESSION_FILE, 0).getLong(Session.USER, 0),
-                        new Service.ClientResponse<Plan>() {
 
-                            @Override
-                            public void onSuccess(Plan result) {
-                                Toast.makeText(PlanActivity.this, getText(R.string.plan_quit), Toast.LENGTH_SHORT).show();
-                                joinPlan.setText(getString(R.string.join_plan));
-                                contains = false;
-                            }
+            @Override
+            public void onError(String error) {
 
-                            @Override
-                            public void onError(String error) {
-
-                            }
-                        }, Plan.class);
             }
+        });
 
-        });*/
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

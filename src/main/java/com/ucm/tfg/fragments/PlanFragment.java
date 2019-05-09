@@ -123,6 +123,7 @@ public class PlanFragment extends Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             updatePlans();
+            updateFriendsPlans();
         });
 
         toolbar = getActivity().findViewById(R.id.toolbar);
@@ -153,10 +154,12 @@ public class PlanFragment extends Fragment {
 
         searchView.setOnCloseListener(() -> {
             updatePlans();
+            updateFriendsPlans();
             return false;
         });
 
         updatePlans();
+        updateFriendsPlans();
     }
 
 
