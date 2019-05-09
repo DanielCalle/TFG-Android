@@ -48,4 +48,9 @@
     <string name="film_recommendations_trending">Popular</string>
     <string name="action_delete">Delete</string>
     <string name="plan_deleted">You deleted the plan</string>
+    <string name="friend_requesting">Waiting for accept</string>
+    <string name="friend_accept">Accept</string>
+    <string name="friend_decline">Decline</string>
+    <string name="friend_remove">Remove from friends</string>
+    <string name="friend_send_request">Send friend request</string>
 </resources>

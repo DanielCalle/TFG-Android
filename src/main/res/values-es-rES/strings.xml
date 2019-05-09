@@ -44,4 +44,9 @@
     <string name="film_recommendations_user">Películas recomendadas</string>
     <string name="action_delete">Eliminar</string>
     <string name="plan_deleted">Has eliminado el plan</string>
+    <string name="friend_remove">Eliminar como amigo</string>
+    <string name="friend_decline">Rechazar</string>
+    <string name="friend_accept">Aceptar</string>
+    <string name="friend_requesting">Esperando respuesta</string>
+    <string name="friend_send_request">Enviar petición de amistad</string>
 </resources>

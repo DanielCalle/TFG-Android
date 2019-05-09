@@ -13,7 +13,7 @@ public class CommandAreFriends implements Command {
     @Override
     public Object execute(Object... objects) {
         Log.wtf("command friendship objects[1]", (String) objects[1]);
-        FriendshipService.areFriends((Activity) objects[0], "1", (String) objects[1], (Service.ClientResponse) objects[2], (Class) objects[3]);
+        FriendshipService.areFriends((Activity) objects[0], 1, (long) objects[1], (Service.ClientResponse) objects[2], (Class) objects[3]);
         return null;
     }
 
