@@ -43,7 +43,7 @@ public class RecommendationService {
                 .execute(callback, new ParameterizedTypeReference<ArrayList<Film>>() {
                 });
     }
-    public static <T> void getThreePlans(Activity activity, long id, long friendId, Service.ClientResponse<T> callback, Class<T> c) {
+    public static <T> void getThreePlans(Activity activity, long id, String friendId, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
                 .get()
