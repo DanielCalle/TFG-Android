@@ -90,4 +90,13 @@ public class UserService {
                 .execute(callback, new ParameterizedTypeReference<ArrayList<Plan>>(){});
     }
 
+    public static <T> void getUserByUUID(Activity activity, String uuid, Service.ClientResponse<T> callback, Class<T> c) {
+        Service.getInstance()
+                .setContext(activity)
+                .get()
+                .url(develop_url + "uuid/"+ "{uuid}")
+                .addPathVariable("uuid", "" + uuid)
+                .execute(callback, c);
+    }
+
 }

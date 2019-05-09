@@ -70,7 +70,7 @@ public class FilmAdapter extends BaseAdapter {
         return view;
     }
 
-    public void addPlanOnClickListener(FilmActionListener filmActionListener) {
+    public void addFilmOnClickListener(FilmActionListener filmActionListener) {
         this.filmActionListener = filmActionListener;
     }
 

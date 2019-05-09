@@ -26,6 +26,15 @@ public class FilmService {
                 .execute(callback, c);
     }
 
+    public static <T> void getFilmByUUID(Activity activity, String uuid, Service.ClientResponse<T> callback, Class<T> c) {
+        Service.getInstance()
+                .setContext(activity)
+                .get()
+                .url(develop_url + "uuid/" + "{uuid}")
+                .addPathVariable("uuid", "" + uuid)
+                .execute(callback, c);
+    }
+
     public static <T> void searchFilmsByName(Activity activity, String name, Service.ClientResponse<ArrayList<Film>> callback) {
         Service.getInstance()
                 .setContext(activity)
