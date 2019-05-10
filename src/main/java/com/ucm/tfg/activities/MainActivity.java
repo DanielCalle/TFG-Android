@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements
 
                 @Override
                 public void onError(String error) {
-
+                    Toast.makeText(MainActivity.this, error, Toast.LENGTH_SHORT).show();
                 }
             }, User.class);
         }

@@ -92,7 +92,6 @@ public class UnityPlayerActivity extends Activity {
 
             @Override
             public void onError(String error) {
-
             }
         }, String.class);
     }

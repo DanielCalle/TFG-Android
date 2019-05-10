@@ -1,10 +1,14 @@
 package com.ucm.tfg.service;
 
 import android.app.Activity;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ucm.tfg.R;
 
 import org.json.JSONObject;
 import org.springframework.core.ParameterizedTypeReference;
@@ -112,56 +116,70 @@ public class Service {
     }
 
     public <T> void execute(ClientResponse<T> callback, Class<T> responseType) {
-        URI uri = new UriTemplate(url).expand(pathVariables);
-        HttpEntity<Object> httpEntity = new HttpEntity<>(body, headers);
-        new AsyncTask<Void, Void, ResponseEntity<T>>() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.get().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
-            @Override
-            protected ResponseEntity<T> doInBackground(Void... voids) {
-                try {
-                    return restTemplate.exchange(uri, method, httpEntity, responseType);
-                } catch (Exception e) {
-                    callback.onError("error");
-                    return null;
-                }
-            }
+        if (wifi.isConnected()) {
+            URI uri = new UriTemplate(url).expand(pathVariables);
+            HttpEntity<Object> httpEntity = new HttpEntity<>(body, headers);
+            new AsyncTask<Void, Void, ResponseEntity<T>>() {
 
-            @Override
-            protected void onPostExecute(ResponseEntity<T> entity) {
-                Activity activity = context.get();
-                if (activity != null && !activity.isFinishing()) {
-                    if (entity != null && entity.getStatusCode().toString().startsWith("2")) {
-                        callback.onSuccess(entity.getBody());
-                    } else {
-                        callback.onError(entity == null ? "" : entity.getStatusCode().toString());
+                @Override
+                protected ResponseEntity<T> doInBackground(Void... voids) {
+                    try {
+                        return restTemplate.exchange(uri, method, httpEntity, responseType);
+                    } catch (Exception e) {
+                        callback.onError("error");
+                        return null;
                     }
                 }
-            }
-        }.execute();
+
+                @Override
+                protected void onPostExecute(ResponseEntity<T> entity) {
+                    Activity activity = context.get();
+                    if (activity != null && !activity.isFinishing()) {
+                        if (entity != null && entity.getStatusCode().toString().startsWith("2")) {
+                            callback.onSuccess(entity.getBody());
+                        } else {
+                            callback.onError(entity == null ? "" : entity.getStatusCode().toString());
+                        }
+                    }
+                }
+            }.execute();
+        } else {
+            callback.onError(context.get().getString(R.string.no_wifi));
+        }
     }
 
     public <T> void execute(ClientResponse<T> callback, ParameterizedTypeReference<T> responseType) {
-        URI uri = new UriTemplate(url).expand(pathVariables);
-        HttpEntity<Object> httpEntity = new HttpEntity<>(body, headers);
-        new AsyncTask<Void, Void, ResponseEntity<T>>() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.get().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
-            @Override
-            protected ResponseEntity<T> doInBackground(Void... voids) {
-                return restTemplate.exchange(uri, method, httpEntity, responseType);
-            }
+        if (wifi.isConnected()) {
+            URI uri = new UriTemplate(url).expand(pathVariables);
+            HttpEntity<Object> httpEntity = new HttpEntity<>(body, headers);
+            new AsyncTask<Void, Void, ResponseEntity<T>>() {
 
-            @Override
-            protected void onPostExecute(ResponseEntity<T> entity) {
-                Activity activity = context.get();
-                if (activity != null && !activity.isFinishing()) {
-                    if (entity != null && entity.getStatusCode().toString().startsWith("2")) {
-                        callback.onSuccess(entity.getBody());
-                    } else {
-                        callback.onError(entity == null ? "" : entity.getStatusCode().toString());
+                @Override
+                protected ResponseEntity<T> doInBackground(Void... voids) {
+                    return restTemplate.exchange(uri, method, httpEntity, responseType);
+                }
+
+                @Override
+                protected void onPostExecute(ResponseEntity<T> entity) {
+                    Activity activity = context.get();
+                    if (activity != null && !activity.isFinishing()) {
+                        if (entity != null && entity.getStatusCode().toString().startsWith("2")) {
+                            callback.onSuccess(entity.getBody());
+                        } else {
+                            callback.onError(entity == null ? "" : entity.getStatusCode().toString());
+                        }
                     }
                 }
-            }
-        }.execute();
+            }.execute();
+        } else {
+            callback.onError(context.get().getString(R.string.no_wifi));
+        }
     }
 
     public interface ClientResponse<T> {

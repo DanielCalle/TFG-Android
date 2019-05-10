@@ -65,8 +65,7 @@ public class StartActivity extends AppCompatActivity {
                             });
                         } else {
                             timer.cancel();
-                            Intent intent = new Intent(StartActivity.this, MainActivity.class);
-                            startActivity(intent);
+                            startActivity(new Intent(StartActivity.this, MainActivity.class));
                             finish();
                         }
                     }
@@ -75,7 +74,9 @@ public class StartActivity extends AppCompatActivity {
 
             @Override
             public void onError(String error) {
-
+                startActivity(new Intent(StartActivity.this, MainActivity.class));
+                Toast.makeText(StartActivity.this, error, Toast.LENGTH_SHORT).show();
+                finish();
             }
         }, Film.class);
     }

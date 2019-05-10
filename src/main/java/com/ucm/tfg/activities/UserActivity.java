@@ -108,7 +108,7 @@ public class UserActivity extends AppCompatActivity {
 
             @Override
             public void onError(String error) {
-
+                Toast.makeText(UserActivity.this, error, Toast.LENGTH_SHORT).show();
             }
         }, Friendship.class);
 
@@ -133,6 +133,7 @@ public class UserActivity extends AppCompatActivity {
 
                         @Override
                         public void onError(String error) {
+                            Toast.makeText(UserActivity.this, error, Toast.LENGTH_SHORT).show();
                         }
                     }, Friendship.class);
                     break;
@@ -148,6 +149,7 @@ public class UserActivity extends AppCompatActivity {
 
                         @Override
                         public void onError(String error) {
+                            Toast.makeText(UserActivity.this, error, Toast.LENGTH_SHORT).show();
                         }
                     }, Friendship.class);
                     break;
@@ -166,6 +168,7 @@ public class UserActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(String error) {
+                    Toast.makeText(UserActivity.this, error, Toast.LENGTH_SHORT).show();
                 }
             }, Friendship.class);
         });
@@ -182,7 +185,7 @@ public class UserActivity extends AppCompatActivity {
 
                 @Override
                 public void onError(String error) {
-
+                    Toast.makeText(UserActivity.this, error, Toast.LENGTH_SHORT).show();
                 }
             }, Friendship.class);
         });

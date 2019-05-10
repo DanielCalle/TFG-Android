@@ -103,7 +103,7 @@ public class PlanActivity extends AppCompatActivity {
 
             @Override
             public void onError(String error) {
-
+                Toast.makeText(PlanActivity.this, error, Toast.LENGTH_SHORT).show();
             }
         }, Film.class);
 
@@ -119,7 +119,7 @@ public class PlanActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(String error) {
-
+                        Toast.makeText(PlanActivity.this, error, Toast.LENGTH_SHORT).show();
                     }
                 }, Plan.class);
             } else {
@@ -133,7 +133,7 @@ public class PlanActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(String error) {
-
+                        Toast.makeText(PlanActivity.this, error, Toast.LENGTH_SHORT).show();
                     }
                 }, Plan.class);
             }
@@ -159,7 +159,7 @@ public class PlanActivity extends AppCompatActivity {
 
             @Override
             public void onError(String error) {
-
+                Toast.makeText(PlanActivity.this, error, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -188,6 +188,7 @@ public class PlanActivity extends AppCompatActivity {
 
                     @Override
                     public void onError(String error) {
+                        Toast.makeText(PlanActivity.this, error, Toast.LENGTH_SHORT).show();
                     }
                 }, String.class);
                 break;

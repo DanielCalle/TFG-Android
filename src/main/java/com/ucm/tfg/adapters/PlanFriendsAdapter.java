@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
@@ -70,7 +71,7 @@ public class PlanFriendsAdapter extends RecyclerView.Adapter<PlanFriendsAdapter.
 
             @Override
             public void onError(String error) {
-
+                Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
             }
         }, Film.class);
         UserService.getUserById(this.context, plan.getCreatorId(), new Service.ClientResponse<User>() {
@@ -82,7 +83,7 @@ public class PlanFriendsAdapter extends RecyclerView.Adapter<PlanFriendsAdapter.
 
             @Override
             public void onError(String error) {
-
+                Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
             }
         }, User.class);
 
@@ -106,7 +107,7 @@ public class PlanFriendsAdapter extends RecyclerView.Adapter<PlanFriendsAdapter.
 
             @Override
             public void onError(String error) {
-
+                Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
             }
         });
         recyclerViewHolder.cardView.setOnClickListener((View v) -> {
