@@ -6,7 +6,8 @@ public class CommandParser {
             new CommandGetFilmById(),
             new CommandGetUserById(),
             new CommandAreFriends(),
-            new CommandAddFriends()
+            new CommandAddFriends(),
+            new CommandGetPlans()
     };
 
     public static Command parse(String action) {

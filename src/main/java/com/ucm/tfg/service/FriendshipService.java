@@ -11,13 +11,14 @@ public class FriendshipService {
 
     public FriendshipService() {}
 
-    public static <T> void areFriends(Activity activity, long friendId, long otherFriendId, Service.ClientResponse<T> callback, Class<T> c) {
+
+    public static <T> void areFriends(Activity activity, long id1, long id2, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
                 .get()
-                .addPathVariable("friendId", "" + friendId)
-                .addPathVariable("otherFriendId", "" + otherFriendId)
-                .url(develop_url + "/{friendId}/{otherFriendId}")
+                .addPathVariable("requesterUuid", "" +id1)
+                .addPathVariable("friendUuid", "" + id2)
+                .url(develop_url + "{requesterUuid}/{friendUuid}")
                 .execute(callback, c);
     }
 
