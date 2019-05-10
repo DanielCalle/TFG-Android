@@ -20,15 +20,44 @@ public class FriendshipService {
                 .url(develop_url + "/{friendId}/{otherFriendId}")
                 .execute(callback, c);
     }
-    public static <T> void addFriend(Activity activity, Friendship friendship, Service.ClientResponse<T> callback, Class<T> c){
+
+    public static <T> void request(Activity activity, long requestId, long friendId, Service.ClientResponse<T> callback, Class<T> c){
         Service.getInstance()
                 .setContext(activity)
                 .post()
-                .body(friendship)
-                .url(develop_url)
+                .url(develop_url + "/{requestId}/{friendId}/request")
+                .addPathVariable("requestId", requestId + "")
+                .addPathVariable("friendId", friendId + "")
                 .execute(callback, c);
-
     }
-    
 
+    public static <T> void accept(Activity activity, long requestId, long friendId, Service.ClientResponse<T> callback, Class<T> c){
+        Service.getInstance()
+                .setContext(activity)
+                .put()
+                .url(develop_url + "/{requestId}/{friendId}/accept")
+                .addPathVariable("requestId", requestId + "")
+                .addPathVariable("friendId", friendId + "")
+                .execute(callback, c);
+    }
+
+    public static <T> void decline(Activity activity, long requestId, long friendId, Service.ClientResponse<T> callback, Class<T> c){
+        Service.getInstance()
+                .setContext(activity)
+                .delete()
+                .url(develop_url + "/{requestId}/{friendId}/decline")
+                .addPathVariable("requestId", requestId + "")
+                .addPathVariable("friendId", friendId + "")
+                .execute(callback, c);
+    }
+
+    public static <T> void delete(Activity activity, long requestId, long friendId, Service.ClientResponse<T> callback, Class<T> c){
+        Service.getInstance()
+                .setContext(activity)
+                .delete()
+                .url(develop_url + "/{requestId}/{friendId}")
+                .addPathVariable("requestId", requestId + "")
+                .addPathVariable("friendId", friendId + "")
+                .execute(callback, c);
+    }
 }

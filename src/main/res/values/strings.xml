@@ -53,4 +53,8 @@
     <string name="friend_decline">Decline</string>
     <string name="friend_remove">Remove from friends</string>
     <string name="friend_send_request">Send friend request</string>
+    <string name="friendship_deleted">Friend removed</string>
+    <string name="friendship_accepted">Friend accepted</string>
+    <string name="friendship_declined">Friend declined</string>
+    <string name="friendship_request_sent">Friend request sent</string>
 </resources>

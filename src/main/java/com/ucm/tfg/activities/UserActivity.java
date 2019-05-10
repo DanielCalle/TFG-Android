@@ -118,6 +118,74 @@ public class UserActivity extends AppCompatActivity {
 
         TextView userName = findViewById(R.id.user_name);
         userName.setText(user.getName());
+
+        friendStatusButton.setOnClickListener((View v) -> {
+            switch (friendStatus) {
+                case NONE:
+                    FriendshipService.request(UserActivity.this, Session.user.getId(), user.getId(), new Service.ClientResponse<Friendship>() {
+                        @Override
+                        public void onSuccess(Friendship result) {
+                            friendStatus = FriendStatus.REQUEST;
+                            friendStatusButton.setText(R.string.friend_requesting);
+                            showResponseButtons(false);
+                            Toast.makeText(UserActivity.this, getString(R.string.friendship_request_sent), Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                        }
+                    }, Friendship.class);
+                    break;
+                case FRIEND:
+                    FriendshipService.delete(UserActivity.this, Session.user.getId(), user.getId(), new Service.ClientResponse<Friendship>() {
+                        @Override
+                        public void onSuccess(Friendship result) {
+                            friendStatus = FriendStatus.NONE;
+                            friendStatusButton.setText(R.string.friend_send_request);
+                            showResponseButtons(false);
+                            Toast.makeText(UserActivity.this, getString(R.string.friendship_deleted), Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                        }
+                    }, Friendship.class);
+                    break;
+            }
+        });
+
+        acceptRequestButton.setOnClickListener((View v) -> {
+            FriendshipService.accept(UserActivity.this, user.getId(), Session.user.getId(), new Service.ClientResponse<Friendship>() {
+                @Override
+                public void onSuccess(Friendship result) {
+                    friendStatus = FriendStatus.FRIEND;
+                    friendStatusButton.setText(R.string.friend_remove);
+                    showResponseButtons(false);
+                    Toast.makeText(UserActivity.this, getString(R.string.friendship_accepted), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onError(String error) {
+                }
+            }, Friendship.class);
+        });
+
+        declineRequestButton.setOnClickListener((View v) -> {
+            FriendshipService.decline(UserActivity.this, Session.user.getId(), user.getId(), new Service.ClientResponse<Friendship>() {
+                @Override
+                public void onSuccess(Friendship result) {
+                    friendStatus = FriendStatus.NONE;
+                    friendStatusButton.setText(R.string.friend_send_request);
+                    showResponseButtons(false);
+                    Toast.makeText(UserActivity.this, getString(R.string.friendship_declined), Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onError(String error) {
+
+                }
+            }, Friendship.class);
+        });
     }
 
     private void showResponseButtons(boolean show) {
@@ -125,6 +193,11 @@ public class UserActivity extends AppCompatActivity {
         responseLayout.setVisibility(show ? View.VISIBLE : View.GONE);
         friendStatusButton.setEnabled(!show);
         friendStatusButton.setVisibility(show ? View.GONE : View.VISIBLE);
+        if (show) {
+            responseLayout.bringToFront();
+        } else {
+            friendStatusButton.bringToFront();
+        }
     }
 
     @Override
