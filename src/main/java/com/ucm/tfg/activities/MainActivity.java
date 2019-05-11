@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements
 
         viewPager.setSwipePagingEnabled(false);
         viewPager.setAdapter(adapter);
+        viewPager.setCurrentItem(1);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
