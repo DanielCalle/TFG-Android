@@ -54,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements
         adapter = new FragmentAdapter(MainActivity.this, getSupportFragmentManager());
 
         toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle(adapter.getPageTitle(1));
+        toolbar.getMenu().clear();
+        toolbar.inflateMenu(R.menu.menu_recommendations);
 
         viewPager = findViewById(R.id.container);
         TabLayout tabLayout = findViewById(R.id.tab);
@@ -110,12 +113,7 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void onFragmentLoaded() {
-        viewPager.setCurrentItem(1);
-        //toolbar.setTitle(adapter.getPageTitle(1));
-        //toolbar.getMenu().clear();
-        //toolbar.inflateMenu(R.menu.menu_recommendations);
-    }
+    public void onFragmentLoaded() {}
 
     @Override
     public void onBackPressed() {

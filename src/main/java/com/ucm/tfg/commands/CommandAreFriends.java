@@ -6,6 +6,7 @@ import android.util.Log;
 import com.ucm.tfg.Session;
 import com.ucm.tfg.service.FriendshipService;
 import com.ucm.tfg.service.Service;
+import android.content.SharedPreferences;
 
 public class CommandAreFriends implements Command {
 
@@ -15,7 +16,8 @@ public class CommandAreFriends implements Command {
     public Object execute(Object... objects) {
         Log.wtf("command friendship objects[1]", (String) objects[1]);
         //Log.wtf("Session.user.getId()", "" + Session.user.getId());
-        FriendshipService.areFriends((Activity) objects[0], Session.user.getId(), Long.parseLong((String) objects[1]), (Service.ClientResponse) objects[2], (Class) objects[3]);
+
+        FriendshipService.areFriends((Activity) objects[0], (Long) objects[4], Long.parseLong((String) objects[1]), (Service.ClientResponse) objects[2], (Class) objects[3]);
         return null;
     }
 

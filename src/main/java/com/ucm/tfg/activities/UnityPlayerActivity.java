@@ -2,6 +2,7 @@ package com.ucm.tfg.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
@@ -82,6 +83,8 @@ public class UnityPlayerActivity extends Activity {
     }
 
     public void DAOController(String action, String info) {
+        SharedPreferences sharedPreferences = getSharedPreferences(Session.SESSION_FILE, 0);
+        long userId = sharedPreferences.getLong(Session.USER, 0);
         CommandParser.parse(action).execute(this, info, new Service.ClientResponse<String>() {
             @Override
             public void onSuccess(String result) {
@@ -94,7 +97,7 @@ public class UnityPlayerActivity extends Activity {
             @Override
             public void onError(String error) {
             }
-        }, String.class);
+        }, String.class, userId);
     }
 
     public void save(String uuid) {
