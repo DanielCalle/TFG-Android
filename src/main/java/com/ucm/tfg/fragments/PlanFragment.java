@@ -157,6 +157,8 @@ public class PlanFragment extends Fragment {
             updatePlans();
             return false;
         });
+
+        updatePlans();
     }
 
     private void updatePlans() {
