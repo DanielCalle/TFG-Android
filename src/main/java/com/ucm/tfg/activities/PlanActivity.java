@@ -3,6 +3,8 @@ package com.ucm.tfg.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -75,6 +77,16 @@ public class PlanActivity extends AppCompatActivity {
         users.setHasFixedSize(true);
         users.setLayoutManager(new LinearLayoutManager(PlanActivity.this, LinearLayoutManager.HORIZONTAL, false));
         users.setAdapter(planUserAdapter);
+        planUserAdapter.addUserOnClickListener((User u, PlanUserAdapter.RecyclerViewHolder recyclerViewHolder) -> {
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(
+                            PlanActivity.this,
+                            Pair.create(recyclerViewHolder.userImage, "user_avatar")
+                    );
+            Intent i = new Intent(PlanActivity.this, UserActivity.class);
+            i.putExtra("user", u);
+            startActivity(i, optionsCompat.toBundle());
+        });
 
         date.setText(Utils.dateFormat(plan.getDate()));
         time.setText(Utils.timeFormat(plan.getDate()));
