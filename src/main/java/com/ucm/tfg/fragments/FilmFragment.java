@@ -112,6 +112,8 @@ public class FilmFragment extends Fragment {
 
         toolbar = getActivity().findViewById(R.id.toolbar);
 
+        updateFilms();
+
         return view;
     }
 
@@ -140,13 +142,6 @@ public class FilmFragment extends Fragment {
             updateFilms();
             return false;
         });
-
-        updateFilms();
-    }
-
-    @Override
-    public void onStart(){
-        super.onStart();
 
         updateFilms();
     }

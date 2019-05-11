@@ -127,6 +127,8 @@ public class PlanFragment extends Fragment {
 
         toolbar = getActivity().findViewById(R.id.toolbar);
 
+        updatePlans();
+
         return view;
     }
 
@@ -155,31 +157,28 @@ public class PlanFragment extends Fragment {
             updatePlans();
             return false;
         });
-        
-        updatePlans();
-    }
-
-    @Override
-    public void onStart(){
-        super.onStart();
-
-        updatePlans();
     }
 
     private void updatePlans() {
-        swipeRefreshLayout.setRefreshing(true);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.setRefreshing(true);
+        }
         if (Session.user != null) {
             UserService.getUserPlansById(getActivity(), Session.user.getId(), new Service.ClientResponse<ArrayList<Plan>>() {
                 @Override
                 public void onSuccess(ArrayList<Plan> result) {
                     planAdapter.setPlansData(result);
-                    swipeRefreshLayout.setRefreshing(false);
+                    if (swipeRefreshLayout != null) {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
                 }
 
                 @Override
                 public void onError(String error) {
                     Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
-                    swipeRefreshLayout.setRefreshing(false);
+                    if (swipeRefreshLayout != null) {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
                 }
             });
         }

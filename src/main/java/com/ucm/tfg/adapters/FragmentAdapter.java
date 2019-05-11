@@ -14,9 +14,16 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 
     private Context context;
 
+    private PlanFragment planFragment;
+    private RecommendationFragment recommendationFragment;
+    private FilmFragment filmFragment;
+
     public FragmentAdapter(Context context, FragmentManager fm) {
         super(fm);
         this.context = context;
+        planFragment = new PlanFragment();
+        recommendationFragment = new RecommendationFragment();
+        filmFragment = new FilmFragment();
     }
 
     @Override
@@ -27,9 +34,9 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch(position) {
-            case 0: return new PlanFragment();
-            case 1: return new RecommendationFragment();
-            case 2: return new FilmFragment();
+            case 0: return planFragment;
+            case 1: return recommendationFragment;
+            case 2: return filmFragment;
             default: return null;
         }
     }

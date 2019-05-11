@@ -116,6 +116,8 @@ public class RecommendationFragment extends Fragment {
 
         toolbar = getActivity().findViewById(R.id.toolbar);
 
+        updateRecommendations();
+
         return view;
     }
 
@@ -144,13 +146,6 @@ public class RecommendationFragment extends Fragment {
             updateRecommendations();
             return false;
         });
-
-        updateRecommendations();
-    }
-
-    @Override
-    public void onStart(){
-        super.onStart();
 
         updateRecommendations();
     }

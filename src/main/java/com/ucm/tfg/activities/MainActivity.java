@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_main);
 
         adapter = new FragmentAdapter(MainActivity.this, getSupportFragmentManager());
+
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle(adapter.getPageTitle(0));
         toolbar.getMenu().clear();
@@ -142,6 +143,11 @@ public class MainActivity extends AppCompatActivity implements
                 }
             }, User.class);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
