@@ -54,16 +54,15 @@ public class MainActivity extends AppCompatActivity implements
         adapter = new FragmentAdapter(MainActivity.this, getSupportFragmentManager());
 
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(adapter.getPageTitle(1));
+        toolbar.setTitle(adapter.getPageTitle(0));
         toolbar.getMenu().clear();
-        toolbar.inflateMenu(R.menu.menu_recommendations);
+        toolbar.inflateMenu(R.menu.menu_plans);
 
         viewPager = findViewById(R.id.container);
         TabLayout tabLayout = findViewById(R.id.tab);
 
         viewPager.setSwipePagingEnabled(false);
         viewPager.setAdapter(adapter);
-        viewPager.setCurrentItem(1);
 
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
