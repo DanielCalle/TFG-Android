@@ -21,6 +21,7 @@ public class PlanUserAdapter extends RecyclerView.Adapter<PlanUserAdapter.Recycl
 
     private Activity context;
     private List<User> users;
+    private UserActionListener userActionListener;
 
     public PlanUserAdapter(Activity context) {
         this.context = context;
@@ -39,11 +40,18 @@ public class PlanUserAdapter extends RecyclerView.Adapter<PlanUserAdapter.Recycl
     @Override
     public void onBindViewHolder(@NonNull PlanUserAdapter.RecyclerViewHolder recyclerViewHolder, int index) {
         User user = users.get(index);
+
         Picasso.get()
                 .load(user.getImageURL()
                 )
                 .resize(100, 100)
                 .into(recyclerViewHolder.userImage);
+
+        recyclerViewHolder.userImage.setOnClickListener((View v) -> {
+            if (userActionListener != null) {
+                userActionListener.onUserClick(user, recyclerViewHolder);
+            }
+        });
     }
 
     @Override
@@ -64,5 +72,16 @@ public class PlanUserAdapter extends RecyclerView.Adapter<PlanUserAdapter.Recycl
             super(view);
             userImage = view.findViewById(R.id.imageUser);
         }
+    }
+
+
+    public void addUserOnClickListener(UserActionListener userActionListener) {
+        this.userActionListener = userActionListener;
+    }
+
+    public interface UserActionListener {
+
+        void onUserClick(User u, RecyclerViewHolder recyclerViewHolder);
+
     }
 }

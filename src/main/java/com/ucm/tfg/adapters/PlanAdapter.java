@@ -36,13 +36,10 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
 
     private Activity context;
     private List<Plan> plans;
-    private List<Plan> friendsPlans;
     private PlanActionListener planActionListener;
-    private static int count;
 
     public PlanAdapter(Activity context) {
         this.context = context;
-        this.count = 0;
         plans = new ArrayList<>();
     }
 
@@ -58,10 +55,6 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder recyclerViewHolder, int index) {
         Plan plan = plans.get(index);
-        updateView(plan, recyclerViewHolder);
-    }
-
-    public void updateView(Plan plan, @NonNull RecyclerViewHolder recyclerViewHolder){
         FilmService.getFilmById(this.context, plan.getFilmId(), new Service.ClientResponse<Film>() {
             @Override
             public void onSuccess(Film result) {
@@ -81,16 +74,9 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
                 Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
             }
         }, Film.class);
-        
-
-        if(recyclerViewHolder.num == 0) {
-            ++this.count;
-            recyclerViewHolder.num = this.count;
-        }
 
         recyclerViewHolder.title.setText(plan.getTitle());
-        recyclerViewHolder.plan.setText(recyclerViewHolder.planString + " " + recyclerViewHolder.num);
-
+        recyclerViewHolder.plan.setText("#" + context.getResources().getString(R.string.plan) + " " + index);
 
         PlanService.getUsers(this.context, plan.getId(), new Service.ClientResponse<ArrayList<User>>(){
 
@@ -98,6 +84,9 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
             public void onSuccess(ArrayList<User> result) {
                 PlanUserAdapter planUserAdapter = new PlanUserAdapter(context);
                 recyclerViewHolder.users.setAdapter(planUserAdapter);
+                planUserAdapter.addUserOnClickListener((User u, PlanUserAdapter.RecyclerViewHolder rvh) -> {
+                    planActionListener.onJoinedUserClick(u, rvh);
+                });
                 planUserAdapter.setData(result);
             }
 
@@ -106,14 +95,12 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
                 Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
             }
         });
+
         recyclerViewHolder.cardView.setOnClickListener((View v) -> {
             if (planActionListener != null) {
                 planActionListener.onPlanClick(plan, recyclerViewHolder);
             }
         });
-
-
-
     }
 
     @Override
@@ -122,13 +109,11 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
     }
 
     public void setPlansData(List<Plan> data) {
-
         this.plans = data;
         notifyDataSetChanged();
     }
 
     public void setFriendsPlansData(List<Plan> data) {
-
         this.plans.addAll(data);
         notifyDataSetChanged();
     }
@@ -145,8 +130,6 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
         public TextView title;
         public TextView plan;
         public RecyclerView users;
-        public int num;
-        public String planString;
 
         public RecyclerViewHolder(View view) {
             super(view);
@@ -156,8 +139,6 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
             title = view.findViewById(R.id.title);
             users = view.findViewById(R.id.users);
             plan = view.findViewById(R.id.plan);
-            planString = "#" + view.getResources().getString(R.string.plan);
-            num = 0;
             users.setHasFixedSize(true);
             users.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         }
@@ -166,6 +147,8 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
     public interface PlanActionListener {
 
         void onPlanClick(Plan p, RecyclerViewHolder recyclerViewHolder);
+
+        void onJoinedUserClick(User u, PlanUserAdapter.RecyclerViewHolder recyclerViewHolder);
 
     }
 

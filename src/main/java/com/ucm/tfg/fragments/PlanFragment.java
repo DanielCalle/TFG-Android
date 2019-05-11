@@ -26,8 +26,10 @@ import com.ucm.tfg.Session;
 import com.ucm.tfg.Utils;
 import com.ucm.tfg.activities.MainActivity;
 import com.ucm.tfg.activities.PlanActivity;
+import com.ucm.tfg.activities.UserActivity;
 import com.ucm.tfg.adapters.PlanAdapter;
 import com.ucm.tfg.adapters.PlanFriendsAdapter;
+import com.ucm.tfg.adapters.PlanUserAdapter;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.Friendship;
 import com.ucm.tfg.entities.Plan;
@@ -107,15 +109,30 @@ public class PlanFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
         planAdapter = new PlanAdapter(getActivity());
-        planAdapter.addPlanOnClickListener((Plan p, PlanAdapter.RecyclerViewHolder recyclerViewHolder) -> {
-            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
-                    .makeSceneTransitionAnimation(
-                            getActivity(),
-                            Pair.create(recyclerViewHolder.image, "film_poster")
-                    );
-            Intent i = new Intent(getActivity(), PlanActivity.class);
-            i.putExtra("plan", p);
-            startActivity(i, optionsCompat.toBundle());
+        planAdapter.addPlanOnClickListener(new PlanAdapter.PlanActionListener() {
+            @Override
+            public void onPlanClick(Plan p, PlanAdapter.RecyclerViewHolder recyclerViewHolder) {
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                        .makeSceneTransitionAnimation(
+                                getActivity(),
+                                Pair.create(recyclerViewHolder.image, "film_poster")
+                        );
+                Intent i = new Intent(getActivity(), PlanActivity.class);
+                i.putExtra("plan", p);
+                startActivity(i, optionsCompat.toBundle());
+            }
+
+            @Override
+            public void onJoinedUserClick(User u, PlanUserAdapter.RecyclerViewHolder recyclerViewHolder) {
+                ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                        .makeSceneTransitionAnimation(
+                                getActivity(),
+                                Pair.create(recyclerViewHolder.userImage, "user_avatar")
+                        );
+                Intent i = new Intent(getActivity(), UserActivity.class);
+                i.putExtra("user", u);
+                startActivity(i, optionsCompat.toBundle());
+            }
         });
 
         recyclerView.setAdapter(planAdapter);
