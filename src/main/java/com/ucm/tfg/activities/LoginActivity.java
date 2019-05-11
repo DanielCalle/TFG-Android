@@ -52,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putBoolean(Session.IS_LOGGED, true);
                         editor.putLong(Session.USER, result.getId());
                         editor.apply();
+                        Session.user = result;
                         loginButton.setEnabled(true);
                         finish();
                     }

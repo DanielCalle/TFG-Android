@@ -17,8 +17,10 @@ import com.ucm.tfg.R;
 import com.ucm.tfg.Session;
 import com.ucm.tfg.Utils;
 import com.ucm.tfg.entities.Film;
+import com.ucm.tfg.entities.User;
 import com.ucm.tfg.service.RecommendationService;
 import com.ucm.tfg.service.Service;
+import com.ucm.tfg.service.UserService;
 
 import java.util.Locale;
 import java.util.Timer;
@@ -37,6 +39,23 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
+
+        SharedPreferences sharedPreferences = getSharedPreferences(Session.SESSION_FILE, 0);
+        boolean isLogged = sharedPreferences.getBoolean(Session.IS_LOGGED, false);
+        if (isLogged) {
+            long userId = sharedPreferences.getLong(Session.USER, 0);
+            UserService.getUserById(StartActivity.this, userId, new Service.ClientResponse<User>() {
+                @Override
+                public void onSuccess(User result) {
+                    Session.user = result;
+                }
+
+                @Override
+                public void onError(String error) {
+                    Toast.makeText(StartActivity.this, error, Toast.LENGTH_SHORT).show();
+                }
+            }, User.class);
+        }
 
         poster = findViewById(R.id.poster);
         RelativeLayout relativeLayout = findViewById(R.id.timer);

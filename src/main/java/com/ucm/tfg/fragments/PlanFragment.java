@@ -126,46 +126,48 @@ public class PlanFragment extends Fragment {
         });
 
         toolbar = getActivity().findViewById(R.id.toolbar);
-
         updatePlans();
-
         return view;
     }
 
-    public void setActive() {
-        toolbar.getMenu().clear();
-        toolbar.inflateMenu(R.menu.menu_plans);
-        toolbar.setTitle(R.string.action_plans);
-        searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (toolbar != null) {
+                toolbar.getMenu().clear();
+                toolbar.inflateMenu(R.menu.menu_plans);
+                toolbar.setTitle(R.string.action_plans);
+                searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String s) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String s) {
+                        if (!Utils.isNullOrEmpty(s)) {
+                            searchPlans(s);
+                        }
+                        return false;
+                    }
+                });
+
+                searchView.setOnCloseListener(() -> {
+                    updatePlans();
+                    return false;
+                });
             }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                if (!Utils.isNullOrEmpty(s)) {
-                    searchPlans(s);
-                }
-                return false;
-            }
-        });
-
-        searchView.setOnCloseListener(() -> {
-            updatePlans();
-            return false;
-        });
-
-        updatePlans();
+        }
     }
 
     private void updatePlans() {
-        if (swipeRefreshLayout != null) {
-            swipeRefreshLayout.setRefreshing(true);
-        }
         if (Session.user != null) {
+            if (swipeRefreshLayout != null) {
+                swipeRefreshLayout.setRefreshing(true);
+            }
             UserService.getUserPlansById(getActivity(), Session.user.getId(), new Service.ClientResponse<ArrayList<Plan>>() {
                 @Override
                 public void onSuccess(ArrayList<Plan> result) {
@@ -205,13 +207,6 @@ public class PlanFragment extends Fragment {
         }
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -240,7 +235,8 @@ public class PlanFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+
+        void onFragmentLoaded();
+
     }
 }

@@ -54,9 +54,6 @@ public class MainActivity extends AppCompatActivity implements
         adapter = new FragmentAdapter(MainActivity.this, getSupportFragmentManager());
 
         toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle(adapter.getPageTitle(0));
-        toolbar.getMenu().clear();
-        toolbar.inflateMenu(R.menu.menu_plans);
 
         viewPager = findViewById(R.id.container);
         TabLayout tabLayout = findViewById(R.id.tab);
@@ -64,40 +61,7 @@ public class MainActivity extends AppCompatActivity implements
         viewPager.setSwipePagingEnabled(false);
         viewPager.setAdapter(adapter);
 
-        viewPager.addOnPageChangeListener(
-                new ViewPager.OnPageChangeListener() {
-                    @Override
-                    public void onPageScrolled(int i, float v, int i1) {
-
-                    }
-
-                    @Override
-                    public void onPageSelected(int i) {
-                        switch (i) {
-                            case 0: ((PlanFragment) viewPager
-                                    .getAdapter()
-                                    .instantiateItem(viewPager, viewPager.getCurrentItem()))
-                                    .setActive();
-                                break;
-                            case 1: ((RecommendationFragment) viewPager
-                                    .getAdapter()
-                                    .instantiateItem(viewPager, viewPager.getCurrentItem()))
-                                    .setActive();
-                            break;
-                            case 2: ((FilmFragment) viewPager
-                                    .getAdapter()
-                                    .instantiateItem(viewPager, viewPager.getCurrentItem()))
-                                    .setActive();
-                            break;
-                        }
-                    }
-
-                    @Override
-                    public void onPageScrollStateChanged(int i) {
-
-                    }
-                }
-        );
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
 
         tabLayout.addOnTabSelectedListener(
                 new TabLayout.ViewPagerOnTabSelectedListener(viewPager)
@@ -146,13 +110,11 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onFragmentInteraction(Uri uri) {
-
+    public void onFragmentLoaded() {
+        viewPager.setCurrentItem(1);
+        //toolbar.setTitle(adapter.getPageTitle(1));
+        //toolbar.getMenu().clear();
+        //toolbar.inflateMenu(R.menu.menu_recommendations);
     }
 
     @Override

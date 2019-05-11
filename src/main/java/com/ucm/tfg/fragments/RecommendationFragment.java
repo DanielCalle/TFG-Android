@@ -12,6 +12,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,90 +116,99 @@ public class RecommendationFragment extends Fragment {
         });
 
         toolbar = getActivity().findViewById(R.id.toolbar);
-
         updateRecommendations();
-
         return view;
     }
 
-    public void setActive() {
-        toolbar.getMenu().clear();
-        toolbar.inflateMenu(R.menu.menu_recommendations);
-        toolbar.setTitle(R.string.action_recommendations);
-        searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (toolbar != null) {
+                toolbar.getMenu().clear();
+                toolbar.inflateMenu(R.menu.menu_recommendations);
+                toolbar.setTitle(R.string.action_recommendations);
+                searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String s) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String s) {
+                        if (!Utils.isNullOrEmpty(s)) {
+                            Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
+                        }
+                        return false;
+                    }
+                });
+
+                searchView.setOnCloseListener(() -> {
+                    updateRecommendations();
+                    return false;
+                });
             }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                if (!Utils.isNullOrEmpty(s)) {
-                    Toast.makeText(getActivity(), s, Toast.LENGTH_SHORT).show();
-                }
-                return false;
-            }
-        });
-
-        searchView.setOnCloseListener(() -> {
-            updateRecommendations();
-            return false;
-        });
-
-        updateRecommendations();
+        }
     }
 
     private void updateRecommendations() {
-        swipeRefreshLayout.setRefreshing(true);
         if (Session.user != null) {
+            if (swipeRefreshLayout != null) {
+                swipeRefreshLayout.setRefreshing(true);
+            }
             RecommendationService.getRecommendedFilms(getActivity(), Session.user.getId(), new Service.ClientResponse<ArrayList<Film>>() {
                 @Override
                 public void onSuccess(ArrayList<Film> result) {
                     recommendationListAdapter.setRecommendedData(result);
-                    swipeRefreshLayout.setRefreshing(false);
+                    if (swipeRefreshLayout != null) {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
                 }
 
                 @Override
                 public void onError(String error) {
                     Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
-                    swipeRefreshLayout.setRefreshing(false);
+                    if (swipeRefreshLayout != null) {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
                 }
             });
             RecommendationService.getTrendingFilms(getActivity(), new Service.ClientResponse<ArrayList<Film>>() {
                 @Override
                 public void onSuccess(ArrayList<Film> result) {
                     recommendationListAdapter.setTrendingData(result);
-                    swipeRefreshLayout.setRefreshing(false);
+                    if (swipeRefreshLayout != null) {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
                 }
 
                 @Override
                 public void onError(String error) {
                     Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
-                    swipeRefreshLayout.setRefreshing(false);
+                    if (swipeRefreshLayout != null) {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
                 }
             });
             RecommendationService.getPremiereFilms(getActivity(), new Service.ClientResponse<ArrayList<Film>>() {
                 @Override
                 public void onSuccess(ArrayList<Film> result) {
                     recommendationListAdapter.setPremiereData(result);
-                    swipeRefreshLayout.setRefreshing(false);
+                    if (swipeRefreshLayout != null) {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
                 }
 
                 @Override
                 public void onError(String error) {
                     Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
-                    swipeRefreshLayout.setRefreshing(false);
+                    if (swipeRefreshLayout != null) {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
                 }
             });
-        }
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
         }
     }
 
@@ -230,7 +240,8 @@ public class RecommendationFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+
+        void onFragmentLoaded();
+
     }
 }

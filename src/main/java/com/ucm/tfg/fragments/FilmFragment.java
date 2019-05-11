@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,45 +112,47 @@ public class FilmFragment extends Fragment {
         });
 
         toolbar = getActivity().findViewById(R.id.toolbar);
-
         updateFilms();
-
         return view;
     }
 
-    public void setActive() {
-        toolbar.getMenu().clear();
-        toolbar.inflateMenu(R.menu.menu_films);
-        toolbar.setTitle(R.string.action_films);
-        searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            if (toolbar != null) {
+                toolbar.getMenu().clear();
+                toolbar.inflateMenu(R.menu.menu_films);
+                toolbar.setTitle(R.string.action_films);
+                searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String s) {
-                return false;
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String s) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String s) {
+                        if (!Utils.isNullOrEmpty(s)) {
+                            searchFilms(s);
+                        }
+                        return false;
+                    }
+                });
+
+                searchView.setOnCloseListener(() -> {
+                    updateFilms();
+                    return false;
+                });
             }
-
-            @Override
-            public boolean onQueryTextChange(String s) {
-                if (!Utils.isNullOrEmpty(s)) {
-                    searchFilms(s);
-                }
-                return false;
-            }
-        });
-
-        searchView.setOnCloseListener(() -> {
-            updateFilms();
-            return false;
-        });
-
-        updateFilms();
+        }
     }
 
     private void updateFilms() {
-        swipeRefreshLayout.setRefreshing(true);
         long userId = getActivity().getSharedPreferences(Session.SESSION_FILE, 0).getLong(Session.USER, 0);
         if (userId != 0) {
+            swipeRefreshLayout.setRefreshing(true);
             UserService.getUserFilmsById(getActivity(), userId, new Service.ClientResponse<ArrayList<Film>>() {
                 @Override
                 public void onSuccess(ArrayList<Film> result) {
@@ -185,13 +188,6 @@ public class FilmFragment extends Fragment {
         }
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -220,7 +216,8 @@ public class FilmFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+
+        void onFragmentLoaded();
+
     }
 }

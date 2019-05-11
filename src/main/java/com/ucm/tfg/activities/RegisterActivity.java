@@ -53,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
                             editor.putBoolean(Session.IS_LOGGED, true);
                             editor.putLong(Session.USER, result.getId());
                             editor.apply();
+                            Session.user = result;
                             registerButton.setEnabled(true);
                             finish();
                         });
