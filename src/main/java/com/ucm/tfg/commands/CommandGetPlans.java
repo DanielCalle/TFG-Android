@@ -11,7 +11,7 @@ public class CommandGetPlans implements Command{
 
     @Override
     public String execute(Object... objects) {
-        RecommendationService.getThreePlans((Activity) objects[0], 4, (String) objects[1], (Service.ClientResponse) objects[2], (Class) objects[3]);
+        RecommendationService.getThreePlans((Activity) objects[0], Session.user.getId(), (String) objects[1], (Service.ClientResponse) objects[2], (Class) objects[3]);
         return null;
     }
 

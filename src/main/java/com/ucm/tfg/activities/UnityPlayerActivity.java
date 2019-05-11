@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.ucm.tfg.Session;
 import com.ucm.tfg.commands.CommandParser;
 import com.ucm.tfg.service.FriendshipService;
 import com.ucm.tfg.service.Service;
