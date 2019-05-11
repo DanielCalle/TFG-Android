@@ -88,7 +88,10 @@ public class UnityPlayerActivity extends Activity {
         CommandParser.parse(action).execute(this, info, new Service.ClientResponse<String>() {
             @Override
             public void onSuccess(String result) {
-                if (!result.equalsIgnoreCase("null")) {
+                if (result == null){
+                    UnityPlayer.UnitySendMessage("CloudRecognition", action, "null");
+                }
+                else if (!result.equalsIgnoreCase("null")) {
                     Log.wtf("daocontroller", "mando a unity " + action + " result " + result );
                     UnityPlayer.UnitySendMessage("CloudRecognition", action, result);
                 }
