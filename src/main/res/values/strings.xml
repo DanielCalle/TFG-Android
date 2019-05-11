@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FilmAR</string>
-    <string name="action_plans">My plans</string>
+    <string name="action_plans">Plans</string>
     <string name="action_recommendations">Recommendations</string>
-    <string name="action_films">My films</string>
+    <string name="action_films">Films</string>
     <string name="add_film_to_plan">Add to plan</string>
     <string name="join_plan">Join plan</string>
     <string name="quit_plan">Quit plan</string>

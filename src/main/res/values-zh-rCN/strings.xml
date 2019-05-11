@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FilmAR</string>
-    <string name="action_plans">我的计划</string>
+    <string name="action_plans">计划</string>
     <string name="action_recommendations">推荐</string>
     <string name="plan">计划</string>
-    <string name="action_films">我的电影</string>
+    <string name="action_films">电影</string>
     <string name="add_film_to_plan">加到计划</string>
     <string name="action_settings">设置</string>
 </resources>

@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,6 +26,7 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
 import com.ucm.tfg.Session;
+import com.ucm.tfg.adapters.PlanAdapter;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.Friendship;
 import com.ucm.tfg.entities.Plan;
@@ -31,10 +36,12 @@ import com.ucm.tfg.service.FriendshipService;
 import com.ucm.tfg.service.PlanService;
 import com.ucm.tfg.service.Service;
 import com.ucm.tfg.service.UserFilmService;
+import com.ucm.tfg.service.UserService;
 import com.ucm.tfg.views.ExpandableTextView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 public class UserActivity extends AppCompatActivity {
 
@@ -54,6 +61,7 @@ public class UserActivity extends AppCompatActivity {
     private Button declineRequestButton;
     private FriendStatus friendStatus;
     private LinearLayout responseLayout;
+    private PlanAdapter planAdapter;
 
     private User user;
 
@@ -80,6 +88,36 @@ public class UserActivity extends AppCompatActivity {
         declineRequestButton = findViewById(R.id.decline_request);
 
         responseLayout = findViewById(R.id.request);
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.plans);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(UserActivity.this));
+
+        planAdapter = new PlanAdapter(UserActivity.this);
+        planAdapter.addPlanOnClickListener((Plan p, PlanAdapter.RecyclerViewHolder recyclerViewHolder) -> {
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
+                    .makeSceneTransitionAnimation(
+                            UserActivity.this,
+                            Pair.create(recyclerViewHolder.image, "film_poster")
+                    );
+            Intent i = new Intent(UserActivity.this, PlanActivity.class);
+            i.putExtra("plan", p);
+            startActivity(i, optionsCompat.toBundle());
+        });
+
+        recyclerView.setAdapter(planAdapter);
+
+        UserService.getUserPlansById(UserActivity.this, user.getId(), new Service.ClientResponse<ArrayList<Plan>>() {
+            @Override
+            public void onSuccess(ArrayList<Plan> result) {
+                planAdapter.setPlansData(result);
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(UserActivity.this, error, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         FriendshipService.areFriends(UserActivity.this, Session.user.getId(), user.getId(), new Service.ClientResponse<Friendship>() {
             @Override
