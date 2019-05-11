@@ -7,7 +7,8 @@ public class CommandParser {
             new CommandGetUserById(),
             new CommandAreFriends(),
             new CommandAddFriends(),
-            new CommandGetPlans()
+            new CommandGetPlans(),
+            new CommandShowInfoFilm()
     };
 
     public static Command parse(String action) {
