@@ -19,17 +19,13 @@ public class CommandAddFriends implements Command {
 
     @Override
     public Object execute(Object... objects) {
-        Log.wtf("command addfriends", objects.toString());
         Friendship tfriendship = new Friendship();
         DateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
         Date date = new Date();
-        Log.wtf("command addfriends",sdf.format(date) );
         tfriendship.setDate(sdf.format(date));
-        tfriendship.setRequesterId(1);
-        tfriendship.setFriendId((long) objects[1]);
-        //tfriendship.setFriendUuid("2");
+        tfriendship.setRequesterId((Long) objects[4]);
+        tfriendship.setFriendId(Long.parseLong(objects[1].toString()));
         FriendshipService.request((Activity) objects[0], tfriendship.getRequesterId(), tfriendship.getFriendId(), (Service.ClientResponse) objects[2], (Class) objects[3]);
-        //FriendshipService.addFriend((Activity) objects[0],(String) objects[1], "1", (Service.ClientResponse) objects[2], (Class) objects[3]);
         return null;
     }
 
