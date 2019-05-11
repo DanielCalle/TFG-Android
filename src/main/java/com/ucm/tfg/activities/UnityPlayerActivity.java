@@ -110,10 +110,6 @@ public class UnityPlayerActivity extends Activity {
     }
 
 
-    public void areFriends(String info) {
-        Log.wtf("friends unity", info);
-    }
-
     @Override
     protected void onNewIntent(Intent intent) {
         // To support deep linking, we need to make sure that the service can get access to
