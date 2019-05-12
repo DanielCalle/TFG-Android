@@ -8,7 +8,8 @@ public class CommandParser {
             new CommandAreFriends(),
             new CommandAddFriends(),
             new CommandGetPlans(),
-            new CommandShowInfoFilm()
+            new CommandShowInfoFilm(),
+            new CommandJoinToPlan()
     };
 
     public static Command parse(String action) {
