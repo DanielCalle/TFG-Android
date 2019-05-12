@@ -9,8 +9,12 @@ import android.widget.ImageButton;
 
 import com.ucm.tfg.R;
 
+/**
+ * Given a button element, controlls the length of the text to be longer or not.
+ */
 public class ExpandableTextView extends AppCompatTextView {
 
+    // Default as 200 characters as the trimmed text
     private final int DEFAULT_TRIM_LENGTH = 200;
 
     private CharSequence originalText;
@@ -37,12 +41,14 @@ public class ExpandableTextView extends AppCompatTextView {
 
     private CharSequence trim(CharSequence text) {
         if (text != null && text.length() > DEFAULT_TRIM_LENGTH) {
+            // trimming
             return new SpannableStringBuilder(text, 0, DEFAULT_TRIM_LENGTH).append(" ...");
         }
         return text;
     }
 
     public void setExpandListener(ImageButton imageButton) {
+        // The control button
         imageButton.setBackgroundResource(trimmed ? R.drawable.ic_keyboard_arrow_down_black_24dp : R.drawable.ic_keyboard_arrow_up_black_24dp);
         imageButton.setOnClickListener((View v) -> {
             trimmed = !trimmed;

@@ -24,7 +24,7 @@ import com.ucm.tfg.service.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-
+// This is used for recycler view, see its doc in android developer
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.RecyclerViewHolder> {
 
     private Activity context;

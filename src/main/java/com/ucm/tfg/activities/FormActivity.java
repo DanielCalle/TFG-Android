@@ -18,6 +18,10 @@ import com.ucm.tfg.adapters.FormInputAdapter;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A generic activity used to make a form
+ * The data is returned when this activity is finished
+ */
 public class FormActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
@@ -28,15 +32,18 @@ public class FormActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_form);
 
+        // Getting all form labels and the type of the response
         Map<Integer, Pair<String, String>> map = new HashMap<>();
         Bundle dataBundle = getIntent().getExtras();
 
         int count = 0;
         for (String key : dataBundle.keySet()) {
+            // Keeping them in a map structure
             map.put(count, new Pair<>(key, dataBundle.getString(key)));
             count++;
         }
 
+        // Using the recycler view to put labels and inputs
         recyclerView = findViewById(R.id.inputs);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(FormActivity.this));
@@ -47,6 +54,7 @@ public class FormActivity extends AppCompatActivity {
 
         Button submitButton = findViewById(R.id.submit_button);
         submitButton.setOnClickListener((View v) -> {
+            // When send, adding all label responses
             Map<String, String> result = formInputAdapter.getResult();
             if (result.size() == map.size()) {
                 Intent resultIntent = new Intent();

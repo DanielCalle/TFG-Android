@@ -34,6 +34,9 @@ import com.ucm.tfg.fragments.PlanFragment;
 import com.ucm.tfg.R;
 import com.ucm.tfg.adapters.FragmentAdapter;
 
+/**
+ * The principal activity, it contains three fragments, and it is where all flows start
+ */
 public class MainActivity extends AppCompatActivity implements
         PlanFragment.OnFragmentInteractionListener,
         RecommendationFragment.OnFragmentInteractionListener,
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Adapter for the three fragments
         adapter = new FragmentAdapter(MainActivity.this, getSupportFragmentManager());
 
         toolbar = findViewById(R.id.toolbar);
@@ -81,6 +85,7 @@ public class MainActivity extends AppCompatActivity implements
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        // Sidebar menu
         navigationView = findViewById(R.id.navigation_view);
         navigationView.setNavigationItemSelectedListener(MainActivity.this);
     }
@@ -88,13 +93,16 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onStart() {
         super.onStart();
+        // Checking if user is logged
         SharedPreferences sharedPreferences = getSharedPreferences(Session.SESSION_FILE, 0);
         boolean isLogged = sharedPreferences.getBoolean(Session.IS_LOGGED, false);
 
         if (!isLogged) {
+            // if not logged redirect to login
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(intent);
         } else {
+            // else saving logged user in session
             long userId = sharedPreferences.getLong(Session.USER, 0);
             UserService.getUserById(MainActivity.this, userId, new Service.ClientResponse<User>() {
                 @Override
@@ -126,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+        // Actions for sidebar menu
         switch (menuItem.getItemId()) {
             case R.id.action_logout:
                 SharedPreferences sharedPreferences = getSharedPreferences(Session.SESSION_FILE, 0);

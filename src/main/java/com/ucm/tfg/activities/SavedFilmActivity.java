@@ -29,6 +29,9 @@ import org.json.JSONObject;
 
 import java.util.Date;
 
+/**
+ * When in unity proyect has clicked save film
+ */
 public class SavedFilmActivity extends AppCompatActivity {
 
     private static String LOGTAG = "SavedFilmActivity";

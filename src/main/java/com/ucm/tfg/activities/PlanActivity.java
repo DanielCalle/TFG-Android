@@ -34,6 +34,9 @@ import android.view.Menu;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Shows all data for a given plan
+ */
 public class PlanActivity extends AppCompatActivity {
 
     private ActionBar actionBar;
@@ -78,6 +81,7 @@ public class PlanActivity extends AppCompatActivity {
         users.setLayoutManager(new LinearLayoutManager(PlanActivity.this, LinearLayoutManager.HORIZONTAL, false));
         users.setAdapter(planUserAdapter);
         planUserAdapter.addUserOnClickListener((User u, PlanUserAdapter.RecyclerViewHolder recyclerViewHolder) -> {
+            // this is used for an animation effect when changing interfaces
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
                     .makeSceneTransitionAnimation(
                             PlanActivity.this,
@@ -120,6 +124,7 @@ public class PlanActivity extends AppCompatActivity {
         }, Film.class);
 
         joinPlan.setOnClickListener((View v) -> {
+            // if logged user joined the plan then quit, join otherwise
             if (!joined) {
                 PlanService.joinPlan(PlanActivity.this, plan.getId(), Session.user.getId(), new Service.ClientResponse<Plan>() {
 
@@ -159,6 +164,7 @@ public class PlanActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(ArrayList<User> result) {
+                // Checking if is creator is has joined the plan
                 planUserAdapter.setData(result);
                 if (!isCreator) {
                     joined = false;

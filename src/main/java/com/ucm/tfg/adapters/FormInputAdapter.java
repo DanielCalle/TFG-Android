@@ -30,6 +30,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+// This is used for recycler view, see its doc in android developer
 public class FormInputAdapter extends RecyclerView.Adapter<FormInputAdapter.RecyclerViewHolder> {
 
     private Context context;

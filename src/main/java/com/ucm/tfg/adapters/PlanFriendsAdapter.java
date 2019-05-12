@@ -28,7 +28,7 @@ import com.ucm.tfg.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
 
-
+// This is used for recycler view, see its doc in android developer
 public class PlanFriendsAdapter extends RecyclerView.Adapter<PlanFriendsAdapter.RecyclerViewHolder> {
 
     private Activity context;

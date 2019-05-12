@@ -18,6 +18,9 @@ import com.ucm.tfg.entities.User;
 import com.ucm.tfg.service.Service;
 import com.ucm.tfg.service.UserService;
 
+/**
+ * The intarface of login
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private final static int REGISTER_REQUEST = 1;
@@ -49,6 +52,7 @@ public class LoginActivity extends AppCompatActivity {
                 UserService.login(LoginActivity.this, user, new Service.ClientResponse<User>() {
                     @Override
                     public void onSuccess(User result) {
+                        // When logged writing logged user in session
                         editor.putBoolean(Session.IS_LOGGED, true);
                         editor.putLong(Session.USER, result.getId());
                         editor.apply();
@@ -71,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         registerButton.setOnClickListener((View view) -> {
+            // redirect to register a new account
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivityForResult(intent, REGISTER_REQUEST);
         });

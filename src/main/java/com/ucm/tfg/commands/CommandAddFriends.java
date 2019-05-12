@@ -16,7 +16,6 @@ public class CommandAddFriends implements Command {
 
     private final static String action = "addFriend";
 
-
     @Override
     public Object execute(Object... objects) {
         Friendship tfriendship = new Friendship();

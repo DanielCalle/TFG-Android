@@ -34,20 +34,20 @@ import com.ucm.tfg.views.CustomViewPager;
 
 import java.util.ArrayList;
 
+/**
+ * Shows a list of friends for the logged user
+ */
 public class FriendActivity extends AppCompatActivity{
 
     private Toolbar toolbar;
     private SwipeRefreshLayout swipeRefreshLayout;
     private FriendAdapter friendAdapter;
     private SearchView searchView;
-    private long userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend);
-
-        userId = getSharedPreferences(Session.SESSION_FILE, 0).getLong(Session.USER, 0);
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,6 +65,7 @@ public class FriendActivity extends AppCompatActivity{
 
         friendAdapter = new FriendAdapter(FriendActivity.this);
         friendAdapter.addPlanOnClickListener((User friend, FriendAdapter.RecyclerViewHolder recyclerViewHolder) -> {
+            // this is used for an animation effect when changing interfaces
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
                     .makeSceneTransitionAnimation(
                             FriendActivity.this,
@@ -77,6 +78,7 @@ public class FriendActivity extends AppCompatActivity{
 
         recyclerView.setAdapter(friendAdapter);
 
+        // Swipe down action -> refresh data
         swipeRefreshLayout = findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             updateFriends();
@@ -92,8 +94,8 @@ public class FriendActivity extends AppCompatActivity{
 
     private void updateFriends() {
         swipeRefreshLayout.setRefreshing(true);
-        if (userId != 0) {
-            UserService.getFriends(FriendActivity.this, userId, new Service.ClientResponse<ArrayList<User>>() {
+        if (Session.user != null) {
+            UserService.getFriends(FriendActivity.this, Session.user.getId(), new Service.ClientResponse<ArrayList<User>>() {
                 @Override
                 public void onSuccess(ArrayList<User> result) {
                     friendAdapter.setFriendData(result);
