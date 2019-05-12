@@ -9,7 +9,8 @@ public class CommandParser {
             new CommandAreFriends(),
             new CommandAddFriends(),
             new CommandGetPlans(),
-            new CommandShowInfoFilm()
+            new CommandShowInfoFilm(),
+            new CommandJoinToPlan()
     };
 
     // Iterate through all commands and finds out the wanted command and returns it
