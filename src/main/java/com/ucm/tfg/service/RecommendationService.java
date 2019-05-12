@@ -8,6 +8,9 @@ import org.springframework.core.ParameterizedTypeReference;
 
 import java.util.ArrayList;
 
+/**
+ * All http requests against films route
+ */
 public class RecommendationService {
 
     private static String url = "http://tfg-spring.herokuapp.com/recommendations/";
@@ -16,6 +19,7 @@ public class RecommendationService {
     public RecommendationService() {
     }
 
+    // Returns film recommendations given for a specific user id
     public static <T> void getRecommendedFilms(Activity activity, long id, Service.ClientResponse<ArrayList<Film>> callback) {
         Service.getInstance()
                 .setContext(activity)
@@ -26,6 +30,7 @@ public class RecommendationService {
                 });
     }
 
+    // Returns recent films on premiere
     public static <T> void getPremiereFilms(Activity activity, Service.ClientResponse<ArrayList<Film>> callback) {
         Service.getInstance()
                 .setContext(activity)
@@ -35,6 +40,7 @@ public class RecommendationService {
                 });
     }
 
+    // Returns the most popular films
     public static <T> void getTrendingFilms(Activity activity, Service.ClientResponse<ArrayList<Film>> callback) {
         Service.getInstance()
                 .setContext(activity)
@@ -44,6 +50,7 @@ public class RecommendationService {
                 });
     }
 
+    // Returns recommendations for plans given two user ids (for unity case)
     public static <T> void getThreePlans(Activity activity, long id, String friendId, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
@@ -54,6 +61,7 @@ public class RecommendationService {
                 .execute(callback, c);
     }
 
+    // Get a random film
     public static <T> void getRandomFilm(Activity activity, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)

@@ -112,6 +112,7 @@ public class PlanFragment extends Fragment {
         planAdapter.addPlanOnClickListener(new PlanAdapter.PlanActionListener() {
             @Override
             public void onPlanClick(Plan p, PlanAdapter.RecyclerViewHolder recyclerViewHolder) {
+                // this is used for an animation effect when changing interfaces
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
                         .makeSceneTransitionAnimation(
                                 getActivity(),
@@ -124,6 +125,7 @@ public class PlanFragment extends Fragment {
 
             @Override
             public void onJoinedUserClick(User u, PlanUserAdapter.RecyclerViewHolder recyclerViewHolder) {
+                // this is used for an animation effect when changing interfaces
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
                         .makeSceneTransitionAnimation(
                                 getActivity(),
@@ -137,6 +139,7 @@ public class PlanFragment extends Fragment {
 
         recyclerView.setAdapter(planAdapter);
 
+        // Swipe down action -> refresh data
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             updatePlans();
@@ -148,13 +151,16 @@ public class PlanFragment extends Fragment {
     }
 
     @Override
+    // Determines if the fragment is visible to the user
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             if (toolbar != null) {
+                // Clearing toolbar and changes the menu for this fragment
                 toolbar.getMenu().clear();
                 toolbar.inflateMenu(R.menu.menu_plans);
                 toolbar.setTitle(R.string.action_plans);
+                // Action search
                 searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
 
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

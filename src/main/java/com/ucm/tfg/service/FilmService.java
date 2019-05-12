@@ -9,6 +9,9 @@ import org.springframework.core.ParameterizedTypeReference;
 
 import java.util.ArrayList;
 
+/**
+ * All http requests against films route
+ */
 public class FilmService {
 
     private static String url = "http://tfg-spring.herokuapp.com/films/";
@@ -17,6 +20,7 @@ public class FilmService {
     public FilmService() {
     }
 
+    // Given a film id, returns through callback the film result
     public static <T> void getFilmById(Activity activity, long id, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
@@ -26,6 +30,7 @@ public class FilmService {
                 .execute(callback, c);
     }
 
+    // Given a film uuid (vuforia), returns through callback the film result
     public static <T> void getFilmByUUID(Activity activity, String uuid, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
@@ -35,6 +40,7 @@ public class FilmService {
                 .execute(callback, c);
     }
 
+    // Given a film name, returns through callback all films containing the string
     public static <T> void searchFilmsByName(Activity activity, String name, Service.ClientResponse<ArrayList<Film>> callback) {
         Service.getInstance()
                 .setContext(activity)
@@ -45,6 +51,7 @@ public class FilmService {
                 });
     }
 
+    // Returns through callback all films
     public static <T> void getFilms(Activity activity, Service.ClientResponse<ArrayList<Film>> callback) {
         Service.getInstance()
                 .setContext(activity)

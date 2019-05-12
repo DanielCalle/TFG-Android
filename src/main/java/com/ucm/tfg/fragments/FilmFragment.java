@@ -93,8 +93,12 @@ public class FilmFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_film, container, false);
 
         GridView gridView = (GridView) view.findViewById(R.id.films);
+
+        // Creating the adapter for each film
         filmAdapter = new FilmAdapter(getActivity());
+        // When click on a film, redirects to the film activity
         filmAdapter.addFilmOnClickListener((Film film, View v) -> {
+            // this is used for an animation effect when changing interfaces
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
                     .makeSceneTransitionAnimation(
                             getActivity(),
@@ -106,6 +110,7 @@ public class FilmFragment extends Fragment {
         });
         gridView.setAdapter(filmAdapter);
 
+        // Swipe down action -> refresh data
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             updateFilms();
@@ -117,13 +122,16 @@ public class FilmFragment extends Fragment {
     }
 
     @Override
+    // Determines if the fragment is visible to the user
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             if (toolbar != null) {
+                // Clearing toolbar and changes the menu for this fragment
                 toolbar.getMenu().clear();
                 toolbar.inflateMenu(R.menu.menu_films);
                 toolbar.setTitle(R.string.action_films);
+                // Action search
                 searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
 
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

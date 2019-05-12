@@ -10,6 +10,7 @@ import com.ucm.tfg.fragments.FilmFragment;
 import com.ucm.tfg.fragments.RecommendationFragment;
 import com.ucm.tfg.fragments.PlanFragment;
 
+// This is used for view pager, see its doc in android developer
 public class FragmentAdapter extends FragmentPagerAdapter {
 
     private Context context;

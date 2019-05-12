@@ -17,6 +17,9 @@ import com.ucm.tfg.service.UserService;
 
 import java.util.UUID;
 
+/**
+ * Interface for logging
+ */
 public class RegisterActivity extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
@@ -49,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(User result) {
                         runOnUiThread(() -> {
+                            // When registered, writing data into session
                             Toast.makeText(RegisterActivity.this, getString(R.string.register_success), Toast.LENGTH_SHORT).show();
                             editor.putBoolean(Session.IS_LOGGED, true);
                             editor.putLong(Session.USER, result.getId());

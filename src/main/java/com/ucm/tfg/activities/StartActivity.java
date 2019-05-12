@@ -26,6 +26,9 @@ import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * The first activity when the app opens, if shows a 5 sec advertisement then redirects to main activity
+ */
 public class StartActivity extends AppCompatActivity {
 
     private final static int MAX_TIME = 5000;
@@ -40,6 +43,7 @@ public class StartActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
 
+        // This writing logged data is for a problem caused between main activity and its fragments
         SharedPreferences sharedPreferences = getSharedPreferences(Session.SESSION_FILE, 0);
         boolean isLogged = sharedPreferences.getBoolean(Session.IS_LOGGED, false);
         if (isLogged) {

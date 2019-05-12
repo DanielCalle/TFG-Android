@@ -32,6 +32,9 @@ import com.ucm.tfg.views.ExpandableTextView;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+/**
+ * Shows all data for a given film
+ */
 public class FilmActivity extends AppCompatActivity {
 
     private final static String LOGTAG = "FilmActivity";
@@ -72,8 +75,10 @@ public class FilmActivity extends AppCompatActivity {
                 .load(film.getImageURL())
                 .into(filmPoster);
 
+        // A circle progress bar representin the user valoration for this film
         progressBar = findViewById(R.id.progress_bar);
         progressText = findViewById(R.id.progress_text);
+        // The view used to valorate the film
         progressController = findViewById(R.id.progress_controller);
 
         // enable/disable rating
@@ -116,6 +121,7 @@ public class FilmActivity extends AppCompatActivity {
         });
 
         Button addToPlan = findViewById(R.id.add_to_plan);
+        // Creating a new plan
         addToPlan.setOnClickListener((View v) -> {
             Intent intent = new Intent(FilmActivity.this, FormActivity.class);
             intent.putExtra(getString(R.string.plan_title), "text");
@@ -125,16 +131,19 @@ public class FilmActivity extends AppCompatActivity {
             startActivityForResult(intent, FORM_REQUEST);
         });
 
+        // Film synopsis
         ImageButton expandable = findViewById(R.id.expandable_button);
         ExpandableTextView description = findViewById(R.id.description);
         description.setText(film.getSynopsis());
         description.setExpandListener(expandable);
 
+        // Film genre
         TextView genre = findViewById(R.id.genre);
         genre.setText(film.getGenre());
         TextView director = findViewById(R.id.director);
         director.setText(film.getDirector());
 
+        // Redirect to youtube to see the trailer
         FloatingActionButton trailer = findViewById(R.id.trailer);
         trailer.setOnClickListener((View v) -> {
             Intent youtube = new Intent(Intent.ACTION_VIEW);
@@ -144,29 +153,30 @@ public class FilmActivity extends AppCompatActivity {
 
         UserFilmService.get(
                 FilmActivity.this,
-                getSharedPreferences(Session.SESSION_FILE, 0).getLong(Session.USER, 0),
+                Session.user.getId(),
                 film.getId(),
                 new Service.ClientResponse<UserFilm>() {
-            @Override
-            public void onSuccess(UserFilm result) {
-                userFilm = result;
-                // setting film rating data
-                enableEdit(true);
-                progressBar.setProgress((int) result.getRating() * 10);
-                progressController.setProgress((int) result.getRating() * 10);
-                progressText.setText("" + result.getRating() + "/10");
-            }
+                    @Override
+                    public void onSuccess(UserFilm result) {
+                        userFilm = result;
+                        // setting film rating data
+                        enableEdit(true);
+                        progressBar.setProgress((int) result.getRating() * 10);
+                        progressController.setProgress((int) result.getRating() * 10);
+                        progressText.setText("" + result.getRating() + "/10");
+                    }
 
-            @Override
-            public void onError(String error) {
-                runOnUiThread(() -> {
-                    enableEdit(false);
-                    Toast.makeText(FilmActivity.this, error, Toast.LENGTH_SHORT).show();
-                });
-            }
-        }, UserFilm.class);
+                    @Override
+                    public void onError(String error) {
+                        runOnUiThread(() -> {
+                            enableEdit(false);
+                            Toast.makeText(FilmActivity.this, error, Toast.LENGTH_SHORT).show();
+                        });
+                    }
+                }, UserFilm.class);
     }
 
+    // When its a saved film for the logged user, the he/she can rate the film
     private void enableEdit(boolean enabled) {
         progressBar.setEnabled(enabled);
         progressController.setEnabled(enabled);
@@ -181,13 +191,14 @@ public class FilmActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
+            // The response from the form activity
             case FORM_REQUEST:
                 if (data != null) {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     Plan plan = new Plan();
                     plan.setCreatorId(
                             getSharedPreferences(Session.SESSION_FILE, 0)
-                            .getLong(Session.USER, 0)
+                                    .getLong(Session.USER, 0)
                     );
                     plan.setFilmId(film.getId());
                     plan.setTitle(data.getExtras().getString(getString(R.string.plan_title)));
@@ -198,6 +209,7 @@ public class FilmActivity extends AppCompatActivity {
                     }
                     plan.setLocation(data.getExtras().getString(getString(R.string.plan_location)));
                     plan.setDescription(data.getExtras().getString(getString(R.string.plan_description)));
+                    // Creates the new plan
                     PlanService.createPlan(FilmActivity.this, plan, new Service.ClientResponse<Plan>() {
 
                         @Override
@@ -228,29 +240,27 @@ public class FilmActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home: finish(); break;
+            case android.R.id.home:
+                finish();
+                break;
             case R.id.favorite:
                 if (userFilm != null) {
-                    UserFilmService.delete(
-                            FilmActivity.this,
-                            getSharedPreferences(Session.SESSION_FILE, 0).getLong(Session.USER, 0),
-                            film.getId(),
-                            new Service.ClientResponse<UserFilm>() {
-                                @Override
-                                public void onSuccess(UserFilm result) {
-                                    userFilm = null;
-                                    enableEdit(false);
-                                    Toast.makeText(FilmActivity.this, getString(R.string.user_film_unfavorite), Toast.LENGTH_SHORT).show();
-                                }
+                    UserFilmService.delete(FilmActivity.this, Session.user.getId(), film.getId(), new Service.ClientResponse<UserFilm>() {
+                        @Override
+                        public void onSuccess(UserFilm result) {
+                            userFilm = null;
+                            enableEdit(false);
+                            Toast.makeText(FilmActivity.this, getString(R.string.user_film_unfavorite), Toast.LENGTH_SHORT).show();
+                        }
 
-                                @Override
-                                public void onError(String error) {
-                                    Toast.makeText(FilmActivity.this, error, Toast.LENGTH_SHORT).show();
-                                }
-                            }, UserFilm.class);
+                        @Override
+                        public void onError(String error) {
+                            Toast.makeText(FilmActivity.this, error, Toast.LENGTH_SHORT).show();
+                        }
+                    }, UserFilm.class);
                 } else {
                     userFilm = new UserFilm();
-                    userFilm.setUserId(getSharedPreferences(Session.SESSION_FILE, 0).getLong(Session.USER, 0));
+                    userFilm.setUserId(Session.user.getId());
                     userFilm.setFilmId(film.getId());
                     UserFilmService.postUserFilm(FilmActivity.this, userFilm, new Service.ClientResponse<UserFilm>() {
                         @Override

@@ -99,6 +99,7 @@ public class RecommendationFragment extends Fragment {
 
         recommendationListAdapter = new RecommendationListAdapter(getActivity());
         recommendationListAdapter.addFilmOnClickListener((Film film, View v) -> {
+            // this is used for an animation effect when changing interfaces
             ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
                     .makeSceneTransitionAnimation(
                             getActivity(),
@@ -110,6 +111,7 @@ public class RecommendationFragment extends Fragment {
         });
         recyclerView.setAdapter(recommendationListAdapter);
 
+        // Swipe down action -> refresh data
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             updateRecommendations();
@@ -121,13 +123,16 @@ public class RecommendationFragment extends Fragment {
     }
 
     @Override
+    // Determines if the fragment is visible to the user
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             if (toolbar != null) {
+                // Clearing toolbar and changes the menu for this fragment
                 toolbar.getMenu().clear();
                 toolbar.inflateMenu(R.menu.menu_recommendations);
                 toolbar.setTitle(R.string.action_recommendations);
+                // Action search
                 searchView = (SearchView) toolbar.getMenu().findItem(R.id.action_search).getActionView();
 
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {

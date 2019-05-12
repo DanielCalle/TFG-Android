@@ -2,6 +2,10 @@ package com.ucm.tfg;
 
 import com.ucm.tfg.entities.User;
 
+/**
+ * This class has the purpose of setting session parameters for sharedpreferences
+ * It also saves a user instance as the user is logged
+ */
 public class Session {
 
     public final static String SESSION_FILE = "SESSION_FILE";

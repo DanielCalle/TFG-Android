@@ -8,6 +8,10 @@ import android.support.v4.widget.ViewGroupUtils;
 import android.util.AttributeSet;
 import android.view.View;
 
+/**
+ * Describes the behaviour for a given view element, it depends on its position
+ * @param <T> It could be any view
+ */
 public class AnchorVisibilityBehavior<T extends View> extends CoordinatorLayout.Behavior<T> {
 
     private Rect mTmpRect;

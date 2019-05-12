@@ -11,11 +11,15 @@ import org.springframework.core.ParameterizedTypeReference;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * All http requests against plans route
+ */
 public class PlanService {
 
     private static String url = "http://tfg-spring.herokuapp.com/plans/";
     private static String develop_url = "http://filmar-develop.herokuapp.com/plans/";
 
+    // Returns all plans stored in database
     public static <T> void getPlans(Activity activity, Service.ClientResponse<ArrayList<Plan>> callback) {
         Service.getInstance()
                 .setContext(activity)
@@ -24,6 +28,7 @@ public class PlanService {
                 .execute(callback, new ParameterizedTypeReference<ArrayList<Plan>>(){});
     }
 
+    // Saves a new plan into database
     public static <T> void createPlan(Activity activity, Plan plan, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
@@ -32,6 +37,8 @@ public class PlanService {
                 .body(plan)
                 .execute(callback, c);
     }
+
+    // given the plan id and a new user, the user joins the plan
     public static <T> void joinPlan(Activity activity, long id, long userId, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
@@ -41,6 +48,8 @@ public class PlanService {
                 .addPathVariable("userId", "" + userId)
                 .execute(callback, c);
     }
+
+    // given the plan id and a new user, the user quits the plan
     public static <T> void quitPlan(Activity activity, long id, long userId, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
@@ -50,6 +59,8 @@ public class PlanService {
                 .addPathVariable("userId", "" + userId)
                 .execute(callback, c);
     }
+
+    // Given the plan id, returns all users joined
     public static <T> void getJoinedUsers(Activity activity, long id, Service.ClientResponse<ArrayList<User>> callback) {
         Service.getInstance()
                 .setContext(activity)
@@ -60,6 +71,7 @@ public class PlanService {
                 });
     }
 
+    // Returns all users joined in the plan including the creator, given a plan id
     public static <T> void getUsers(Activity activity, long id, Service.ClientResponse<ArrayList<User>> callback) {
         Service.getInstance()
                 .setContext(activity)
@@ -70,6 +82,7 @@ public class PlanService {
                 });
     }
 
+    // Given a plan id, removes it
     public static <T> void deletePlan(Activity activity, long id, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
@@ -79,6 +92,7 @@ public class PlanService {
                 .execute(callback, c);
     }
 
+    // Given a string, returns all plans which title contain this string
     public static <T> void searchPlansByTitle(Activity activity, String title, Service.ClientResponse<ArrayList<Plan>> callback) {
         Service.getInstance()
                 .setContext(activity)

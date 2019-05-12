@@ -16,6 +16,7 @@ import com.ucm.tfg.entities.Film;
 import java.util.ArrayList;
 import java.util.List;
 
+// This is used for recycler view, see its doc in android developer
 public class RecommendationListAdapter extends RecyclerView.Adapter<RecommendationListAdapter.RecyclerViewHolder> {
 
     private Context context;

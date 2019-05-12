@@ -15,6 +15,9 @@ import com.ucm.tfg.entities.Film;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The adapter class for a grid formed by films
+ */
 public class FilmAdapter extends BaseAdapter {
 
     private List<Film> films;
@@ -48,13 +51,16 @@ public class FilmAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        // View inflating
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.film_item, parent, false);
 
+        // Getting views
         ImageView image = view.findViewById(R.id.film_poster);
         TextView text = view.findViewById(R.id.text);
 
         Film film = (Film)this.getItem(position);
 
+        // Data setting
         Picasso.get()
                 .load(film
                         .getImageURL()
@@ -70,6 +76,7 @@ public class FilmAdapter extends BaseAdapter {
         return view;
     }
 
+    // Adding on click listener
     public void addFilmOnClickListener(FilmActionListener filmActionListener) {
         this.filmActionListener = filmActionListener;
     }

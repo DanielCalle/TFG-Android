@@ -17,6 +17,7 @@ import com.ucm.tfg.entities.User;
 import java.util.ArrayList;
 import java.util.List;
 
+// This is used for recycler view, see its doc in android developer
 public class PlanUserAdapter extends RecyclerView.Adapter<PlanUserAdapter.RecyclerViewHolder> {
 
     private Activity context;

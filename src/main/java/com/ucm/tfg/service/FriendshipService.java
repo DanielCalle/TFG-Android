@@ -4,6 +4,9 @@ import android.app.Activity;
 
 import com.ucm.tfg.entities.Friendship;
 
+/**
+ * All http requests against friendships route
+ */
 public class FriendshipService {
 
     private static String url = "";
@@ -11,7 +14,7 @@ public class FriendshipService {
 
     public FriendshipService() {}
 
-
+    // Given a two users id, returns through callback the friendship relation telling if they are friends
     public static <T> void areFriends(Activity activity, long id1, long id2, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
                 .setContext(activity)
@@ -22,6 +25,7 @@ public class FriendshipService {
                 .execute(callback, c);
     }
 
+    // Given a requester user id A and the receiver user id B, A sends a frienship request to B
     public static <T> void request(Activity activity, long requestId, long friendId, Service.ClientResponse<T> callback, Class<T> c){
         Service.getInstance()
                 .setContext(activity)
@@ -32,6 +36,7 @@ public class FriendshipService {
                 .execute(callback, c);
     }
 
+    // Given a requester user id A and the receiver user id B, B accepts A as friend
     public static <T> void accept(Activity activity, long requestId, long friendId, Service.ClientResponse<T> callback, Class<T> c){
         Service.getInstance()
                 .setContext(activity)
@@ -42,6 +47,7 @@ public class FriendshipService {
                 .execute(callback, c);
     }
 
+    // Given a requester user id A and the receiver user id B, B declines A as friend
     public static <T> void decline(Activity activity, long requestId, long friendId, Service.ClientResponse<T> callback, Class<T> c){
         Service.getInstance()
                 .setContext(activity)
@@ -52,6 +58,7 @@ public class FriendshipService {
                 .execute(callback, c);
     }
 
+    // Given a requester user id A and the receiver user id B, they are not friends anymore
     public static <T> void delete(Activity activity, long requestId, long friendId, Service.ClientResponse<T> callback, Class<T> c){
         Service.getInstance()
                 .setContext(activity)

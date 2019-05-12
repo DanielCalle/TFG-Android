@@ -44,6 +44,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+/**
+ * Interface for a given user, could be either friend or not
+ */
 public class UserActivity extends AppCompatActivity {
 
     private final static String LOGTAG = "UserActivity";
@@ -98,6 +101,7 @@ public class UserActivity extends AppCompatActivity {
         planAdapter.addPlanOnClickListener(new PlanAdapter.PlanActionListener() {
             @Override
             public void onPlanClick(Plan p, PlanAdapter.RecyclerViewHolder recyclerViewHolder) {
+                // this is used for an animation effect when changing interfaces
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
                         .makeSceneTransitionAnimation(
                                 UserActivity.this,
@@ -110,6 +114,7 @@ public class UserActivity extends AppCompatActivity {
 
             @Override
             public void onJoinedUserClick(User u, PlanUserAdapter.RecyclerViewHolder recyclerViewHolder) {
+                // this is used for an animation effect when changing interfaces
                 ActivityOptionsCompat optionsCompat = ActivityOptionsCompat
                         .makeSceneTransitionAnimation(
                                 UserActivity.this,
@@ -138,6 +143,7 @@ public class UserActivity extends AppCompatActivity {
         FriendshipService.areFriends(UserActivity.this, Session.user.getId(), user.getId(), new Service.ClientResponse<Friendship>() {
             @Override
             public void onSuccess(Friendship result) {
+                // Checks the friendship status
                 if (result == null) {
                     friendStatus = FriendStatus.NONE;
                 } else {
@@ -174,6 +180,7 @@ public class UserActivity extends AppCompatActivity {
         userName.setText(user.getName());
 
         friendStatusButton.setOnClickListener((View v) -> {
+            // Action depending on the friend status
             switch (friendStatus) {
                 case NONE:
                     FriendshipService.request(UserActivity.this, Session.user.getId(), user.getId(), new Service.ClientResponse<Friendship>() {
@@ -246,6 +253,7 @@ public class UserActivity extends AppCompatActivity {
     }
 
     private void showResponseButtons(boolean show) {
+        // When the logged user has to accept/decline a request or not
         responseLayout.setEnabled(show);
         responseLayout.setVisibility(show ? View.VISIBLE : View.GONE);
         friendStatusButton.setEnabled(!show);
