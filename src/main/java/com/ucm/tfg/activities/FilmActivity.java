@@ -170,7 +170,6 @@ public class FilmActivity extends AppCompatActivity {
                     public void onError(String error) {
                         runOnUiThread(() -> {
                             enableEdit(false);
-                            Toast.makeText(FilmActivity.this, error, Toast.LENGTH_SHORT).show();
                         });
                     }
                 }, UserFilm.class);

@@ -146,7 +146,7 @@ public class Service {
                         try {
                             return restTemplate.exchange(uri, method, httpEntity, responseType);
                         } catch (Exception e) {
-                            callback.onError("error");
+                            callback.onError(e.getMessage());
                             return null;
                         }
                     }
@@ -186,7 +186,12 @@ public class Service {
 
                     @Override
                     protected ResponseEntity<T> doInBackground(Void... voids) {
-                        return restTemplate.exchange(uri, method, httpEntity, responseType);
+                        try {
+                            return restTemplate.exchange(uri, method, httpEntity, responseType);
+                        } catch (Exception e) {
+                            callback.onError(e.getMessage());
+                            return null;
+                        }
                     }
 
                     @Override

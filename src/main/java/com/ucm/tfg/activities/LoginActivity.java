@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
                         editor.apply();
                         Session.user = result;
                         loginButton.setEnabled(true);
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        finish();
                     }
 
                     @Override
