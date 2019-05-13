@@ -43,6 +43,8 @@ public class MainActivity extends AppCompatActivity implements
         FilmFragment.OnFragmentInteractionListener,
         NavigationView.OnNavigationItemSelectedListener {
 
+    private final static int LOGIN_REQUEST = 1;
+
     private Toolbar toolbar;
     private DrawerLayout drawer;
     private FragmentAdapter adapter;
@@ -100,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements
         if (!isLogged) {
             // if not logged redirect to login
             Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, LOGIN_REQUEST);
         } else {
             // else saving logged user in session
             long userId = sharedPreferences.getLong(Session.USER, 0);
@@ -143,7 +145,7 @@ public class MainActivity extends AppCompatActivity implements
                 editor.putLong(Session.USER, 0);
                 editor.apply();
 
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                startActivityForResult(new Intent(MainActivity.this, LoginActivity.class), LOGIN_REQUEST);
                 break;
             case R.id.action_friends:
                 startActivity(new Intent(MainActivity.this, FriendActivity.class));
@@ -154,5 +156,14 @@ public class MainActivity extends AppCompatActivity implements
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case LOGIN_REQUEST:
+                recreate();
+                break;
+        }
     }
 }
