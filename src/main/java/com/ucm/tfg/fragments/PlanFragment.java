@@ -151,6 +151,13 @@ public class PlanFragment extends Fragment {
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+
+        updatePlans();
+    }
+
+    @Override
     // Determines if the fragment is visible to the user
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);

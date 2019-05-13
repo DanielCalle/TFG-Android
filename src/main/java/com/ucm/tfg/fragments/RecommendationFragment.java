@@ -123,6 +123,13 @@ public class RecommendationFragment extends Fragment {
     }
 
     @Override
+    public void onResume(){
+        super.onResume();
+
+        updateRecommendations();
+    }
+
+    @Override
     // Determines if the fragment is visible to the user
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);

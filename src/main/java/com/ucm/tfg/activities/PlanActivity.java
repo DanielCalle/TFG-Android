@@ -202,6 +202,7 @@ public class PlanActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(String result) {
                         Toast.makeText(PlanActivity.this, getString(R.string.plan_deleted), Toast.LENGTH_SHORT).show();
+                        finish();
                     }
 
                     @Override
