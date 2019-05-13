@@ -146,7 +146,6 @@ public class FriendActivity extends AppCompatActivity{
             @Override
             public boolean onQueryTextChange(String s) {
                 if (!Utils.isNullOrEmpty(s)) {
-                    Toast.makeText(FriendActivity.this, s, Toast.LENGTH_SHORT).show();
                     searchUsers(s);
                 }
                 return false;
