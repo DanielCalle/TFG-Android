@@ -87,6 +87,7 @@ public class UnityPlayerActivity extends Activity {
 
     public void DAOController(String action, String info) {
         SharedPreferences sharedPreferences = getSharedPreferences(Session.SESSION_FILE, 0);
+        Log.wtf("llego aqui","");
         long userId = sharedPreferences.getLong(Session.USER, 0);
         CommandParser.parse(action).execute(this, info, new Service.ClientResponse<String>() {
             @Override

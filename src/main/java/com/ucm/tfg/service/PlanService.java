@@ -28,6 +28,15 @@ public class PlanService {
                 .execute(callback, new ParameterizedTypeReference<ArrayList<Plan>>(){});
     }
 
+    public static <T> void getPlanById(Activity activity, long id, Service.ClientResponse<T> callback, Class<T> c) {
+        Service.getInstance()
+                .setContext(activity)
+                .get()
+                .url(develop_url + "{id}")
+                .addPathVariable("id", "" + id)
+                .execute(callback, c);
+    }
+
     // Saves a new plan into database
     public static <T> void createPlan(Activity activity, Plan plan, Service.ClientResponse<T> callback, Class<T> c) {
         Service.getInstance()
