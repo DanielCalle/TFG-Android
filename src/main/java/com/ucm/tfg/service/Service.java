@@ -135,8 +135,9 @@ public class Service {
             // Checking connectivity
             ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 
-            if (wifi.isConnected()) {
+            if (wifi.isConnected() || mobile.isConnected()) {
                 URI uri = new UriTemplate(url).expand(pathVariables);
                 HttpEntity<Object> httpEntity = new HttpEntity<>(body, headers);
                 new AsyncTask<Void, Void, ResponseEntity<T>>() {
@@ -178,8 +179,9 @@ public class Service {
             // Checking connectivity
             ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo wifi = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            NetworkInfo mobile = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 
-            if (wifi.isConnected()) {
+            if (wifi.isConnected() || mobile.isConnected()) {
                 URI uri = new UriTemplate(url).expand(pathVariables);
                 HttpEntity<Object> httpEntity = new HttpEntity<>(body, headers);
                 new AsyncTask<Void, Void, ResponseEntity<T>>() {
