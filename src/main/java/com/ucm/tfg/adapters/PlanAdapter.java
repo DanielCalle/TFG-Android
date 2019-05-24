@@ -76,7 +76,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
         }, Film.class);
 
         recyclerViewHolder.title.setText(plan.getTitle());
-        recyclerViewHolder.plan.setText("#" + context.getResources().getString(R.string.plan) + " " + index);
+        recyclerViewHolder.plan.setText("#" + context.getResources().getString(R.string.plan) + " " + (index + 1));
 
         PlanService.getUsers(this.context, plan.getId(), new Service.ClientResponse<ArrayList<User>>(){
 
