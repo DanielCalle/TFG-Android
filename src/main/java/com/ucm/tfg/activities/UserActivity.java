@@ -26,9 +26,9 @@ import com.ucm.tfg.adapters.PlanUserAdapter;
 import com.ucm.tfg.entities.Friendship;
 import com.ucm.tfg.entities.Plan;
 import com.ucm.tfg.entities.User;
-import com.ucm.tfg.service.FriendshipRequest;
-import com.ucm.tfg.service.Request;
-import com.ucm.tfg.service.UserRequest;
+import com.ucm.tfg.requests.FriendshipRequest;
+import com.ucm.tfg.requests.Request;
+import com.ucm.tfg.requests.UserRequest;
 
 import java.util.ArrayList;
 

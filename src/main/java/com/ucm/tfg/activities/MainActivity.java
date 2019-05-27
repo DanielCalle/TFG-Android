@@ -18,8 +18,8 @@ import android.widget.Toast;
 
 import com.ucm.tfg.Session;
 import com.ucm.tfg.entities.User;
-import com.ucm.tfg.service.Request;
-import com.ucm.tfg.service.UserRequest;
+import com.ucm.tfg.requests.Request;
+import com.ucm.tfg.requests.UserRequest;
 import com.ucm.tfg.views.CustomViewPager;
 import com.ucm.tfg.fragments.FilmFragment;
 import com.ucm.tfg.fragments.RecommendationFragment;

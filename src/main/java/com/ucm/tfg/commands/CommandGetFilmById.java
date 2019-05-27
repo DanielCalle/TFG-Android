@@ -3,8 +3,8 @@ package com.ucm.tfg.commands;
 import android.app.Activity;
 
 import com.ucm.tfg.entities.Film;
-import com.ucm.tfg.service.FilmRequest;
-import com.ucm.tfg.service.Request;
+import com.ucm.tfg.requests.FilmRequest;
+import com.ucm.tfg.requests.Request;
 
 public class CommandGetFilmById implements Command {
 

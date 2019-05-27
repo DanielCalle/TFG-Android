@@ -3,8 +3,8 @@ package com.ucm.tfg.commands;
 import android.app.Activity;
 import android.util.Log;
 
-import com.ucm.tfg.service.FriendshipRequest;
-import com.ucm.tfg.service.Request;
+import com.ucm.tfg.requests.FriendshipRequest;
+import com.ucm.tfg.requests.Request;
 
 public class CommandAreFriends implements Command {
 

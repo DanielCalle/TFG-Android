@@ -14,7 +14,7 @@ import android.widget.ImageButton;
 
 import com.ucm.tfg.Session;
 import com.ucm.tfg.commands.CommandParser;
-import com.ucm.tfg.service.Request;
+import com.ucm.tfg.requests.Request;
 import com.ucm.tfg.R;
 import com.unity3d.player.UnityPlayer;
 

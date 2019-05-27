@@ -2,8 +2,8 @@ package com.ucm.tfg.commands;
 
 import android.app.Activity;
 
-import com.ucm.tfg.service.RecommendationRequest;
-import com.ucm.tfg.service.Request;
+import com.ucm.tfg.requests.RecommendationRequest;
+import com.ucm.tfg.requests.Request;
 
 public class CommandGetPlans implements Command{
     private final static String action = "getPlans";

@@ -5,8 +5,8 @@ import android.content.Intent;
 
 import com.ucm.tfg.activities.FilmActivity;
 import com.ucm.tfg.entities.Film;
-import com.ucm.tfg.service.FilmRequest;
-import com.ucm.tfg.service.Request;
+import com.ucm.tfg.requests.FilmRequest;
+import com.ucm.tfg.requests.Request;
 
 public class CommandShowInfoFilm implements Command {
 

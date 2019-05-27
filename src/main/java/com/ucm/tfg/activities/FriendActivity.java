@@ -21,8 +21,8 @@ import com.ucm.tfg.Session;
 import com.ucm.tfg.Utils;
 import com.ucm.tfg.adapters.FriendAdapter;
 import com.ucm.tfg.entities.User;
-import com.ucm.tfg.service.Request;
-import com.ucm.tfg.service.UserRequest;
+import com.ucm.tfg.requests.Request;
+import com.ucm.tfg.requests.UserRequest;
 
 import java.util.ArrayList;
 

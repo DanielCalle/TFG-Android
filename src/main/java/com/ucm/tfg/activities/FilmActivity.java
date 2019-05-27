@@ -24,9 +24,9 @@ import com.ucm.tfg.Session;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.Plan;
 import com.ucm.tfg.entities.UserFilm;
-import com.ucm.tfg.service.PlanRequest;
-import com.ucm.tfg.service.Request;
-import com.ucm.tfg.service.UserFilmRequest;
+import com.ucm.tfg.requests.PlanRequest;
+import com.ucm.tfg.requests.Request;
+import com.ucm.tfg.requests.UserFilmRequest;
 import com.ucm.tfg.views.ExpandableTextView;
 
 import java.text.ParseException;

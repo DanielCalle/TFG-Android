@@ -22,8 +22,8 @@ import com.ucm.tfg.Utils;
 import com.ucm.tfg.activities.FilmActivity;
 import com.ucm.tfg.adapters.RecommendationListAdapter;
 import com.ucm.tfg.entities.Film;
-import com.ucm.tfg.service.RecommendationRequest;
-import com.ucm.tfg.service.Request;
+import com.ucm.tfg.requests.RecommendationRequest;
+import com.ucm.tfg.requests.Request;
 
 import java.util.ArrayList;
 

@@ -21,9 +21,9 @@ import com.ucm.tfg.Utils;
 import com.ucm.tfg.activities.FilmActivity;
 import com.ucm.tfg.adapters.FilmAdapter;
 import com.ucm.tfg.entities.Film;
-import com.ucm.tfg.service.FilmRequest;
-import com.ucm.tfg.service.Request;
-import com.ucm.tfg.service.UserRequest;
+import com.ucm.tfg.requests.FilmRequest;
+import com.ucm.tfg.requests.Request;
+import com.ucm.tfg.requests.UserRequest;
 
 import java.util.ArrayList;
 

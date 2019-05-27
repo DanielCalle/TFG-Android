@@ -14,10 +14,10 @@ import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
 import com.ucm.tfg.Session;
 import com.ucm.tfg.entities.UserFilm;
-import com.ucm.tfg.service.FilmRequest;
-import com.ucm.tfg.service.Request;
+import com.ucm.tfg.requests.FilmRequest;
+import com.ucm.tfg.requests.Request;
 import com.ucm.tfg.entities.Film;
-import com.ucm.tfg.service.UserFilmRequest;
+import com.ucm.tfg.requests.UserFilmRequest;
 
 
 import org.json.JSONObject;

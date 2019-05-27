@@ -5,8 +5,8 @@ import android.content.Intent;
 
 import com.ucm.tfg.activities.PlanActivity;
 import com.ucm.tfg.entities.Plan;
-import com.ucm.tfg.service.PlanRequest;
-import com.ucm.tfg.service.Request;
+import com.ucm.tfg.requests.PlanRequest;
+import com.ucm.tfg.requests.Request;
 
 public class CommandJoinToPlan implements Command {
 

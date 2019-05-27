@@ -15,9 +15,9 @@ import com.ucm.tfg.R;
 import com.ucm.tfg.Session;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.User;
-import com.ucm.tfg.service.RecommendationRequest;
-import com.ucm.tfg.service.Request;
-import com.ucm.tfg.service.UserRequest;
+import com.ucm.tfg.requests.RecommendationRequest;
+import com.ucm.tfg.requests.Request;
+import com.ucm.tfg.requests.UserRequest;
 
 import java.util.Locale;
 import java.util.Timer;

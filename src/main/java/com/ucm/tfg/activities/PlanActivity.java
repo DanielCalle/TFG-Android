@@ -25,9 +25,9 @@ import com.ucm.tfg.adapters.PlanUserAdapter;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.Plan;
 import com.ucm.tfg.entities.User;
-import com.ucm.tfg.service.FilmRequest;
-import com.ucm.tfg.service.PlanRequest;
-import com.ucm.tfg.service.Request;
+import com.ucm.tfg.requests.FilmRequest;
+import com.ucm.tfg.requests.PlanRequest;
+import com.ucm.tfg.requests.Request;
 
 import android.view.Menu;
 

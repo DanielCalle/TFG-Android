@@ -3,8 +3,8 @@ package com.ucm.tfg.commands;
 import android.app.Activity;
 
 import com.ucm.tfg.entities.User;
-import com.ucm.tfg.service.Request;
-import com.ucm.tfg.service.UserRequest;
+import com.ucm.tfg.requests.Request;
+import com.ucm.tfg.requests.UserRequest;
 
 public class CommandGetUserById implements Command {
 

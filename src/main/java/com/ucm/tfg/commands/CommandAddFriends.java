@@ -3,8 +3,8 @@ package com.ucm.tfg.commands;
 import android.app.Activity;
 
 import com.ucm.tfg.entities.Friendship;
-import com.ucm.tfg.service.FriendshipRequest;
-import com.ucm.tfg.service.Request;
+import com.ucm.tfg.requests.FriendshipRequest;
+import com.ucm.tfg.requests.Request;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
