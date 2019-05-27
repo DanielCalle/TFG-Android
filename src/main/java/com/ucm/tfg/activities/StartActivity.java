@@ -3,9 +3,7 @@ package com.ucm.tfg.activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -15,12 +13,11 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
 import com.ucm.tfg.Session;
-import com.ucm.tfg.Utils;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.User;
-import com.ucm.tfg.service.RecommendationService;
-import com.ucm.tfg.service.Service;
-import com.ucm.tfg.service.UserService;
+import com.ucm.tfg.service.RecommendationRequest;
+import com.ucm.tfg.service.Request;
+import com.ucm.tfg.service.UserRequest;
 
 import java.util.Locale;
 import java.util.Timer;
@@ -48,7 +45,7 @@ public class StartActivity extends AppCompatActivity {
         boolean isLogged = sharedPreferences.getBoolean(Session.IS_LOGGED, false);
         if (isLogged) {
             long userId = sharedPreferences.getLong(Session.USER, 0);
-            UserService.getUserById(StartActivity.this, userId, new Service.ClientResponse<User>() {
+            UserRequest.getUserById(StartActivity.this, userId, new Request.ClientResponse<User>() {
                 @Override
                 public void onSuccess(User result) {
                     Session.user = result;
@@ -67,7 +64,7 @@ public class StartActivity extends AppCompatActivity {
         timerProgress = findViewById(R.id.timer_progress);
         timerLabel = findViewById(R.id.timer_label);
 
-        RecommendationService.getRandomFilm(StartActivity.this, new Service.ClientResponse<Film>() {
+        RecommendationRequest.getRandomFilm(StartActivity.this, new Request.ClientResponse<Film>() {
             @Override
             public void onSuccess(Film result) {
                 Picasso.get()

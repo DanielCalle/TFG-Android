@@ -2,21 +2,19 @@ package com.ucm.tfg.service;
 
 import android.app.Activity;
 
-import com.ucm.tfg.entities.Friendship;
-
 /**
  * All http requests against friendships route
  */
-public class FriendshipService {
+public class FriendshipRequest {
 
     private static String url = "";
     private static String develop_url = "http://filmar-develop.herokuapp.com/friendships/";
 
-    public FriendshipService() {}
+    public FriendshipRequest() {}
 
     // Given a two users id, returns through callback the friendship relation telling if they are friends
-    public static <T> void areFriends(Activity activity, long id1, long id2, Service.ClientResponse<T> callback, Class<T> c) {
-        Service.getInstance()
+    public static <T> void areFriends(Activity activity, long id1, long id2, Request.ClientResponse<T> callback, Class<T> c) {
+        Request.getInstance()
                 .setContext(activity)
                 .get()
                 .addPathVariable("requesterUuid", "" +id1)
@@ -26,8 +24,8 @@ public class FriendshipService {
     }
 
     // Given a requester user id A and the receiver user id B, A sends a frienship request to B
-    public static <T> void request(Activity activity, long requestId, long friendId, Service.ClientResponse<T> callback, Class<T> c){
-        Service.getInstance()
+    public static <T> void request(Activity activity, long requestId, long friendId, Request.ClientResponse<T> callback, Class<T> c){
+        Request.getInstance()
                 .setContext(activity)
                 .post()
                 .url(develop_url + "/{requestId}/{friendId}/request")
@@ -37,8 +35,8 @@ public class FriendshipService {
     }
 
     // Given a requester user id A and the receiver user id B, B accepts A as friend
-    public static <T> void accept(Activity activity, long requestId, long friendId, Service.ClientResponse<T> callback, Class<T> c){
-        Service.getInstance()
+    public static <T> void accept(Activity activity, long requestId, long friendId, Request.ClientResponse<T> callback, Class<T> c){
+        Request.getInstance()
                 .setContext(activity)
                 .put()
                 .url(develop_url + "/{requestId}/{friendId}/accept")
@@ -48,8 +46,8 @@ public class FriendshipService {
     }
 
     // Given a requester user id A and the receiver user id B, B declines A as friend
-    public static <T> void decline(Activity activity, long requestId, long friendId, Service.ClientResponse<T> callback, Class<T> c){
-        Service.getInstance()
+    public static <T> void decline(Activity activity, long requestId, long friendId, Request.ClientResponse<T> callback, Class<T> c){
+        Request.getInstance()
                 .setContext(activity)
                 .delete()
                 .url(develop_url + "/{requestId}/{friendId}/decline")
@@ -59,8 +57,8 @@ public class FriendshipService {
     }
 
     // Given a requester user id A and the receiver user id B, they are not friends anymore
-    public static <T> void delete(Activity activity, long requestId, long friendId, Service.ClientResponse<T> callback, Class<T> c){
-        Service.getInstance()
+    public static <T> void delete(Activity activity, long requestId, long friendId, Request.ClientResponse<T> callback, Class<T> c){
+        Request.getInstance()
                 .setContext(activity)
                 .delete()
                 .url(develop_url + "/{requestId}/{friendId}")

@@ -1,12 +1,10 @@
 package com.ucm.tfg.commands;
 
 import android.app.Activity;
-import android.util.Log;
 
 import com.ucm.tfg.entities.Film;
-import com.ucm.tfg.service.FilmService;
-import com.ucm.tfg.service.Service;
-import com.unity3d.player.UnityPlayer;
+import com.ucm.tfg.service.FilmRequest;
+import com.ucm.tfg.service.Request;
 
 public class CommandGetFilmById implements Command {
 
@@ -14,7 +12,7 @@ public class CommandGetFilmById implements Command {
 
     @Override
     public Film execute(Object... objects) {
-        FilmService.getFilmByUUID((Activity) objects[0], (String) objects[1], (Service.ClientResponse) objects[2], (Class) objects[3]);
+        FilmRequest.getFilmByUUID((Activity) objects[0], (String) objects[1], (Request.ClientResponse) objects[2], (Class) objects[3]);
         return null;
     }
 

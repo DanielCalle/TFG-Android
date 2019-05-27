@@ -1,12 +1,10 @@
 package com.ucm.tfg.commands;
 
 import android.app.Activity;
-import android.util.Log;
 
 import com.ucm.tfg.entities.Friendship;
-import com.ucm.tfg.service.FriendshipService;
-import com.ucm.tfg.service.Service;
-import com.ucm.tfg.service.UserService;
+import com.ucm.tfg.service.FriendshipRequest;
+import com.ucm.tfg.service.Request;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -24,7 +22,7 @@ public class CommandAddFriends implements Command {
         tfriendship.setDate(sdf.format(date));
         tfriendship.setRequesterId((Long) objects[4]);
         tfriendship.setFriendId(Long.parseLong(objects[1].toString()));
-        FriendshipService.request((Activity) objects[0], tfriendship.getRequesterId(), tfriendship.getFriendId(), (Service.ClientResponse) objects[2], (Class) objects[3]);
+        FriendshipRequest.request((Activity) objects[0], tfriendship.getRequesterId(), tfriendship.getFriendId(), (Request.ClientResponse) objects[2], (Class) objects[3]);
         return null;
     }
 

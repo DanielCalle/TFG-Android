@@ -11,20 +11,13 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import com.ucm.tfg.Session;
 import com.ucm.tfg.commands.CommandParser;
-import com.ucm.tfg.service.FriendshipService;
-import com.ucm.tfg.service.Service;
+import com.ucm.tfg.service.Request;
 import com.ucm.tfg.R;
-import com.ucm.tfg.service.FilmService;
-import com.ucm.tfg.entities.Film;
-import com.ucm.tfg.entities.User;
-import com.ucm.tfg.service.UserService;
 import com.unity3d.player.UnityPlayer;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -89,7 +82,7 @@ public class UnityPlayerActivity extends Activity {
         SharedPreferences sharedPreferences = getSharedPreferences(Session.SESSION_FILE, 0);
         Log.wtf("llego aqui","");
         long userId = sharedPreferences.getLong(Session.USER, 0);
-        CommandParser.parse(action).execute(this, info, new Service.ClientResponse<String>() {
+        CommandParser.parse(action).execute(this, info, new Request.ClientResponse<String>() {
             @Override
             public void onSuccess(String result) {
                 if (result == null){

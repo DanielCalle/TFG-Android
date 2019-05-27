@@ -1,9 +1,7 @@
 package com.ucm.tfg.activities;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.ActionBar;
@@ -15,11 +13,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
-import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,20 +23,13 @@ import com.ucm.tfg.R;
 import com.ucm.tfg.Session;
 import com.ucm.tfg.adapters.PlanAdapter;
 import com.ucm.tfg.adapters.PlanUserAdapter;
-import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.Friendship;
 import com.ucm.tfg.entities.Plan;
 import com.ucm.tfg.entities.User;
-import com.ucm.tfg.entities.UserFilm;
-import com.ucm.tfg.service.FriendshipService;
-import com.ucm.tfg.service.PlanService;
-import com.ucm.tfg.service.Service;
-import com.ucm.tfg.service.UserFilmService;
-import com.ucm.tfg.service.UserService;
-import com.ucm.tfg.views.ExpandableTextView;
+import com.ucm.tfg.service.FriendshipRequest;
+import com.ucm.tfg.service.Request;
+import com.ucm.tfg.service.UserRequest;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -128,7 +116,7 @@ public class UserActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(planAdapter);
 
-        UserService.getUserPlansById(UserActivity.this, user.getId(), new Service.ClientResponse<ArrayList<Plan>>() {
+        UserRequest.getUserPlansById(UserActivity.this, user.getId(), new Request.ClientResponse<ArrayList<Plan>>() {
             @Override
             public void onSuccess(ArrayList<Plan> result) {
                 planAdapter.setPlansData(result);
@@ -140,7 +128,7 @@ public class UserActivity extends AppCompatActivity {
             }
         });
 
-        FriendshipService.areFriends(UserActivity.this, Session.user.getId(), user.getId(), new Service.ClientResponse<Friendship>() {
+        FriendshipRequest.areFriends(UserActivity.this, Session.user.getId(), user.getId(), new Request.ClientResponse<Friendship>() {
             @Override
             public void onSuccess(Friendship result) {
                 // Checks the friendship status
@@ -183,7 +171,7 @@ public class UserActivity extends AppCompatActivity {
             // Action depending on the friend status
             switch (friendStatus) {
                 case NONE:
-                    FriendshipService.request(UserActivity.this, Session.user.getId(), user.getId(), new Service.ClientResponse<Friendship>() {
+                    FriendshipRequest.request(UserActivity.this, Session.user.getId(), user.getId(), new Request.ClientResponse<Friendship>() {
                         @Override
                         public void onSuccess(Friendship result) {
                             friendStatus = FriendStatus.REQUEST;
@@ -199,7 +187,7 @@ public class UserActivity extends AppCompatActivity {
                     }, Friendship.class);
                     break;
                 case FRIEND:
-                    FriendshipService.delete(UserActivity.this, Session.user.getId(), user.getId(), new Service.ClientResponse<Friendship>() {
+                    FriendshipRequest.delete(UserActivity.this, Session.user.getId(), user.getId(), new Request.ClientResponse<Friendship>() {
                         @Override
                         public void onSuccess(Friendship result) {
                             friendStatus = FriendStatus.NONE;
@@ -218,7 +206,7 @@ public class UserActivity extends AppCompatActivity {
         });
 
         acceptRequestButton.setOnClickListener((View v) -> {
-            FriendshipService.accept(UserActivity.this, user.getId(), Session.user.getId(), new Service.ClientResponse<Friendship>() {
+            FriendshipRequest.accept(UserActivity.this, user.getId(), Session.user.getId(), new Request.ClientResponse<Friendship>() {
                 @Override
                 public void onSuccess(Friendship result) {
                     friendStatus = FriendStatus.FRIEND;
@@ -235,7 +223,7 @@ public class UserActivity extends AppCompatActivity {
         });
 
         declineRequestButton.setOnClickListener((View v) -> {
-            FriendshipService.decline(UserActivity.this, Session.user.getId(), user.getId(), new Service.ClientResponse<Friendship>() {
+            FriendshipRequest.decline(UserActivity.this, Session.user.getId(), user.getId(), new Request.ClientResponse<Friendship>() {
                 @Override
                 public void onSuccess(Friendship result) {
                     friendStatus = FriendStatus.NONE;

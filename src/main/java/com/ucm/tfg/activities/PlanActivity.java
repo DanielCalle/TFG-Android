@@ -25,14 +25,13 @@ import com.ucm.tfg.adapters.PlanUserAdapter;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.Plan;
 import com.ucm.tfg.entities.User;
-import com.ucm.tfg.service.FilmService;
-import com.ucm.tfg.service.PlanService;
-import com.ucm.tfg.service.Service;
+import com.ucm.tfg.service.FilmRequest;
+import com.ucm.tfg.service.PlanRequest;
+import com.ucm.tfg.service.Request;
 
 import android.view.Menu;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Shows all data for a given plan
@@ -99,7 +98,7 @@ public class PlanActivity extends AppCompatActivity {
 
         floatingActionButton = findViewById(R.id.film_info);
 
-        FilmService.getFilmById(PlanActivity.this, plan.getFilmId(), new Service.ClientResponse<Film>() {
+        FilmRequest.getFilmById(PlanActivity.this, plan.getFilmId(), new Request.ClientResponse<Film>() {
             @Override
             public void onSuccess(Film result) {
                 Picasso.get()
@@ -122,7 +121,7 @@ public class PlanActivity extends AppCompatActivity {
         joinPlan.setOnClickListener((View v) -> {
             // if logged user joined the plan then quit, join otherwise
             if (!joined) {
-                PlanService.joinPlan(PlanActivity.this, plan.getId(), Session.user.getId(), new Service.ClientResponse<Plan>() {
+                PlanRequest.joinPlan(PlanActivity.this, plan.getId(), Session.user.getId(), new Request.ClientResponse<Plan>() {
 
                     @Override
                     public void onSuccess(Plan result) {
@@ -136,7 +135,7 @@ public class PlanActivity extends AppCompatActivity {
                     }
                 }, Plan.class);
             } else {
-                PlanService.quitPlan(PlanActivity.this, plan.getId(), Session.user.getId(), new Service.ClientResponse<Plan>() {
+                PlanRequest.quitPlan(PlanActivity.this, plan.getId(), Session.user.getId(), new Request.ClientResponse<Plan>() {
 
                     @Override
                     public void onSuccess(Plan result) {
@@ -156,7 +155,7 @@ public class PlanActivity extends AppCompatActivity {
     }
 
     private void updateJoinedUsers() {
-        PlanService.getUsers(this, plan.getId(), new Service.ClientResponse<ArrayList<User>>() {
+        PlanRequest.getUsers(this, plan.getId(), new Request.ClientResponse<ArrayList<User>>() {
 
             @Override
             public void onSuccess(ArrayList<User> result) {
@@ -194,7 +193,7 @@ public class PlanActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.delete:
-                PlanService.deletePlan(PlanActivity.this, plan.getId(), new Service.ClientResponse<String>() {
+                PlanRequest.deletePlan(PlanActivity.this, plan.getId(), new Request.ClientResponse<String>() {
                     @Override
                     public void onSuccess(String result) {
                         Toast.makeText(PlanActivity.this, getString(R.string.plan_deleted), Toast.LENGTH_SHORT).show();

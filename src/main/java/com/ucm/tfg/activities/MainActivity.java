@@ -2,31 +2,24 @@ package com.ucm.tfg.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ucm.tfg.Session;
 import com.ucm.tfg.entities.User;
-import com.ucm.tfg.service.Service;
-import com.ucm.tfg.service.UserService;
+import com.ucm.tfg.service.Request;
+import com.ucm.tfg.service.UserRequest;
 import com.ucm.tfg.views.CustomViewPager;
 import com.ucm.tfg.fragments.FilmFragment;
 import com.ucm.tfg.fragments.RecommendationFragment;
@@ -106,7 +99,7 @@ public class MainActivity extends AppCompatActivity implements
         } else {
             // else saving logged user in session
             long userId = sharedPreferences.getLong(Session.USER, 0);
-            UserService.getUserById(MainActivity.this, userId, new Service.ClientResponse<User>() {
+            UserRequest.getUserById(MainActivity.this, userId, new Request.ClientResponse<User>() {
                 @Override
                 public void onSuccess(User result) {
                     Session.user = result;

@@ -11,17 +11,17 @@ import java.util.ArrayList;
 /**
  * All http requests against films route
  */
-public class RecommendationService {
+public class RecommendationRequest {
 
     private static String url = "http://tfg-spring.herokuapp.com/recommendations/";
     private static String develop_url = "http://filmar-develop.herokuapp.com/recommendations/";
 
-    public RecommendationService() {
+    public RecommendationRequest() {
     }
 
     // Returns film recommendations given for a specific user id
-    public static <T> void getRecommendedFilms(Activity activity, long id, Service.ClientResponse<ArrayList<Film>> callback) {
-        Service.getInstance()
+    public static <T> void getRecommendedFilms(Activity activity, long id, Request.ClientResponse<ArrayList<Film>> callback) {
+        Request.getInstance()
                 .setContext(activity)
                 .get()
                 .url(develop_url + "{id}/films")
@@ -31,8 +31,8 @@ public class RecommendationService {
     }
 
     // Returns recent films on premiere
-    public static <T> void getPremiereFilms(Activity activity, Service.ClientResponse<ArrayList<Film>> callback) {
-        Service.getInstance()
+    public static <T> void getPremiereFilms(Activity activity, Request.ClientResponse<ArrayList<Film>> callback) {
+        Request.getInstance()
                 .setContext(activity)
                 .get()
                 .url(develop_url + "premiere")
@@ -41,8 +41,8 @@ public class RecommendationService {
     }
 
     // Returns the most popular films
-    public static <T> void getTrendingFilms(Activity activity, Service.ClientResponse<ArrayList<Film>> callback) {
-        Service.getInstance()
+    public static <T> void getTrendingFilms(Activity activity, Request.ClientResponse<ArrayList<Film>> callback) {
+        Request.getInstance()
                 .setContext(activity)
                 .get()
                 .url(develop_url + "trending")
@@ -51,8 +51,8 @@ public class RecommendationService {
     }
 
     // Returns recommendations for plans given two user ids (for unity case)
-    public static <T> void getThreePlans(Activity activity, long id, String friendId, Service.ClientResponse<T> callback, Class<T> c) {
-        Service.getInstance()
+    public static <T> void getThreePlans(Activity activity, long id, String friendId, Request.ClientResponse<T> callback, Class<T> c) {
+        Request.getInstance()
                 .setContext(activity)
                 .get()
                 .url(develop_url + "{id}/plans/{friendId}")
@@ -62,8 +62,8 @@ public class RecommendationService {
     }
 
     // Get a random film
-    public static <T> void getRandomFilm(Activity activity, Service.ClientResponse<T> callback, Class<T> c) {
-        Service.getInstance()
+    public static <T> void getRandomFilm(Activity activity, Request.ClientResponse<T> callback, Class<T> c) {
+        Request.getInstance()
                 .setContext(activity)
                 .get()
                 .url(develop_url + "random")

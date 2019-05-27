@@ -2,19 +2,14 @@ package com.ucm.tfg.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,21 +19,15 @@ import android.widget.Toast;
 import com.ucm.tfg.R;
 import com.ucm.tfg.Session;
 import com.ucm.tfg.Utils;
-import com.ucm.tfg.activities.MainActivity;
 import com.ucm.tfg.activities.PlanActivity;
 import com.ucm.tfg.activities.UserActivity;
 import com.ucm.tfg.adapters.PlanAdapter;
-import com.ucm.tfg.adapters.PlanFriendsAdapter;
 import com.ucm.tfg.adapters.PlanUserAdapter;
-import com.ucm.tfg.entities.Film;
-import com.ucm.tfg.entities.Friendship;
 import com.ucm.tfg.entities.Plan;
 import com.ucm.tfg.entities.User;
-import com.ucm.tfg.service.FilmService;
-import com.ucm.tfg.service.PlanService;
-import com.ucm.tfg.service.Service;
-import com.ucm.tfg.service.UserFilmService;
-import com.ucm.tfg.service.UserService;
+import com.ucm.tfg.service.PlanRequest;
+import com.ucm.tfg.service.Request;
+import com.ucm.tfg.service.UserRequest;
 
 import java.util.ArrayList;
 
@@ -198,7 +187,7 @@ public class PlanFragment extends Fragment {
             if (swipeRefreshLayout != null) {
                 swipeRefreshLayout.setRefreshing(true);
             }
-            UserService.getUserPlansById(getActivity(), Session.user.getId(), new Service.ClientResponse<ArrayList<Plan>>() {
+            UserRequest.getUserPlansById(getActivity(), Session.user.getId(), new Request.ClientResponse<ArrayList<Plan>>() {
                 @Override
                 public void onSuccess(ArrayList<Plan> result) {
                     planAdapter.setPlansData(result);
@@ -221,7 +210,7 @@ public class PlanFragment extends Fragment {
     private void searchPlans(String title) {
         if (!Utils.isNullOrEmpty(title)) {
             swipeRefreshLayout.setRefreshing(true);
-            PlanService.searchPlansByTitle(getActivity(), title, new Service.ClientResponse<ArrayList<Plan>>() {
+            PlanRequest.searchPlansByTitle(getActivity(), title, new Request.ClientResponse<ArrayList<Plan>>() {
                 @Override
                 public void onSuccess(ArrayList<Plan> result) {
                     planAdapter.setPlansData(result);

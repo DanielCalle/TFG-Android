@@ -2,8 +2,6 @@ package com.ucm.tfg.activities;
 
 
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -15,14 +13,11 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
 import com.ucm.tfg.Session;
-import com.ucm.tfg.Utils;
-import com.ucm.tfg.entities.User;
 import com.ucm.tfg.entities.UserFilm;
-import com.ucm.tfg.service.FilmService;
-import com.ucm.tfg.service.Service;
+import com.ucm.tfg.service.FilmRequest;
+import com.ucm.tfg.service.Request;
 import com.ucm.tfg.entities.Film;
-import com.ucm.tfg.service.UserFilmService;
-import com.ucm.tfg.service.UserService;
+import com.ucm.tfg.service.UserFilmRequest;
 
 
 import org.json.JSONObject;
@@ -54,7 +49,7 @@ public class SavedFilmActivity extends AppCompatActivity {
         JSONObject json = null;
         try {
             json = new JSONObject(uuid);
-            FilmService.getFilmById(SavedFilmActivity.this, json.getLong("id"), new Service.ClientResponse<Film>() {
+            FilmRequest.getFilmById(SavedFilmActivity.this, json.getLong("id"), new Request.ClientResponse<Film>() {
 
                 @Override
                 public void onSuccess(Film film) {
@@ -71,7 +66,7 @@ public class SavedFilmActivity extends AppCompatActivity {
                     userFilm.setUserId(getSharedPreferences(Session.SESSION_FILE, 0).getLong(Session.USER, 0));
                     userFilm.setFilmId(film.getId());
                     userFilm.setDate(new Date());
-                    UserFilmService.postUserFilm(SavedFilmActivity.this, userFilm, new Service.ClientResponse<UserFilm>(){
+                    UserFilmRequest.postUserFilm(SavedFilmActivity.this, userFilm, new Request.ClientResponse<UserFilm>(){
                         @Override
                         public void onSuccess(UserFilm userFilm) {
                             Button button = (Button) findViewById(R.id.button);

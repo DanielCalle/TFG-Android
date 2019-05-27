@@ -12,10 +12,8 @@ import com.ucm.tfg.R;
 import com.ucm.tfg.Session;
 import com.ucm.tfg.Utils;
 import com.ucm.tfg.entities.User;
-import com.ucm.tfg.service.Service;
-import com.ucm.tfg.service.UserService;
-
-import java.util.UUID;
+import com.ucm.tfg.service.Request;
+import com.ucm.tfg.service.UserRequest;
 
 /**
  * Interface for logging
@@ -48,7 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
                 user.setName(nameInput.getText().toString());
                 user.setEmail(emailInput.getText().toString());
                 user.setPassword(passwordInput.getText().toString());
-                UserService.register(RegisterActivity.this, user, new Service.ClientResponse<User>() {
+                UserRequest.register(RegisterActivity.this, user, new Request.ClientResponse<User>() {
                     @Override
                     public void onSuccess(User result) {
                         runOnUiThread(() -> {

@@ -3,12 +3,10 @@ package com.ucm.tfg.commands;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.ucm.tfg.activities.FilmActivity;
 import com.ucm.tfg.activities.PlanActivity;
-import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.Plan;
-import com.ucm.tfg.service.PlanService;
-import com.ucm.tfg.service.Service;
+import com.ucm.tfg.service.PlanRequest;
+import com.ucm.tfg.service.Request;
 
 public class CommandJoinToPlan implements Command {
 
@@ -17,7 +15,7 @@ public class CommandJoinToPlan implements Command {
 
     @Override
     public Object execute(Object... objects) {
-        PlanService.getPlanById((Activity)objects[0], Long.parseLong((String) objects[1]), new Service.ClientResponse<Plan>(){
+        PlanRequest.getPlanById((Activity)objects[0], Long.parseLong((String) objects[1]), new Request.ClientResponse<Plan>(){
             @Override
             public void onSuccess(Plan result) {
                 Intent i = new Intent((Activity)objects[0], PlanActivity.class);

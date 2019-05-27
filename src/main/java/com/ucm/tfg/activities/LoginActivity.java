@@ -4,19 +4,17 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ucm.tfg.R;
 import com.ucm.tfg.Session;
 import com.ucm.tfg.Utils;
 import com.ucm.tfg.entities.User;
-import com.ucm.tfg.service.Service;
-import com.ucm.tfg.service.UserService;
+import com.ucm.tfg.service.Request;
+import com.ucm.tfg.service.UserRequest;
 
 /**
  * The intarface of login
@@ -49,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
                 User user = new User();
                 user.setEmail(emailInput.getText().toString());
                 user.setPassword(passwordInput.getText().toString());
-                UserService.login(LoginActivity.this, user, new Service.ClientResponse<User>() {
+                UserRequest.login(LoginActivity.this, user, new Request.ClientResponse<User>() {
                     @Override
                     public void onSuccess(User result) {
                         // When logged writing logged user in session

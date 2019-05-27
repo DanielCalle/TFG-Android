@@ -2,14 +2,12 @@ package com.ucm.tfg.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +21,9 @@ import com.ucm.tfg.Utils;
 import com.ucm.tfg.activities.FilmActivity;
 import com.ucm.tfg.adapters.FilmAdapter;
 import com.ucm.tfg.entities.Film;
-import com.ucm.tfg.service.FilmService;
-import com.ucm.tfg.service.Service;
-import com.ucm.tfg.service.UserService;
+import com.ucm.tfg.service.FilmRequest;
+import com.ucm.tfg.service.Request;
+import com.ucm.tfg.service.UserRequest;
 
 import java.util.ArrayList;
 
@@ -168,7 +166,7 @@ public class FilmFragment extends Fragment {
         long userId = getActivity().getSharedPreferences(Session.SESSION_FILE, 0).getLong(Session.USER, 0);
         if (userId != 0) {
             swipeRefreshLayout.setRefreshing(true);
-            UserService.getUserFilmsById(getActivity(), userId, new Service.ClientResponse<ArrayList<Film>>() {
+            UserRequest.getUserFilmsById(getActivity(), userId, new Request.ClientResponse<ArrayList<Film>>() {
                 @Override
                 public void onSuccess(ArrayList<Film> result) {
                     filmAdapter.setData(result);
@@ -187,7 +185,7 @@ public class FilmFragment extends Fragment {
     private void searchFilms(String name) {
         if (!Utils.isNullOrEmpty(name)) {
             swipeRefreshLayout.setRefreshing(true);
-            FilmService.searchFilmsByName(getActivity(), name, new Service.ClientResponse<ArrayList<Film>>() {
+            FilmRequest.searchFilmsByName(getActivity(), name, new Request.ClientResponse<ArrayList<Film>>() {
                 @Override
                 public void onSuccess(ArrayList<Film> result) {
                     filmAdapter.setData(result);

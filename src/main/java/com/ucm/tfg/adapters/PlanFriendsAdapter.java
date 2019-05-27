@@ -20,10 +20,10 @@ import com.ucm.tfg.R;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.Plan;
 import com.ucm.tfg.entities.User;
-import com.ucm.tfg.service.FilmService;
-import com.ucm.tfg.service.PlanService;
-import com.ucm.tfg.service.Service;
-import com.ucm.tfg.service.UserService;
+import com.ucm.tfg.service.FilmRequest;
+import com.ucm.tfg.service.PlanRequest;
+import com.ucm.tfg.service.Request;
+import com.ucm.tfg.service.UserRequest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +54,7 @@ public class PlanFriendsAdapter extends RecyclerView.Adapter<PlanFriendsAdapter.
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder recyclerViewHolder, int index) {
         Plan plan = plans.get(index);
-        FilmService.getFilmById(this.context, plan.getFilmId(), new Service.ClientResponse<Film>() {
+        FilmRequest.getFilmById(this.context, plan.getFilmId(), new Request.ClientResponse<Film>() {
             @Override
             public void onSuccess(Film result) {
                 Picasso.get()
@@ -74,7 +74,7 @@ public class PlanFriendsAdapter extends RecyclerView.Adapter<PlanFriendsAdapter.
                 Toast.makeText(context, error, Toast.LENGTH_SHORT).show();
             }
         }, Film.class);
-        UserService.getUserById(this.context, plan.getCreatorId(), new Service.ClientResponse<User>() {
+        UserRequest.getUserById(this.context, plan.getCreatorId(), new Request.ClientResponse<User>() {
 
             @Override
             public void onSuccess(User result) {
@@ -95,7 +95,7 @@ public class PlanFriendsAdapter extends RecyclerView.Adapter<PlanFriendsAdapter.
         recyclerViewHolder.plan.setText(recyclerViewHolder.planString + " " + recyclerViewHolder.num);
 
 
-        PlanService.getJoinedUsers(this.context, plan.getId(), new Service.ClientResponse<ArrayList<User>>(){
+        PlanRequest.getJoinedUsers(this.context, plan.getId(), new Request.ClientResponse<ArrayList<User>>(){
 
             @Override
             public void onSuccess(ArrayList<User> result) {

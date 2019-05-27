@@ -24,9 +24,9 @@ import com.ucm.tfg.Session;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.Plan;
 import com.ucm.tfg.entities.UserFilm;
-import com.ucm.tfg.service.PlanService;
-import com.ucm.tfg.service.Service;
-import com.ucm.tfg.service.UserFilmService;
+import com.ucm.tfg.service.PlanRequest;
+import com.ucm.tfg.service.Request;
+import com.ucm.tfg.service.UserFilmRequest;
 import com.ucm.tfg.views.ExpandableTextView;
 
 import java.text.ParseException;
@@ -105,7 +105,7 @@ public class FilmActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 if (userFilm != null) {
                     userFilm.setRating(((float) (seekBar.getProgress() / 10.0)));
-                    UserFilmService.rate(FilmActivity.this, userFilm, new Service.ClientResponse<UserFilm>() {
+                    UserFilmRequest.rate(FilmActivity.this, userFilm, new Request.ClientResponse<UserFilm>() {
                         @Override
                         public void onSuccess(UserFilm result) {
                             Toast.makeText(FilmActivity.this, getString(R.string.rated_film), Toast.LENGTH_SHORT).show();
@@ -151,11 +151,11 @@ public class FilmActivity extends AppCompatActivity {
             startActivity(youtube);
         });
 
-        UserFilmService.get(
+        UserFilmRequest.get(
                 FilmActivity.this,
                 Session.user.getId(),
                 film.getId(),
-                new Service.ClientResponse<UserFilm>() {
+                new Request.ClientResponse<UserFilm>() {
                     @Override
                     public void onSuccess(UserFilm result) {
                         userFilm = result;
@@ -209,7 +209,7 @@ public class FilmActivity extends AppCompatActivity {
                     plan.setLocation(data.getExtras().getString(getString(R.string.plan_location)));
                     plan.setDescription(data.getExtras().getString(getString(R.string.plan_description)));
                     // Creates the new plan
-                    PlanService.createPlan(FilmActivity.this, plan, new Service.ClientResponse<Plan>() {
+                    PlanRequest.createPlan(FilmActivity.this, plan, new Request.ClientResponse<Plan>() {
 
                         @Override
                         public void onSuccess(Plan result) {
@@ -244,7 +244,7 @@ public class FilmActivity extends AppCompatActivity {
                 break;
             case R.id.favorite:
                 if (userFilm != null) {
-                    UserFilmService.delete(FilmActivity.this, Session.user.getId(), film.getId(), new Service.ClientResponse<UserFilm>() {
+                    UserFilmRequest.delete(FilmActivity.this, Session.user.getId(), film.getId(), new Request.ClientResponse<UserFilm>() {
                         @Override
                         public void onSuccess(UserFilm result) {
                             userFilm = null;
@@ -261,7 +261,7 @@ public class FilmActivity extends AppCompatActivity {
                     userFilm = new UserFilm();
                     userFilm.setUserId(Session.user.getId());
                     userFilm.setFilmId(film.getId());
-                    UserFilmService.postUserFilm(FilmActivity.this, userFilm, new Service.ClientResponse<UserFilm>() {
+                    UserFilmRequest.postUserFilm(FilmActivity.this, userFilm, new Request.ClientResponse<UserFilm>() {
                         @Override
                         public void onSuccess(UserFilm result) {
                             userFilm = result;

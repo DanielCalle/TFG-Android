@@ -3,9 +3,8 @@ package com.ucm.tfg.commands;
 import android.app.Activity;
 
 import com.ucm.tfg.entities.User;
-import com.ucm.tfg.service.FilmService;
-import com.ucm.tfg.service.Service;
-import com.ucm.tfg.service.UserService;
+import com.ucm.tfg.service.Request;
+import com.ucm.tfg.service.UserRequest;
 
 public class CommandGetUserById implements Command {
 
@@ -13,7 +12,7 @@ public class CommandGetUserById implements Command {
 
     @Override
     public User execute(Object... objects) {
-        UserService.getUserByUUID((Activity) objects[0], (String) objects[1], (Service.ClientResponse) objects[2], (Class) objects[3]);
+        UserRequest.getUserByUUID((Activity) objects[0], (String) objects[1], (Request.ClientResponse) objects[2], (Class) objects[3]);
         return null;
     }
 

@@ -3,7 +3,6 @@ package com.ucm.tfg.adapters;
 import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +12,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
-import com.ucm.tfg.Utils;
-import com.ucm.tfg.entities.Film;
-import com.ucm.tfg.entities.Plan;
 import com.ucm.tfg.entities.User;
-import com.ucm.tfg.service.FilmService;
-import com.ucm.tfg.service.PlanService;
-import com.ucm.tfg.service.Service;
 
 import java.util.ArrayList;
 import java.util.List;

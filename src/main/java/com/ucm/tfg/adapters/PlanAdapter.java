@@ -1,10 +1,6 @@
 package com.ucm.tfg.adapters;
 
 import android.app.Activity;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Matrix;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,14 +15,12 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import com.ucm.tfg.R;
 import com.ucm.tfg.Utils;
-import com.ucm.tfg.activities.PlanActivity;
 import com.ucm.tfg.entities.Film;
 import com.ucm.tfg.entities.Plan;
 import com.ucm.tfg.entities.User;
-import com.ucm.tfg.service.FilmService;
-import com.ucm.tfg.service.PlanService;
-import com.ucm.tfg.service.Service;
-import com.ucm.tfg.service.UserService;
+import com.ucm.tfg.service.FilmRequest;
+import com.ucm.tfg.service.PlanRequest;
+import com.ucm.tfg.service.Request;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +49,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewHolder recyclerViewHolder, int index) {
         Plan plan = plans.get(index);
-        FilmService.getFilmById(this.context, plan.getFilmId(), new Service.ClientResponse<Film>() {
+        FilmRequest.getFilmById(this.context, plan.getFilmId(), new Request.ClientResponse<Film>() {
             @Override
             public void onSuccess(Film result) {
                 Picasso.get()
@@ -78,7 +72,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.RecyclerViewHo
         recyclerViewHolder.title.setText(plan.getTitle());
         recyclerViewHolder.plan.setText("#" + context.getResources().getString(R.string.plan) + " " + (index + 1));
 
-        PlanService.getUsers(this.context, plan.getId(), new Service.ClientResponse<ArrayList<User>>(){
+        PlanRequest.getUsers(this.context, plan.getId(), new Request.ClientResponse<ArrayList<User>>(){
 
             @Override
             public void onSuccess(ArrayList<User> result) {

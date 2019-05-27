@@ -2,9 +2,7 @@ package com.ucm.tfg.fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
@@ -12,7 +10,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +20,10 @@ import com.ucm.tfg.R;
 import com.ucm.tfg.Session;
 import com.ucm.tfg.Utils;
 import com.ucm.tfg.activities.FilmActivity;
-import com.ucm.tfg.adapters.PlanAdapter;
 import com.ucm.tfg.adapters.RecommendationListAdapter;
 import com.ucm.tfg.entities.Film;
-import com.ucm.tfg.service.RecommendationService;
-import com.ucm.tfg.service.Service;
+import com.ucm.tfg.service.RecommendationRequest;
+import com.ucm.tfg.service.Request;
 
 import java.util.ArrayList;
 
@@ -170,7 +166,7 @@ public class RecommendationFragment extends Fragment {
             if (swipeRefreshLayout != null) {
                 swipeRefreshLayout.setRefreshing(true);
             }
-            RecommendationService.getRecommendedFilms(getActivity(), Session.user.getId(), new Service.ClientResponse<ArrayList<Film>>() {
+            RecommendationRequest.getRecommendedFilms(getActivity(), Session.user.getId(), new Request.ClientResponse<ArrayList<Film>>() {
                 @Override
                 public void onSuccess(ArrayList<Film> result) {
                     recommendationListAdapter.setRecommendedData(result);
@@ -187,7 +183,7 @@ public class RecommendationFragment extends Fragment {
                     }
                 }
             });
-            RecommendationService.getTrendingFilms(getActivity(), new Service.ClientResponse<ArrayList<Film>>() {
+            RecommendationRequest.getTrendingFilms(getActivity(), new Request.ClientResponse<ArrayList<Film>>() {
                 @Override
                 public void onSuccess(ArrayList<Film> result) {
                     recommendationListAdapter.setTrendingData(result);
@@ -204,7 +200,7 @@ public class RecommendationFragment extends Fragment {
                     }
                 }
             });
-            RecommendationService.getPremiereFilms(getActivity(), new Service.ClientResponse<ArrayList<Film>>() {
+            RecommendationRequest.getPremiereFilms(getActivity(), new Request.ClientResponse<ArrayList<Film>>() {
                 @Override
                 public void onSuccess(ArrayList<Film> result) {
                     recommendationListAdapter.setPremiereData(result);
