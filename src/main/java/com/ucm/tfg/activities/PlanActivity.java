@@ -62,12 +62,12 @@ public class PlanActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setDisplayShowHomeEnabled(true);
-            actionBar.setTitle("");
+            actionBar.setTitle(plan.getTitle());
         }
 
         filmPoster = findViewById(R.id.film_poster);
         TextView date = findViewById(R.id.date);
-        TextView time = findViewById(R.id.time);
+        TextView time = findViewById(R.id.duration);
         TextView location = findViewById(R.id.location);
         TextView description = findViewById(R.id.description);
         RecyclerView users = findViewById(R.id.users);
@@ -102,10 +102,6 @@ public class PlanActivity extends AppCompatActivity {
         FilmService.getFilmById(PlanActivity.this, plan.getFilmId(), new Service.ClientResponse<Film>() {
             @Override
             public void onSuccess(Film result) {
-                if (actionBar != null) {
-                    actionBar.setTitle(result.getName());
-                }
-
                 Picasso.get()
                         .load(result.getImageURL())
                         .into(filmPoster);

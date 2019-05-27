@@ -53,7 +53,7 @@
     <string name="friendship_declined">Amistad rechazada</string>
     <string name="friendship_deleted">Amistad eliminada</string>
     <string name="friendship_request_sent">Petición de amistad enviada</string>
-    <string name="plan_time">Tiempo</string>
+    <string name="plan_duration">Duración</string>
     <string name="plan_users">Usuarios</string>
     <string name="no_wifi">Asegura de que está conectado en un ambiente con wifi</string>
 </resources>
