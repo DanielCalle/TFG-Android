@@ -13,9 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
 import com.ucm.tfg.Session;
 import com.ucm.tfg.entities.User;
 import com.ucm.tfg.requests.Request;
@@ -104,7 +106,14 @@ public class MainActivity extends AppCompatActivity implements
                 public void onSuccess(User result) {
                     Session.user = result;
                     TextView userName = navigationView.getHeaderView(0).findViewById(R.id.user_name);
+                    ImageView avatar = navigationView.getHeaderView(0).findViewById(R.id.avatar);
+                    Picasso.get()
+                            .load(result.getImageURL())
+                            .resize(200, 150)
+                            .centerCrop()
+                            .into(avatar);
                     userName.setText(Session.user.getName());
+                    userName.bringToFront();
                 }
 
                 @Override
