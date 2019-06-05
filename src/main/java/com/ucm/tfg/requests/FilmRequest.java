@@ -30,7 +30,7 @@ public class FilmRequest {
     }
 
     // Given a film uuid (vuforia), returns through callback the film result
-    public static <T> void getFilmByUUID(Activity activity, String uuid, Request.ClientResponse<T> callback, Class<T> c) {
+    public static <T> void getFilmByUuid(Activity activity, String uuid, Request.ClientResponse<T> callback, Class<T> c) {
         Request.getInstance()
                 .setContext(activity)
                 .get()

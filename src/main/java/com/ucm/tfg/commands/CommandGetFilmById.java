@@ -12,7 +12,7 @@ public class CommandGetFilmById implements Command {
 
     @Override
     public Film execute(Object... objects) {
-        FilmRequest.getFilmByUUID((Activity) objects[0], (String) objects[1], (Request.ClientResponse) objects[2], (Class) objects[3]);
+        FilmRequest.getFilmByUuid((Activity) objects[0], (String) objects[1], (Request.ClientResponse) objects[2], (Class) objects[3]);
         return null;
     }
 

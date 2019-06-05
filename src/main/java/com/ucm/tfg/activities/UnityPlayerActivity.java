@@ -51,19 +51,6 @@ public class UnityPlayerActivity extends Activity {
         finish();
     }
 
-    public void plan(String id) {
-        Log.d("PLAN", id);
-
-        //En id está el id de la película que ha detectado con RA
-        //y que le ha dado a plan
-    }
-
-    public void share(String id) {
-        Log.d("SHARE", id);
-        //En id está el id de la película que ha detectado con RA
-        //y que le ha dado a compartir
-    }
-
     public void youtube(String info) {
         Log.d("YOUTUBE", info);
         JSONObject json = null;
