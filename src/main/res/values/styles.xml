@@ -11,6 +11,10 @@
         <item name="android:colorControlNormal">#FFFFFF</item>
     </style>
 
+    <style name="AppTheme.ProgressBar">
+        <item name="colorAccent">@color/secondaryColor</item> <!-- Whatever color you want-->
+    </style>
+
     <style name="AppTheme.CollapsibleToolbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

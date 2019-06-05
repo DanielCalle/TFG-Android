@@ -56,4 +56,5 @@
     <string name="plan_duration">Duración</string>
     <string name="plan_users">Usuarios</string>
     <string name="no_wifi">Asegura de que está conectado en un ambiente con wifi</string>
+    <string name="init_server">En estos momentos nuestro servidor se está inicializando. Por favor espere unos instantes.</string>
 </resources>

@@ -58,4 +58,5 @@
     <string name="friendship_declined">Friend declined</string>
     <string name="friendship_request_sent">Friend request sent</string>
     <string name="no_wifi">Check your wifi status</string>
+    <string name="init_server">At the moment our server is being powered on. Please wait a few moments.</string>
 </resources>

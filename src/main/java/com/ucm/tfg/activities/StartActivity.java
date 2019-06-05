@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -34,6 +35,9 @@ public class StartActivity extends AppCompatActivity {
     private ProgressBar timerProgress;
     private TextView timerLabel;
     private ImageView poster;
+    private TextView loadingTitle;
+    private ProgressBar loading;
+    private ImageView icon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,10 +67,23 @@ public class StartActivity extends AppCompatActivity {
         relativeLayout.bringToFront();
         timerProgress = findViewById(R.id.timer_progress);
         timerLabel = findViewById(R.id.timer_label);
+        loadingTitle = findViewById(R.id.loading_title);
+        loading = findViewById(R.id.loading);
+        icon = findViewById(R.id.icon);
+
+        loadingTitle.setText(R.string.init_server);
+
+        icon.setVisibility(View.INVISIBLE);
+        timerProgress.setVisibility(View.INVISIBLE);
 
         RecommendationRequest.getRandomFilm(StartActivity.this, new Request.ClientResponse<Film>() {
             @Override
             public void onSuccess(Film result) {
+                timerProgress.setVisibility(View.VISIBLE);
+                icon.setVisibility(View.VISIBLE);
+                loadingTitle.setVisibility(View.GONE);
+                loading.setVisibility(View.GONE);
+
                 Picasso.get()
                         .load(result.getImageURL())
                         .fit()
