@@ -87,10 +87,17 @@ public class UnityPlayerActivity extends Activity {
         }, String.class, userId);
     }
 
-    public void save(String uuid) {
-        Intent intent = new Intent(this, SavedFilmActivity.class);
-        intent.putExtra("uuid", uuid);
-        startActivity(intent);
+    public void save(String info) {
+        JSONObject json = null;
+        try {
+            json = new JSONObject(info);
+            Log.d("JSSONN", json.getString("uuid"));
+            Intent intent = new Intent(this, SavedFilmActivity.class);
+            intent.putExtra("uuid", json.getString("uuid"));
+            startActivity(intent);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 
